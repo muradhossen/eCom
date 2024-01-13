@@ -17,6 +17,9 @@ namespace Infrastructure
             });
 
             services.AddTransient<ITestRepository, TestRepository>();
+            services.AddTransient<ICategoryRepository, CategoryRepository>();
+            services.AddTransient<ISubCategoryRepository, SubCategoryRepository>();
+            services.AddTransient<IProductRepository, ProductRepository>();
 
             return services;
         }

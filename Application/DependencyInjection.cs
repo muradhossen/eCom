@@ -9,6 +9,11 @@ namespace Application
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
             services.AddTransient<ITestService, TestService>();
+            services.AddTransient<ICategoryService, CategoryService>();
+            services.AddTransient<ISubCategoryService, SubCategoryService>();
+            services.AddTransient<IProductService, ProductService>();
+
+
             return services;
         }
     }
