@@ -1,6 +1,9 @@
 using Application;
+using Application.Common.Mapper;
 using Application.DTOs.Tests;
 using Application.ServiceInterface;
+using AutoMapper;
+using Domain.Entities;
 using Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,6 +16,8 @@ builder.Services
        .AddApplication()
        .AddPersistence(builder.Configuration);
 
+builder.Services.AddAutoMapper(typeof(MappingProfile));
+
 var app = builder.Build();
 
 
@@ -24,15 +29,15 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-
-
-app.MapPost("/tests", async (ITestService _testService, [FromBody] TestCreateDto testCreateDto) =>
+app.MapPost("/tests", async (ITestService _testService,IMapper _mapper ,[FromBody] TestCreateDto testCreateDto) =>
 {
-
-    bool isSaved = await _testService.AddAsync(new Domain.Entities.Test
+    if (testCreateDto is null)
     {
-        Name = testCreateDto.Name
-    });
+        return Results.BadRequest("No data found to add");
+    }
+    var test = _mapper.Map<Test>(testCreateDto);
+
+    bool isSaved = await _testService.AddAsync(test);
 
     if (isSaved)
     {
@@ -41,7 +46,7 @@ app.MapPost("/tests", async (ITestService _testService, [FromBody] TestCreateDto
     return Results.BadRequest();
 });
 
-    app.MapGet("/tests", async (ITestService _testService) =>
+app.MapGet("/tests", async (ITestService _testService) =>
     {
 
        var tests = await _testService.GetAllAsync();
