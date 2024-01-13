@@ -1,4 +1,5 @@
-﻿using Application.DTOs.Tests;
+﻿using Application.DTOs.Categories;
+using Application.DTOs.Tests;
 using AutoMapper;
 using Domain.Entities;
 
@@ -9,6 +10,9 @@ namespace Application.Common.Mapper
         public MappingProfile()
         {
             CreateMap<TestCreateDto, Test>();
+            CreateMap<CategoryCreateDto, Category>();
+            CreateMap<Category, CategoryDto>();
+            CreateMap<CategoryDto, Category>();
         }
     }
 }
