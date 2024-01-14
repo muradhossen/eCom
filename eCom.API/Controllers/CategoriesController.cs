@@ -1,4 +1,7 @@
-﻿using Application.DTOs.Categories;
+﻿using Application.Common;
+using Application.Common.Result;
+using Application.DTOs.Categories;
+using Application.Errors;
 using Application.ServiceInterface;
 using AutoMapper;
 using Domain.Entities;
@@ -23,7 +26,7 @@ namespace eCom.API.Controllers
         {
             if (dto is null)
             {
-                return BadRequest("Invalid data");
+                return BadRequest(Result.Failure(CommonError.InvalidRequest));
             }
             var category = _mapper.Map<Category>(dto);
             category.CreatedById = 1;
@@ -42,7 +45,7 @@ namespace eCom.API.Controllers
                 };
                 return CreatedAtRoute(routeValues, category);
             }
-            return BadRequest("Failed to create category!");
+            return BadRequest(Result.Failure(CategoryError.CreateFailed));
         }
         [HttpGet]
         public async Task<IActionResult> GetCategories()
@@ -51,7 +54,7 @@ namespace eCom.API.Controllers
 
             if (categories is null || !categories.Any())
             {
-                return NotFound();
+                return NotFound(Result.Failure(CategoryError.NotFound));
             }
             return Ok(_mapper.Map<List<CategoryDto>>(categories));
         }
@@ -61,14 +64,14 @@ namespace eCom.API.Controllers
         {
             if (id <= 0)
             {
-                return BadRequest("Invalid request!");
+                return BadRequest(Result.Failure(CommonError.InvalidRequest));
             }
 
            var category = await _categoryService.GetByIdAsync(id);
 
             if (category is null)
             {
-                return NotFound("The requested category was not found!");
+                return NotFound(Result.Failure(CategoryError.NotFound));
             }
 
             return Ok(_mapper.Map<CategoryDto>(category));
@@ -85,17 +88,13 @@ namespace eCom.API.Controllers
             var category = await _categoryService.GetByIdAsync(id);
 
             if (category is null)
-            {
-                return BadRequest("The requested category was not found!");
+            {                 
+              return NotFound(Result.Failure(CategoryError.NotFound));
             }
 
             _mapper.Map(dto,category,opt=> opt.AfterMap((src, des) =>
             {
-                des.Id = id;
-                des.CreatedOn = DateTime.UtcNow;
-                des.CreatedById = 1;
-                des.ModifiedOn = DateTime.UtcNow;
-                des.ModifiedById = 2;
+                des.Id = id; 
             }));
 
             if(await _categoryService.UpdateAsync(category))
@@ -109,7 +108,7 @@ namespace eCom.API.Controllers
                 };
                 return CreatedAtRoute(routeValues, category);
             }
-            return BadRequest("Failed to update category!");
+            return BadRequest(Result.Failure(CategoryError.UpdateFailed(category.Id)));
         }
     }
 }
