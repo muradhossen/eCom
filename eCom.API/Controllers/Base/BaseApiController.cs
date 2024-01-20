@@ -5,7 +5,7 @@ namespace eCom.API.Controllers.Base
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BaseController : ControllerBase
+    public class BaseApiController : ControllerBase
     {
     }
 }

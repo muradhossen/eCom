@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace eCom.API.Controllers
 {
-    public class CategoriesController : BaseController
+    public class CategoriesController : BaseApiController
     {
         private readonly ICategoryService _categoryService;
         private readonly IMapper _mapper;
@@ -108,7 +108,7 @@ namespace eCom.API.Controllers
                 };
                 return CreatedAtRoute(routeValues, category);
             }
-            return BadRequest(Result.Failure(CategoryError.UpdateFailed(category.Id)));
+            return BadRequest(Result.Failure(CategoryError.UpdateFailed(category.Code)));
         }
     }
 }
