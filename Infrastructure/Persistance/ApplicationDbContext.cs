@@ -15,7 +15,7 @@ namespace Infrastructure.Persistance
     {
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
-            //AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
         }
         public DbSet<Test> Tests { get; set; }
         public DbSet<Category> Categories { get; set; }
