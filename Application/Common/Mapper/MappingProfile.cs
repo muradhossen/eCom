@@ -18,6 +18,7 @@ namespace Application.Common.Mapper
 
             CreateMap<AuthUser, RegisterDto>();
             CreateMap<RegisterDto, AuthUser>();
+            CreateMap<AuthUser, AuthUserDto>();
         }
     }
 }

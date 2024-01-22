@@ -11,6 +11,7 @@ namespace Domain.Entities.User
         public DateTime DateOfBirth { get; set; }  
         public string Gender { get; set; }
         public string Address { get; set; }
+        public string PhotoUrl { get; set; }
         public DateTime LastActive { get; set; } = DateTime.Now; 
         public DateTime Created { get; set; } = DateTime.Now;
         public ICollection<UserRole> UserRoles { get; set; }

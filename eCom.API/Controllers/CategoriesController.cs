@@ -1,5 +1,4 @@
-﻿using Application.Common;
-using Application.Common.Result;
+﻿using Application.Common.Result;
 using Application.DTOs.Categories;
 using Application.Errors;
 using Application.ServiceInterface;
@@ -7,6 +6,7 @@ using AutoMapper;
 using Domain.Entities;
 using eCom.API.Controllers.Base;
 using Microsoft.AspNetCore.Mvc;
+using Application.Extentions;
 
 namespace eCom.API.Controllers
 {
@@ -48,14 +48,15 @@ namespace eCom.API.Controllers
             return BadRequest(Result.Failure(CategoryError.CreateFailed));
         }
         [HttpGet]
-        public async Task<IActionResult> GetCategories()
+        public async Task<IActionResult> GetCategories([FromQuery] CategoryPageParam pageParam)
         {
-            var categories = await _categoryService.GetAllAsync();
+            var categories = await _categoryService.GetCategoriesAsync(pageParam);
 
             if (categories is null || !categories.Any())
             {
                 return NotFound(Result.Failure(CategoryError.NotFound));
             }
+            Response.AddPaginationHeader(categories.CurrentPage, categories.PageSize, categories.TotalCount, categories.TotalPage);
             return Ok(_mapper.Map<List<CategoryDto>>(categories));
         }
 

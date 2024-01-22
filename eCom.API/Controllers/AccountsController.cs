@@ -3,14 +3,14 @@ using Application.Service;
 using Application.ServiceInterface;
 using AutoMapper;
 using Domain.Entities.User;
-using eCom.API.Controllers.Base; 
+using eCom.API.Controllers.Base;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace eCom.API.Controllers
 {
-   
+
     public class AccountsController : BaseApiController
     {
         private readonly ITokenService _tokenService;
@@ -34,7 +34,7 @@ namespace eCom.API.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
+        public async Task<ActionResult> Register(RegisterDto registerDto)
         {
             if (await _accountService.IsUserExist(registerDto.Username)) return BadRequest("User already exist.");
 
@@ -58,18 +58,14 @@ namespace eCom.API.Controllers
                 return BadRequest(roleResult.Errors);
             }
 
-            return new UserDto
-            {
-                UserName = registerDto.Username,
-                Token = await _tokenService.CreateToken(user),
-                KnownAs = user.UserName,
-                Gender = user.Gender,
+            var userDto = _mapper.Map<AuthUserDto>(user);
+            userDto.Token = await _tokenService.CreateToken(user);
 
-            };
+            return Ok(userDto);
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
+        public async Task<ActionResult> Login(LoginDto loginDto)
         {
             var user = await _accountService.GetUserByUsername(loginDto.UserName);
 
@@ -82,16 +78,12 @@ namespace eCom.API.Controllers
                 return Unauthorized();
             }
 
-            return new UserDto
-            {
-                UserName = loginDto.UserName,
-                Token = await _tokenService.CreateToken(user),
-                PhotoUrl = "",
-                KnownAs = user.UserName,
-                Gender = user.Gender
-            };
+            var userDto = _mapper.Map<AuthUserDto>(user);
+            userDto.Token = await _tokenService.CreateToken(user);
+
+            return Ok(userDto);
         }
 
-   
+
     }
 }
