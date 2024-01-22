@@ -1,4 +1,5 @@
 ﻿using Application.DTOs.Categories;
+using Application.DTOs.SubCategories;
 using Application.DTOs.Tests;
 using Application.DTOs.User;
 using AutoMapper;
@@ -19,6 +20,10 @@ namespace Application.Common.Mapper
             CreateMap<AuthUser, RegisterDto>();
             CreateMap<RegisterDto, AuthUser>();
             CreateMap<AuthUser, AuthUserDto>();
+
+            CreateMap<SubCategoryCreateDto, SubCategory>();
+            CreateMap<SubCategory, SubCategoryDto>().ReverseMap();
+            
         }
     }
 }

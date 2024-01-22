@@ -1,7 +1,4 @@
-﻿using Domain.Entities;
-using System.ComponentModel.DataAnnotations;
-
-namespace Application.DTOs.SubCategories;
+﻿namespace Application.DTOs.SubCategories;
 
 public class SubCategoryDto
 {
