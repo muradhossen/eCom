@@ -1,4 +1,5 @@
 ﻿using Application.DTOs.Categories;
+using Application.DTOs.Products;
 using Application.DTOs.SubCategories;
 using Application.DTOs.Tests;
 using Application.DTOs.User;
@@ -23,7 +24,9 @@ namespace Application.Common.Mapper
 
             CreateMap<SubCategoryCreateDto, SubCategory>();
             CreateMap<SubCategory, SubCategoryDto>().ReverseMap();
-            
+
+            CreateMap<ProductCreateDto, Product>();
+            CreateMap<Product, ProductDto>().ReverseMap();
         }
     }
 }

@@ -86,7 +86,7 @@ namespace eCom.API.Controllers
         {
             if (id <= 0 || dto is null)
             {
-                return BadRequest("Invalid request!");
+                return BadRequest(Result.Failure(CommonError.InvalidRequest));
             }
 
             var subCategory = await _subCategoryService.GetByIdAsync(id);

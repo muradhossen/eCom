@@ -7,7 +7,7 @@ using Domain.Entities;
 
 namespace Application.Service;
 
-public class SubCategoryService : Service<SubCategory>, ISubCategoryService
+internal class SubCategoryService : Service<SubCategory>, ISubCategoryService
 {
     private readonly ISubCategoryRepository _repository;
 
