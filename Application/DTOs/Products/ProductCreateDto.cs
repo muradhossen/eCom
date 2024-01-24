@@ -8,4 +8,5 @@ public class ProductCreateDto
     public string Details { get; set; }
     public string USP { get; set; } 
     public long SubCategoryId { get; set; }
+    public SectionCreateDto Section { get; set; }
 }

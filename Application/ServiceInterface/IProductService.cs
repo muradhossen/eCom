@@ -8,4 +8,5 @@ namespace Application.ServiceInterface;
 public interface IProductService : IService<Product>
 {
     Task<PagedList<Product>> GetProductsAsync(ProductPageParam pageParam);
+    
 }

@@ -20,4 +20,5 @@ public class Product : AuditableWithBaseEntity<long>
     public string USP { get; set; }
     public SubCategory SubCategory { get; set; }
     public long SubCategoryId { get; set; }
+    public Section Section { get; set; }
 }

@@ -5,6 +5,7 @@ using Application.RepositoryInterface;
 using Application.Service.Base;
 using Application.ServiceInterface;
 using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Service;
 
@@ -21,6 +22,16 @@ internal class ProductService : Service<Product>, IProductService
 
         var query = _repository.TableNoTracking.AsQueryable();
 
+        if (pageParam.SubCategoryId > 0)
+        {
+            query = query.Where(c => c.SubCategoryId == pageParam.SubCategoryId);
+        }
+
+        if (pageParam.IncludePricing)
+        {
+            query = query.Include(c => c.Section).ThenInclude(c => c.PricingItems);
+        }
+
         if (!string.IsNullOrWhiteSpace(pageParam.SearchKey))
         {
             string searchKey = pageParam.SearchKey.ToLower().Trim();
@@ -34,4 +45,6 @@ internal class ProductService : Service<Product>, IProductService
 
         return await PagedList<Product>.CreateAsync(query, pageParam.PageSize, pageParam.PageNumber);
     }
+
+
 }

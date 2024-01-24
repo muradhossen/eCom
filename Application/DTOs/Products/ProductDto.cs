@@ -10,4 +10,5 @@ public class ProductDto
     public string Details { get; set; }
     public string USP { get; set; }
     public long SubCategoryId { get; set; }
+    public SectionDto Section { get; set; }
 }

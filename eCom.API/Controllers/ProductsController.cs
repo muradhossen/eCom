@@ -31,6 +31,12 @@ namespace eCom.API.Controllers
             {
                 return BadRequest(Result.Failure(CommonError.InvalidRequest));
             }
+
+            if (dto.Section is null || dto.Section.PricingItems.IsNullOrEmpty())
+            {
+                return BadRequest(Result.Failure(ProductError.NoPricintItemToCreate));
+            }
+
             var product = _mapper.Map<Product>(dto);
             product.CreatedById = 1;
             product.CreatedOn = DateTime.UtcNow;
@@ -46,9 +52,9 @@ namespace eCom.API.Controllers
                     id = product.Id,
 
                 };
-                return CreatedAtRoute(routeValues, product);
+                return CreatedAtRoute(routeValues, _mapper.Map<ProductDto>(product));
             }
-            return BadRequest(Result.Failure(SubCategoryError.CreateFailed));
+            return BadRequest(Result.Failure(ProductError.CreateFailed));
         }
         [HttpGet]
         public async Task<IActionResult> GetProducts([FromQuery] ProductPageParam pageParam)

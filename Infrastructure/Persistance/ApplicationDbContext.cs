@@ -21,6 +21,8 @@ namespace Infrastructure.Persistance
         public DbSet<Category> Categories { get; set; }
         public DbSet<SubCategory> SubCategories { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Section> Sections { get; set; }
+        public DbSet<PricingItem> PricingItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

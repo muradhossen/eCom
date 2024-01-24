@@ -27,6 +27,12 @@ namespace Application.Common.Mapper
 
             CreateMap<ProductCreateDto, Product>();
             CreateMap<Product, ProductDto>().ReverseMap();
+
+            CreateMap<SectionCreateDto, Section>();
+            CreateMap<PricingItemCreateDto,PricingItem>();
+
+            CreateMap<Section,SectionDto>().ReverseMap();
+            CreateMap<PricingItem,PricingItemDto>().ReverseMap();
         }
     }
 }
