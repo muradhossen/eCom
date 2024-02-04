@@ -4,6 +4,7 @@ using Application.ServiceInterface;
 using AutoMapper;
 using Domain.Entities.User;
 using eCom.API.Controllers.Base;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -32,7 +33,7 @@ namespace eCom.API.Controllers
             _mapper = mapper;
             _accountService = accountService;
         }
-
+        [AllowAnonymous]
         [HttpPost("register")]
         public async Task<ActionResult> Register(RegisterDto registerDto)
         {
@@ -64,6 +65,7 @@ namespace eCom.API.Controllers
             return Ok(userDto);
         }
 
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<ActionResult> Login(LoginDto loginDto)
         {

@@ -14,6 +14,7 @@ namespace Application
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<ITokenService, TokenService>();
             services.AddTransient<IAccountService, AccountService>();
+            services.AddTransient<ISearchService, SearchService>();
             return services;
         }
     }

@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Domain.Views;
 
 namespace Infrastructure.Persistance
 {
@@ -23,6 +24,7 @@ namespace Infrastructure.Persistance
         public DbSet<Product> Products { get; set; }
         public DbSet<Section> Sections { get; set; }
         public DbSet<PricingItem> PricingItems { get; set; }
+        public DbSet<VwSearch> VwSearches { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -39,6 +41,10 @@ namespace Infrastructure.Persistance
                 .WithOne(u => u.Role)
                 .HasForeignKey(ur => ur.RoleId)
                 .IsRequired();
+
+            builder.Entity<VwSearch>()
+                .HasNoKey()
+                .ToView("VwSearch");
 
             builder.ApplyUtcDateTimeConverter();
         }
