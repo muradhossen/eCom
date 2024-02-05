@@ -8,20 +8,24 @@ using Domain.Entities;
 using eCom.API.Controllers.Base;
 using Microsoft.AspNetCore.Mvc;
 using Application.Extentions;
+using Application.Common.CurrentUser;
 
 namespace eCom.API.Controllers
 {
- 
+
     public class SubCategoriesController : BaseApiController
     {
         private readonly ISubCategoryService _subCategoryService;
         private readonly IMapper _mapper;
+        private readonly ICurrentUserService _currentUser;
 
         public SubCategoriesController(ISubCategoryService subCategoryService
-            , IMapper mapper)
+            , IMapper mapper
+            , ICurrentUserService currentUser)
         {
             _subCategoryService = subCategoryService;
             _mapper = mapper;
+            _currentUser = currentUser;
         }
 
         [HttpPost]
@@ -123,18 +127,11 @@ namespace eCom.API.Controllers
                 return BadRequest(Result.Failure(CommonError.InvalidRequest));
             }
 
-            var subcategory = await _subCategoryService.GetByIdAsync(id);
+            var result = await _subCategoryService.DeleteSubCategoryWithHierarchy(id, _currentUser.UserId);
 
-            if (subcategory is null)
-            {
-                return NotFound(Result.Failure(SubCategoryError.NotFound));
-            }
+            if(result.IsSuccess) return Ok(result);
 
-            if (await _subCategoryService.RemoveAsync(subcategory))
-            {
-                return Ok(Result.Success());
-            }
-            return BadRequest(Result.Failure(CommonError.UnknownError));
+            return BadRequest(result);
         }
     }
 }
