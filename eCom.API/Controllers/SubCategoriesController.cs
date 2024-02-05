@@ -114,5 +114,27 @@ namespace eCom.API.Controllers
             }
             return BadRequest(Result.Failure(SubCategoryError.UpdateFailed(subCategory.Code)));
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(long id)
+        {
+            if (id <= 0)
+            {
+                return BadRequest(Result.Failure(CommonError.InvalidRequest));
+            }
+
+            var subcategory = await _subCategoryService.GetByIdAsync(id);
+
+            if (subcategory is null)
+            {
+                return NotFound(Result.Failure(SubCategoryError.NotFound));
+            }
+
+            if (await _subCategoryService.RemoveAsync(subcategory))
+            {
+                return Ok(Result.Success());
+            }
+            return BadRequest(Result.Failure(CommonError.UnknownError));
+        }
     }
 }

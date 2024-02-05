@@ -7,6 +7,10 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Domain.Views;
+using Domain.Common;
+using System;
+using Application.Common.CurrentUser;
+using System.Reflection.Emit;
 
 namespace Infrastructure.Persistance
 {
@@ -14,9 +18,13 @@ namespace Infrastructure.Persistance
         IdentityUserClaim<long>, UserRole, IdentityUserLogin<long>,
         IdentityRoleClaim<long>, IdentityUserToken<long>>
     {
-        public ApplicationDbContext(DbContextOptions options) : base(options)
+        private readonly ICurrentUserService _currentUserService;
+
+        public ApplicationDbContext(DbContextOptions options
+            , ICurrentUserService currentUserService) : base(options)
         {
             AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+            _currentUserService = currentUserService;
         }
         public DbSet<Test> Tests { get; set; }
         public DbSet<Category> Categories { get; set; }
@@ -46,8 +54,89 @@ namespace Infrastructure.Persistance
                 .HasNoKey()
                 .ToView("VwSearch");
 
+
+            #region Default query filter
+            builder.Entity<Category>().HasQueryFilter(m => EF.Property<bool>(m, "IsDeleted") == false);
+            builder.Entity<SubCategory>().HasQueryFilter(m => EF.Property<bool>(m, "IsDeleted") == false);
+            builder.Entity<Product>().HasQueryFilter(m => EF.Property<bool>(m, "IsDeleted") == false);
+            
+            #endregion
+
             builder.ApplyUtcDateTimeConverter();
         }
+
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+        {
+            foreach (var entry in ChangeTracker.Entries<IAuditableEntity>())
+            {
+                switch (entry.State)
+                {
+                    case EntityState.Added:
+                        entry.Entity.CreatedById = _currentUserService.UserId;
+                        entry.Entity.CreatedOn = DateTime.UtcNow;
+                        entry.CurrentValues["IsDeleted"] = false;
+                        break;
+                    case EntityState.Modified:
+                        entry.Entity.ModifiedById = _currentUserService.UserId;
+                        entry.Entity.ModifiedOn = DateTime.UtcNow;
+                        entry.CurrentValues["IsDeleted"] = false;
+                        break;
+                    case EntityState.Detached:
+                        break;
+                    case EntityState.Unchanged:
+                        break;
+                    case EntityState.Deleted:
+                        entry.State = EntityState.Modified;
+                        entry.CurrentValues["IsDeleted"] = true;
+                        entry.Entity.DeletedOn = DateTime.UtcNow;
+                        entry.Entity.DeletedById = _currentUserService.UserId;
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+
+            }
+
+
+            return base.SaveChangesAsync(cancellationToken);
+        }
+        public override int SaveChanges()
+        {
+            foreach (var entry in ChangeTracker.Entries<IAuditableEntity>())
+            {
+                switch (entry.State)
+                {
+                    case EntityState.Added:
+                        entry.Entity.CreatedById = _currentUserService.UserId;
+                        entry.Entity.CreatedOn = DateTime.UtcNow;
+                        entry.CurrentValues["IsDeleted"] = false;
+                        break;
+                    case EntityState.Modified:
+                        entry.Entity.ModifiedById = _currentUserService.UserId;
+                        entry.Entity.ModifiedOn = DateTime.UtcNow;
+                        entry.CurrentValues["IsDeleted"] = false;
+                        break;
+                    case EntityState.Detached:
+                        break;
+                    case EntityState.Unchanged:
+                        break;
+                    case EntityState.Deleted:
+                        entry.State = EntityState.Modified;
+                        entry.CurrentValues["IsDeleted"] = true;
+                        entry.Entity.DeletedOn = DateTime.UtcNow;
+                        entry.Entity.DeletedById = _currentUserService.UserId;
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+
+            }
+
+
+            return base.SaveChanges();
+        }
+
+
     }
     public static class UtcDateAnnotation
     {

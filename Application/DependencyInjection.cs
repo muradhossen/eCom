@@ -1,4 +1,5 @@
-﻿using Application.Service;
+﻿using Application.Common.CurrentUser;
+using Application.Service;
 using Application.ServiceInterface;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -15,6 +16,7 @@ namespace Application
             services.AddTransient<ITokenService, TokenService>();
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<ISearchService, SearchService>();
+            services.AddTransient<ICurrentUserService, CurrentUserService>();
             return services;
         }
     }

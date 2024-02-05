@@ -13,4 +13,7 @@ public static class CategoryError
 
     public static readonly Error CreateFailed = new Error(
         "Categories.CreateFailed", "Failed to create category");
+
+    public static readonly Error DeleteFailed = new Error(
+    "Categories.DeleteFailed", "Failed to delete category");
 }

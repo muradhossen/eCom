@@ -120,5 +120,27 @@ namespace eCom.API.Controllers
             }
             return BadRequest(Result.Failure(ProductError.UpdateFailed(product.Code)));
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(long id)
+        {
+            if (id <= 0)
+            {
+                return BadRequest(Result.Failure(CommonError.InvalidRequest));
+            }
+
+            var product = await _productService.GetByIdAsync(id);
+
+            if (product is null)
+            {
+                return NotFound(Result.Failure(ProductError.NotFound));
+            }
+
+            if (await _productService.RemoveAsync(product))
+            {
+                return Ok(Result.Success());
+            }
+            return BadRequest(Result.Failure(CommonError.UnknownError));
+        }
     }
 }

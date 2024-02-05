@@ -7,6 +7,7 @@ using Domain.Entities;
 using eCom.API.Controllers.Base;
 using Microsoft.AspNetCore.Mvc;
 using Application.Extentions;
+using Application.Common.CurrentUser;
 
 namespace eCom.API.Controllers
 {
@@ -14,12 +15,15 @@ namespace eCom.API.Controllers
     {
         private readonly ICategoryService _categoryService;
         private readonly IMapper _mapper;
+        private readonly ICurrentUserService _currentUser;
 
         public CategoriesController(ICategoryService categoryService
-            , IMapper mapper)
+            , IMapper mapper
+            , ICurrentUserService currentUser)
         {
             _categoryService = categoryService;
             _mapper = mapper;
+            _currentUser = currentUser;
         }
         [HttpPost]
         public async Task<IActionResult> CreateCategory([FromBody] CategoryCreateDto dto)
@@ -110,6 +114,23 @@ namespace eCom.API.Controllers
                 return CreatedAtRoute(routeValues, category);
             }
             return BadRequest(Result.Failure(CategoryError.UpdateFailed(category.Code)));
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(long id)
+        {
+            if (id <= 0)
+            {
+                return BadRequest(Result.Failure(CommonError.InvalidRequest));
+            }
+
+            var result = await _categoryService.DeleteWithHierarchyAsync(id, _currentUser.UserId);
+
+            if (result.IsFailure)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
         }
     }
 }
