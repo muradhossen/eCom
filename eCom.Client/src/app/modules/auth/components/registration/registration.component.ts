@@ -44,7 +44,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
   initForm() {
     this.registrationForm = this.fb.group(
       {
-        fullname: [
+        firstName: [
           '',
           Validators.compose([
             Validators.required,
@@ -52,8 +52,25 @@ export class RegistrationComponent implements OnInit, OnDestroy {
             Validators.maxLength(100),
           ]),
         ],
+        lastName: [
+          '',
+          Validators.compose([
+            Validators.required,
+            Validators.minLength(3),
+            Validators.maxLength(100),
+          ]),
+        ],
+        userName: [
+          '',
+          Validators.compose([
+            Validators.required,
+            Validators.minLength(3),
+            Validators.maxLength(15),
+          ]),
+        ],
+        address: [''],
         email: [
-          'qwe@qwe.qwe',
+          '',
           Validators.compose([
             Validators.required,
             Validators.email,
@@ -61,6 +78,21 @@ export class RegistrationComponent implements OnInit, OnDestroy {
             Validators.maxLength(320), // https://stackoverflow.com/questions/386294/what-is-the-maximum-length-of-a-valid-email-address
           ]),
         ],
+        phoneNumber: [
+          '',
+          Validators.compose([
+            Validators.required,   
+            Validators.maxLength(11), 
+          ]),
+        ],
+        gender: [
+          '',
+          Validators.compose([  
+            Validators.maxLength(11), 
+          ]),
+        ],
+        dateOfBirth: [''],
+        photoUrl: [''],
         password: [
           '',
           Validators.compose([

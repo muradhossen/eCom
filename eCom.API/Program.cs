@@ -71,6 +71,14 @@ builder.Services
        .AddApplication()
        .AddPersistence(builder.Configuration);
 
+builder.Services.AddCors(o => o.AddPolicy("CorsPolicy", policyBuilder =>
+{
+    policyBuilder
+    .AllowAnyHeader()
+    .AllowAnyMethod()
+    .AllowCredentials()
+    .WithOrigins("http://localhost:4200");
+}));
 
 var app = builder.Build();
 
@@ -91,6 +99,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("CorsPolicy");
 
 app.UseAuthentication();
 app.UseAuthorization();
