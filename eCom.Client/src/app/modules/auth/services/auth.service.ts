@@ -136,6 +136,10 @@ return this.http.post(`${this.baseUrl}accounts/register`,user).pipe(
     }
   }
 
+  getAuthUser(){
+    return this.http.get<AuthModel>(`${this.baseUrl}user`);    
+  }
+
   ngOnDestroy() {
     this.unsubscribe.forEach((sb) => sb.unsubscribe());
   }

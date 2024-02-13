@@ -1,5 +1,5 @@
 ﻿using Application.DTOs.User;
-using Application.Service;
+using Application.Extentions;
 using Application.ServiceInterface;
 using AutoMapper;
 using Domain.Entities.User;
@@ -7,7 +7,6 @@ using eCom.API.Controllers.Base;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace eCom.API.Controllers
 {
@@ -85,7 +84,12 @@ namespace eCom.API.Controllers
 
             return Ok(userDto);
         }
+        [HttpGet("/api/user")]
+        public async Task<IActionResult> GetAuthUserAsync()
+        {
+            var user = await _accountService.GetUserByUsername(User.GetUserName());
 
-
+            return Ok(_mapper.Map<AuthUserDto>(user));
+        }
     }
 }

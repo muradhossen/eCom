@@ -21,7 +21,7 @@ const Routing: Routes = [
     path: 'crafted/account',
     loadChildren: () =>
       import('../modules/account/account.module').then((m) => m.AccountModule),
-    data: { layout: 'dark-header' },
+    // data: { layout: 'dark-header' },
   },
   {
     path: 'crafted/pages/wizards',

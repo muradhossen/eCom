@@ -13,6 +13,7 @@ import { NotificationsComponent } from './settings/forms/notifications/notificat
 import { SignInMethodComponent } from './settings/forms/sign-in-method/sign-in-method.component';
 import { DropdownMenusModule, WidgetsModule } from '../../_metronic/partials';
 import {SharedModule} from "../../_metronic/shared/shared.module";
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,8 @@ import {SharedModule} from "../../_metronic/shared/shared.module";
     DropdownMenusModule,
     WidgetsModule,
     SharedModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
 })
 export class AccountModule {}
