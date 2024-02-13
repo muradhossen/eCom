@@ -35,11 +35,8 @@ import { SidebarLogoComponent } from './components/sidebar/sidebar-logo/sidebar-
 import { SidebarMenuComponent } from './components/sidebar/sidebar-menu/sidebar-menu.component';
 import { SidebarFooterComponent } from './components/sidebar/sidebar-footer/sidebar-footer.component';
 import { NavbarComponent } from './components/header/navbar/navbar.component';
-import { AccountingComponent } from './components/toolbar/accounting/accounting.component';
 import { ClassicComponent } from './components/toolbar/classic/classic.component';
-import { ExtendedComponent } from './components/toolbar/extended/extended.component';
-import { ReportsComponent } from './components/toolbar/reports/reports.component';
-import { SaasComponent } from './components/toolbar/saas/saas.component';
+ 
 import {SharedModule} from "../shared/shared.module";
 
 const routes: Routes = [
@@ -68,12 +65,8 @@ const routes: Routes = [
     SidebarLogoComponent,
     SidebarMenuComponent,
     SidebarFooterComponent,
-    NavbarComponent,
-    AccountingComponent,
-    ClassicComponent,
-    ExtendedComponent,
-    ReportsComponent,
-    SaasComponent,
+    NavbarComponent, 
+    ClassicComponent, 
   ],
   imports: [
     CommonModule,

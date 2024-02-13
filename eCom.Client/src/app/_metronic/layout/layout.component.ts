@@ -31,7 +31,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
   appHeaderDefaultMinimizeAttributes: { [attrName: string]: string } = {};
   // toolbar
   appToolbarDisplay: boolean;
-  appToolbarLayout: 'classic' | 'accounting' | 'extended' | 'reports' | 'saas';
+  appToolbarLayout: 'classic' ;
   appToolbarCSSClass: string = '';
   appToolbarSwapEnabled: boolean;
   appToolbarSwapAttributes: { [attrName: string]: string } = {};
@@ -310,7 +310,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
     this.appToolbarLayout = this.layout.getProp(
       'app.toolbar.layout',
       config
-    ) as 'classic' | 'accounting' | 'extended' | 'reports' | 'saas';
+    ) as 'classic' ;
     this.appToolbarSwapEnabled = this.layout.getProp(
       'app.toolbar.swap.enabled',
       config

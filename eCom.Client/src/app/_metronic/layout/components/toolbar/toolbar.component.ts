@@ -14,11 +14,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   // Public props
   @Input() currentLayoutType: LayoutType | null;
   @Input() appToolbarLayout:
-    | 'classic'
-    | 'accounting'
-    | 'extended'
-    | 'reports'
-    | 'saas';
+    | 'classic' ;
 
   // toolbar
   appToolbarDisplay: boolean;

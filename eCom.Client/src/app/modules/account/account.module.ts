@@ -2,8 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { AccountRoutingModule } from './account-routing.module';
-import { AccountComponent } from './account.component';
-import { OverviewComponent } from './overview/overview.component';
+import { AccountComponent } from './account.component'; 
 import { SettingsComponent } from './settings/settings.component';
 import { ProfileDetailsComponent } from './settings/forms/profile-details/profile-details.component';
 import { ConnectedAccountsComponent } from './settings/forms/connected-accounts/connected-accounts.component';
@@ -17,8 +16,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
-    AccountComponent,
-    OverviewComponent,
+    AccountComponent, 
     SettingsComponent,
     ProfileDetailsComponent,
     ConnectedAccountsComponent,
