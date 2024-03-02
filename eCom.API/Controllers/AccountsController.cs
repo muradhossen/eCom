@@ -84,12 +84,6 @@ namespace eCom.API.Controllers
 
             return Ok(userDto);
         }
-        [HttpGet("/api/user")]
-        public async Task<IActionResult> GetAuthUserAsync()
-        {
-            var user = await _accountService.GetUserByUsername(User.GetUserName());
 
-            return Ok(_mapper.Map<AuthUserDto>(user));
-        }
     }
 }

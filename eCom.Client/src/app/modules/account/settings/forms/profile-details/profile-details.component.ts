@@ -21,16 +21,21 @@ export class ProfileDetailsComponent implements OnInit, OnDestroy {
     private fb: FormBuilder) {
     const loadingSubscr = this.isLoading$
       .asObservable()
-      .subscribe((res) => (this.isLoading = res));
+      .subscribe((res) => {
+        debugger
+        this.isLoading = res
+      });
     this.unsubscribe.push(loadingSubscr);
   }
 
   ngOnInit(): void {
-    this.initForm();
+
+  //  this.initFormV2();
+   this.initForm();
 
     this.authService.getAuthUser()
       .subscribe(res => {
-        this.user = res;
+        this.user = res; 
         this.assignValueToForm();
       });
 
@@ -40,20 +45,31 @@ export class ProfileDetailsComponent implements OnInit, OnDestroy {
 
   saveSettings() {
     this.isLoading$.next(true);
-    setTimeout(() => {
+
+    const user = new AuthModel(); 
+    user.firstName = this.userForm.get('firstName')?.value;
+    user.lastName = this.userForm.get('lastName')?.value;
+    user.dateOfBirth = this.userForm.get('dateOfBirth')?.value;
+    user.gender = this.userForm.get('gender')?.value;
+    user.address = this.userForm.get('address')?.value;
+    user.email = this.userForm.get('email')?.value;
+    user.phoneNumber = this.userForm.get('phoneNumber')?.value;
+
+    this.authService.updateAuthUser(user).subscribe(res => {
+    debugger
       this.isLoading$.next(false);
-      this.cdr.detectChanges();
-    }, 1500);
+    });
+
   }
 
-  initForm() {
+   initForm() {
     this.userForm = this.fb.group({
       firstName: [
         '',
         Validators.compose([
           Validators.required,
           Validators.minLength(3),
-          Validators.maxLength(320),
+          Validators.maxLength(10),
         ]),
       ],
       lastName: [
@@ -67,7 +83,7 @@ export class ProfileDetailsComponent implements OnInit, OnDestroy {
       gender: [''],
       address: [''],
       userName: [
-        '',
+        '', 
         Validators.compose([
           Validators.required,
           Validators.minLength(3),
@@ -77,7 +93,7 @@ export class ProfileDetailsComponent implements OnInit, OnDestroy {
       email: [
         '',
         Validators.compose([
-          Validators.required,
+          Validators.email,
           Validators.minLength(3),
           Validators.maxLength(320),
         ]),
@@ -92,26 +108,25 @@ export class ProfileDetailsComponent implements OnInit, OnDestroy {
       ],
     });
   }
+ 
 
-  assignValueToForm() { 
-
-    this.userForm.get('firstName')?.setValue(this.user.firstName);
-    this.userForm.get('lastName')?.setValue(this.user.lastName);
-    if (this.user.dateOfBirth) { 
-      const todayFormatted = ConvertDateToFormatedDate(this.user.dateOfBirth); 
-      this.userForm.get('dateOfBirth')?.setValue(todayFormatted);
-    }
-
-
-    this.userForm.get('gender')?.setValue(this.user.gender);
-    this.userForm.get('address')?.setValue(this.user.address);
-    this.userForm.get('userName')?.setValue(this.user.userName);
-    this.userForm.get('email')?.setValue(this.user.email);
-    this.userForm.get('phoneNumber')?.setValue(this.user.phoneNumber);
+  assignValueToForm() {
+    this.userForm.patchValue({
+      firstName: this.user.firstName,
+      lastName: this.user.lastName,
+      userName: this.user.userName,
+      dateOfBirth: ConvertDateToFormatedDate(this.user.dateOfBirth),
+      gender: this.user.gender,
+      address: this.user.address,
+      email: this.user.email,
+      phoneNumber: this.user.phoneNumber
+    });
 
   }
 
   ngOnDestroy() {
+    this.userForm.reset();
+
     this.unsubscribe.forEach((sb) => sb.unsubscribe());
   }
 }

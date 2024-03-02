@@ -33,6 +33,8 @@ namespace Application.Common.Mapper
 
             CreateMap<Section,SectionDto>().ReverseMap();
             CreateMap<PricingItem,PricingItemDto>().ReverseMap();
+
+            CreateMap<AuthUserUpdateDto, AuthUser>();
         }
     }
 }

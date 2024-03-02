@@ -7,6 +7,7 @@ import { AuthHTTPService } from './auth-http';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { Result } from '../models/result';
 
 export type UserType = AuthModel | undefined;
 
@@ -66,6 +67,9 @@ export class AuthService implements OnDestroy {
 
   logout() {
     localStorage.removeItem(this.authLocalStorageToken);
+
+    this.currentUserSubject.next(undefined); 
+   
     this.router.navigate(['/auth/login'], {
       queryParams: {},
     });
@@ -138,6 +142,15 @@ return this.http.post(`${this.baseUrl}accounts/register`,user).pipe(
 
   getAuthUser(){
     return this.http.get<AuthModel>(`${this.baseUrl}user`);    
+  }
+  get UserFromLocalStorage() : AuthModel | undefined { return this.getAuthFromLocalStorage(); }
+
+  updateAuthUser(user : AuthModel){
+    return this.http.put<Result<AuthModel>>(`${this.baseUrl}user`,user)
+    .pipe(map(res => {
+      const result = this.setAuthFromLocalStorage(res.data);
+      return res.data;
+    }));    
   }
 
   ngOnDestroy() {

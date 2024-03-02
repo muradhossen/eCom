@@ -7,8 +7,7 @@ import { LoginComponent } from './components/login/login.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { LogoutComponent } from './components/logout/logout.component';
-import { AuthComponent } from './auth.component';
-import { TranslationModule } from '../i18n/translation.module';  
+import { AuthComponent } from './auth.component'; 
 import { JwtInterceptor } from './services/jwt.interceptor';
 
 @NgModule({
@@ -20,8 +19,7 @@ import { JwtInterceptor } from './services/jwt.interceptor';
     AuthComponent,
   ],
   imports: [
-    CommonModule,
-    TranslationModule,
+    CommonModule, 
     AuthRoutingModule,
     FormsModule,
     ReactiveFormsModule,

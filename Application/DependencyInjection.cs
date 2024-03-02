@@ -17,6 +17,8 @@ namespace Application
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<ISearchService, SearchService>();
             services.AddTransient<ICurrentUserService, CurrentUserService>();
+            services.AddTransient<IUserService, UserService>();
+
             return services;
         }
     }

@@ -7,8 +7,7 @@ import {
   NgbProgressbarModule,
   NgbTooltipModule,
 } from '@ng-bootstrap/ng-bootstrap';
-import { TranslateModule } from '@ngx-translate/core';
-import { TranslationModule } from '../../modules/i18n';
+import { TranslateModule } from '@ngx-translate/core'; 
 import { LayoutComponent } from './layout.component';
 import { ExtrasModule } from '../partials/layout/extras/extras.module';
 import { Routing } from '../../pages/routing';
@@ -22,13 +21,10 @@ import { AsideMenuComponent } from './components/aside/aside-menu/aside-menu.com
 import { TopbarComponent } from './components/topbar/topbar.component';
 import { PageTitleComponent } from './components/header/page-title/page-title.component';
 import { HeaderMenuComponent } from './components/header/header-menu/header-menu.component';
-import {
-  DrawersModule,
-  DropdownMenusModule,
-  ModalsModule,
-  EngagesModule,
-} from '../partials';
-import { EngagesComponent } from '../partials/layout/engages/engages.component';
+import { 
+ 
+  ModalsModule, 
+} from '../partials'; 
 import { ThemeModeModule } from '../partials/layout/theme-mode-switcher/theme-mode.module';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { SidebarLogoComponent } from './components/sidebar/sidebar-logo/sidebar-logo.component';
@@ -38,6 +34,7 @@ import { NavbarComponent } from './components/header/navbar/navbar.component';
 import { ClassicComponent } from './components/toolbar/classic/classic.component';
  
 import {SharedModule} from "../shared/shared.module";
+import { UserDropdownComponent } from '../partials/layout/user-dropdown/user-dropdown.component';
 
 const routes: Routes = [
   {
@@ -59,27 +56,23 @@ const routes: Routes = [
     AsideMenuComponent,
     TopbarComponent,
     PageTitleComponent,
-    HeaderMenuComponent,
-    EngagesComponent,
+    HeaderMenuComponent, 
     SidebarComponent,
     SidebarLogoComponent,
     SidebarMenuComponent,
     SidebarFooterComponent,
     NavbarComponent, 
     ClassicComponent, 
+    UserDropdownComponent
   ],
   imports: [
     CommonModule,
-    RouterModule.forChild(routes),
-    TranslationModule,
+    RouterModule.forChild(routes), 
     InlineSVGModule,
     NgbDropdownModule,
     NgbProgressbarModule,
     ExtrasModule,
-    ModalsModule,
-    DrawersModule,
-    EngagesModule,
-    DropdownMenusModule,
+    ModalsModule,  
     NgbTooltipModule,
     TranslateModule,
     ThemeModeModule,

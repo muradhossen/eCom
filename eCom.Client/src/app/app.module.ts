@@ -13,7 +13,12 @@ import { AuthService } from './modules/auth/services/auth.service';
 import { environment } from 'src/environments/environment';
 // #fake-start#
 import { FakeAPIService } from './_fake/fake-api.service';
-import { JwtInterceptor } from './modules/auth/services/jwt.interceptor';
+import { JwtInterceptor } from './modules/auth/services/jwt.interceptor'; 
+import { registerLocaleData } from '@angular/common';
+import en from '@angular/common/locales/en';
+import { FormsModule } from '@angular/forms';
+
+registerLocaleData(en);
 // #fake-end#
 
 function appInitializer(authService: AuthService) {
@@ -44,6 +49,7 @@ function appInitializer(authService: AuthService) {
     AppRoutingModule,
     InlineSVGModule.forRoot(),
     NgbModule,
+    FormsModule,
   ],
   providers: [
     {
@@ -52,7 +58,8 @@ function appInitializer(authService: AuthService) {
       multi: true,
       deps: [AuthService],
     },
-    {provide : HTTP_INTERCEPTORS, useClass : JwtInterceptor,multi : true}
+    {provide : HTTP_INTERCEPTORS, useClass : JwtInterceptor,multi : true},
+    
   ],
   bootstrap: [AppComponent],
 })
