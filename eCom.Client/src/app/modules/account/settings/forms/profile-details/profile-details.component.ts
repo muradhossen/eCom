@@ -22,20 +22,22 @@ export class ProfileDetailsComponent implements OnInit, OnDestroy {
     const loadingSubscr = this.isLoading$
       .asObservable()
       .subscribe((res) => {
-        debugger
+     
         this.isLoading = res
+       
       });
     this.unsubscribe.push(loadingSubscr);
+    
   }
 
   ngOnInit(): void {
 
-  //  this.initFormV2();
-   this.initForm();
+    //  this.initFormV2();
+    this.initForm();
 
     this.authService.getAuthUser()
       .subscribe(res => {
-        this.user = res; 
+        this.user = res;
         this.assignValueToForm();
       });
 
@@ -44,9 +46,9 @@ export class ProfileDetailsComponent implements OnInit, OnDestroy {
   }
 
   saveSettings() {
-    this.isLoading$.next(true);
+    this.isLoading = true;
 
-    const user = new AuthModel(); 
+    const user = new AuthModel();
     user.firstName = this.userForm.get('firstName')?.value;
     user.lastName = this.userForm.get('lastName')?.value;
     user.dateOfBirth = this.userForm.get('dateOfBirth')?.value;
@@ -55,14 +57,19 @@ export class ProfileDetailsComponent implements OnInit, OnDestroy {
     user.email = this.userForm.get('email')?.value;
     user.phoneNumber = this.userForm.get('phoneNumber')?.value;
 
-    this.authService.updateAuthUser(user).subscribe(res => {
-    debugger
-      this.isLoading$.next(false);
-    });
+    this.authService.updateAuthUser(user).subscribe(
+      {
+        next: (res) => { 
+        }, 
+        complete: () => {
+          this.isLoading$.next(false);
+          this.cdr.detectChanges();
+        }
+      });
 
   }
 
-   initForm() {
+  initForm() {
     this.userForm = this.fb.group({
       firstName: [
         '',
@@ -83,7 +90,7 @@ export class ProfileDetailsComponent implements OnInit, OnDestroy {
       gender: [''],
       address: [''],
       userName: [
-        '', 
+        '',
         Validators.compose([
           Validators.required,
           Validators.minLength(3),
@@ -108,7 +115,7 @@ export class ProfileDetailsComponent implements OnInit, OnDestroy {
       ],
     });
   }
- 
+
 
   assignValueToForm() {
     this.userForm.patchValue({
