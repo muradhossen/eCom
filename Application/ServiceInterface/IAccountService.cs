@@ -1,4 +1,5 @@
-﻿using Domain.Entities.User;
+﻿using Application.DTOs.User;
+using Domain.Entities.User;
 
 namespace Application.ServiceInterface;
 

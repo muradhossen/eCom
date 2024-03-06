@@ -2,6 +2,7 @@
 using Application.DTOs.User;
 using Application.Errors;
 using Application.Extentions;
+using Application.Service;
 using Application.ServiceInterface;
 using AutoMapper;
 using eCom.API.Controllers.Base;
@@ -15,14 +16,17 @@ namespace eCom.API.Controllers
         private readonly IAccountService _accountService;
         private readonly IMapper _mapper;
         private readonly IUserService _userService;
+        private readonly IPhotoService _photoService;
 
         public UserController(IAccountService accountService
             , IMapper mapper
-            , IUserService userService)
+            , IUserService userService
+            , IPhotoService photoService)
         {
             _accountService = accountService;
             _mapper = mapper;
             _userService = userService;
+            _photoService = photoService;
         }
 
         [HttpGet]
@@ -34,7 +38,7 @@ namespace eCom.API.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateUser([FromBody] AuthUserUpdateDto userDto)
+        public async Task<IActionResult> UpdateUser([FromForm] AuthUserUpdateDto userDto)
         {
             var user = _userService
                 .Get(c => c.UserName == User.GetUserName())
@@ -44,7 +48,19 @@ namespace eCom.API.Controllers
             {
                 return BadRequest(Result.Failure(UserError.NotFound));
             }
+            var photoUploadResult = await _photoService.AddPhotoAsync(userDto.Photo);
+
+            if (photoUploadResult.Error != null)
+            {
+                return BadRequest(Result.Failure(UserError.ImageUploadFailed));
+            }
+
             _mapper.Map(userDto, user);
+            if (photoUploadResult.SecureUrl != null)
+            {
+                user.PhotoUrl = photoUploadResult.SecureUrl.AbsoluteUri;
+                user.PhotoPublicId = photoUploadResult.PublicId;
+            }
 
             var isUpdate = await _userService.UpdateAsync(user);
             if (isUpdate)

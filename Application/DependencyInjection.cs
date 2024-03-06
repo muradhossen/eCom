@@ -1,6 +1,6 @@
-﻿using Application.Common.CurrentUser;
+﻿using Application.Common.CurrentUser; 
 using Application.Service;
-using Application.ServiceInterface;
+using Application.ServiceInterface; 
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Application
@@ -18,7 +18,7 @@ namespace Application
             services.AddTransient<ISearchService, SearchService>();
             services.AddTransient<ICurrentUserService, CurrentUserService>();
             services.AddTransient<IUserService, UserService>();
-
+            services.AddTransient<IPhotoService, PhotoService>();
             return services;
         }
     }

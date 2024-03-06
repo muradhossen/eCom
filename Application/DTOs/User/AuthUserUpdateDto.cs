@@ -1,4 +1,6 @@
-﻿namespace Application.DTOs.User
+﻿using Microsoft.AspNetCore.Http;
+
+namespace Application.DTOs.User
 {
     public class AuthUserUpdateDto
     {
@@ -10,5 +12,6 @@
         public string Email { get; set; }
         public string PhoneNumber { get; set; } 
         public string PhotoUrl { get; set; }
+        public IFormFile Photo { get; set; }
     }
 }

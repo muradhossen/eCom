@@ -8,6 +8,7 @@ import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Result } from '../models/result';
+import { userToFormData } from 'src/app/_helpers/mapper';
 
 export type UserType = AuthModel | undefined;
 
@@ -38,7 +39,7 @@ export class AuthService implements OnDestroy {
   constructor(
     private authHttpService: AuthHTTPService,
     private router: Router,
-    private http : HttpClient
+    private http: HttpClient
   ) {
     this.isLoadingSubject = new BehaviorSubject<boolean>(false);
     this.currentUserSubject = new BehaviorSubject<UserType>(undefined);
@@ -50,26 +51,26 @@ export class AuthService implements OnDestroy {
 
   // public methods
   login(userName: string, password: string): Observable<UserType> {
-    this.isLoadingSubject.next(true);  
+    this.isLoadingSubject.next(true);
 
-  return  this.http.post<AuthModel>(`${this.baseUrl}Accounts/login`,{UserName : userName, Password : password })
-    .pipe(map(auth => {
-      const result = this.setAuthFromLocalStorage(auth);
-      return result;
-    }),
-    switchMap(() => this.getUserByToken()),
-    catchError((err) => {
-      console.error('err', err);
-      return of(undefined);
-    }),
-    finalize(() => this.isLoadingSubject.next(false)));
+    return this.http.post<AuthModel>(`${this.baseUrl}Accounts/login`, { UserName: userName, Password: password })
+      .pipe(map(auth => {
+        const result = this.setAuthFromLocalStorage(auth);
+        return result;
+      }),
+        switchMap(() => this.getUserByToken()),
+        catchError((err) => {
+          console.error('err', err);
+          return of(undefined);
+        }),
+        finalize(() => this.isLoadingSubject.next(false)));
   }
 
   logout() {
     localStorage.removeItem(this.authLocalStorageToken);
 
-    this.currentUserSubject.next(undefined); 
-   
+    this.currentUserSubject.next(undefined);
+
     this.router.navigate(['/auth/login'], {
       queryParams: {},
     });
@@ -79,32 +80,32 @@ export class AuthService implements OnDestroy {
     const auth = this.getAuthFromLocalStorage();
     if (!auth || !auth.token) {
       return of(undefined);
-    } 
-    
+    }
+
     if (auth) {
       this.currentUserSubject.next(auth);
     } else {
       this.logout();
     }
-    return of(auth); 
+    return of(auth);
   }
 
   // need create new user then login
   registration(user: UserModel): Observable<any> {
     this.isLoadingSubject.next(true);
-  
 
-return this.http.post(`${this.baseUrl}accounts/register`,user).pipe(
-    map(() => {
-      this.isLoadingSubject.next(false);
-    }),
-    switchMap(() => this.login(user.userName, user.password)),
-    catchError((err) => {
-      console.error('err', err);
-      return of(undefined);
-    }),
-    finalize(() => this.isLoadingSubject.next(false))
-  );
+
+    return this.http.post(`${this.baseUrl}accounts/register`, user).pipe(
+      map(() => {
+        this.isLoadingSubject.next(false);
+      }),
+      switchMap(() => this.login(user.userName, user.password)),
+      catchError((err) => {
+        console.error('err', err);
+        return of(undefined);
+      }),
+      finalize(() => this.isLoadingSubject.next(false))
+    );
 
   }
 
@@ -140,17 +141,20 @@ return this.http.post(`${this.baseUrl}accounts/register`,user).pipe(
     }
   }
 
-  getAuthUser(){
-    return this.http.get<AuthModel>(`${this.baseUrl}user`);    
+  getAuthUser() {
+    return this.http.get<AuthModel>(`${this.baseUrl}user`);
   }
-  get UserFromLocalStorage() : AuthModel | undefined { return this.getAuthFromLocalStorage(); }
+  get UserFromLocalStorage(): AuthModel | undefined { return this.getAuthFromLocalStorage(); }
 
-  updateAuthUser(user : AuthModel){
-    return this.http.put<Result<AuthModel>>(`${this.baseUrl}user`,user)
-    .pipe(map(res => {
-      const result = this.setAuthFromLocalStorage(res.data);
-      return res.data;
-    }));    
+ 
+  updateAuthUser(user: UserType) { 
+
+    return this.http.put<Result<AuthModel>>(`${this.baseUrl}user`, userToFormData(user as AuthModel))
+      .pipe(map(res => {
+        debugger
+        const result = this.setAuthFromLocalStorage(res.data);
+        return res.data;
+      }));
   }
 
   ngOnDestroy() {

@@ -8,6 +8,7 @@ import { AuthModel } from 'src/app/modules/auth/models/auth.model';
 @Component({
   selector: 'app-profile-details',
   templateUrl: './profile-details.component.html',
+  styleUrls: ['./profile-details.component.css']
 })
 export class ProfileDetailsComponent implements OnInit, OnDestroy {
   isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
@@ -15,6 +16,9 @@ export class ProfileDetailsComponent implements OnInit, OnDestroy {
   private unsubscribe: Subscription[] = [];
   user: AuthModel = new AuthModel();
   userForm: FormGroup;
+  userPhoto: File;
+
+  userProfilePhotoUrl = "./assets/media/avatars/blank.png"//"./assets/media/avatars/300-1.jpg"
 
   constructor(private cdr: ChangeDetectorRef,
     private authService: AuthService,
@@ -22,27 +26,39 @@ export class ProfileDetailsComponent implements OnInit, OnDestroy {
     const loadingSubscr = this.isLoading$
       .asObservable()
       .subscribe((res) => {
-     
+
         this.isLoading = res
-       
+
       });
     this.unsubscribe.push(loadingSubscr);
-    
+
   }
 
   ngOnInit(): void {
-
-    //  this.initFormV2();
+ 
     this.initForm();
 
     this.authService.getAuthUser()
       .subscribe(res => {
-        this.user = res;
-        this.assignValueToForm();
-      });
+        this.setUser(res);
+      }); 
+  }
 
-
-
+  setUser(user : AuthModel){
+    this.user = user;
+    if (this.user.photoUrl) {
+      this.userProfilePhotoUrl = this.user.photoUrl;
+    }
+    this.cdr.detectChanges()
+    this.assignValueToForm();
+  }
+  // Method to handle file selection
+  onFileSelected(event: any) {
+    debugger
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.userPhoto = file;
+    }
   }
 
   saveSettings() {
@@ -56,11 +72,15 @@ export class ProfileDetailsComponent implements OnInit, OnDestroy {
     user.address = this.userForm.get('address')?.value;
     user.email = this.userForm.get('email')?.value;
     user.phoneNumber = this.userForm.get('phoneNumber')?.value;
+    user.photo = this.userPhoto;
 
     this.authService.updateAuthUser(user).subscribe(
       {
-        next: (res) => { 
-        }, 
+        next: (res) => {
+          debugger
+          this.setUser(res);
+         },
+        error: error => this.isLoading$.next(false),
         complete: () => {
           this.isLoading$.next(false);
           this.cdr.detectChanges();
@@ -113,6 +133,7 @@ export class ProfileDetailsComponent implements OnInit, OnDestroy {
           Validators.maxLength(11),
         ]),
       ],
+      photo: ['']
     });
   }
 

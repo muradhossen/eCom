@@ -6,17 +6,31 @@
     </div>
   </div>
   <div id="kt_account_profile_details" class="collapse show">
+
+
+
+
     <form novalidate="" class="form" [formGroup]="userForm">
       <div class="card-body border-top p-9">
         <div class="row mb-6">
           <label class="col-lg-4 col-form-label fw-bold fs-6">Avatar</label>
           <div class="col-lg-8">
             <div class="image-input image-input-outline" data-kt-image-input="true"
-              [style.background-image]="'url(./assets/media/avatars/blank.png'">
-              <div class="image-input-wrapper w-125px h-125px" [style.background-image]="
-                  'url(./assets/media/avatars/300-1.jpg'
-                "></div>
+              [style.background-image]="'url(./assets/media/avatars/blank.png)'">
+              <!-- <div class="image-input-wrapper w-125px h-125px" [style.background-image]="photoUrl">
+
+                
+              </div> -->
+              <img [src]="userProfilePhotoUrl" alt="User image" class="image-input-wrapper w-125px h-125px">
+              <!-- Photo upload : Begine -->
+              <label for="file-upload" class="file-upload">
+                <i class="bi bi-pencil-fill"></i>
+              </label>
+              <input type="file" id="file-upload" name="photo" formControlName="photo"
+                (change)="onFileSelected($event)">
+              <!-- Photo upload : End -->
             </div>
+
           </div>
         </div>
         <div class="row mb-6">
@@ -25,14 +39,12 @@
             <div class="row">
               <!-- First name start -->
               <div class="col-lg-6 fv-row">
-               
-                  <div class="col-md"> 
-                      <input type="email" 
-                      class="form-control"  
-                      name="firstName" formControlName="firstName"
-                      autocomplete="off" [ngClass]="{'is-invalid': userForm.controls['firstName'].invalid && userForm.get('firstName')?.touched}"
-                       > 
-                  </div> 
+
+                <div class="col-md">
+                  <input type="email" class="form-control" name="firstName" formControlName="firstName"
+                    autocomplete="off"
+                    [ngClass]="{'is-invalid': userForm.controls['firstName'].invalid && userForm.get('firstName')?.touched}">
+                </div>
 
                 <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{ 
                           validation: 'required',
@@ -79,37 +91,23 @@
                 }" />
           </div>
         </div>
-      <!-- Date of birth -->
+        <!-- Date of birth -->
 
-      <!-- Gender -->
+        <!-- Gender -->
         <div class="row mb-6">
           <label class="col-lg-4 col-form-label fw-bold fs-6">Gender</label>
           <div class="col-lg-8 fv-row">
 
-            <!-- <input class="form-control form-control-lg form-control-solid" name="gender" formControlName="gender"
-              autocomplete="off" [ngClass]="{
-                'is-invalid': userForm.controls['gender'].invalid,
-                'is-valid': userForm.controls['gender'].valid
-              }" /> -->
-
-              <label for="male" class="me-5">
-                <input type="radio" 
-                class="form-check-input"
-                 name="gender"
-                 formControlName="gender"
-                  value="Male"
-                  id="male">
-                Male
-              </label> 
+            <label for="male" class="me-5">
+              <input type="radio" class="form-check-input" name="gender" formControlName="gender" value="Male"
+                id="male">
+              Male
+            </label>
 
             <label for="female">
-              <input type="radio" 
-              class="form-check-input"
-               name="gender"
-               formControlName="gender"
-                value="Female"
+              <input type="radio" class="form-check-input" name="gender" formControlName="gender" value="Female"
                 id="female">
-                Female 
+              Female
             </label>
 
           </div>
@@ -120,8 +118,8 @@
         <div class="row mb-6">
           <label class="col-lg-4 col-form-label fw-bold fs-6">Address</label>
           <div class="col-lg-8 fv-row">
-            <textarea  class="form-control form-control-lg" name="address" formControlName="address"
-              autocomplete="off" [ngClass]="{
+            <textarea class="form-control form-control-lg" name="address" formControlName="address" autocomplete="off"
+              [ngClass]="{
                               'is-invalid': userForm.controls['address'].invalid 
                             }" rows="3"></textarea>
           </div>
@@ -132,14 +130,9 @@
         <div class="row mb-6">
           <label class="col-lg-4 col-form-label required fw-bold fs-6">Username</label>
           <div class="col-lg-8 fv-row">
-            
-            <input  
-            class="form-control form-control-lg"
-             name="userName"
-             formControlName="userName"
-             autocomplete="off"           
-             [ngClass]="{'is-invalid': userForm.controls['userName'].invalid && userForm.get('userName')?.touched }" 
-             />
+
+            <input class="form-control form-control-lg" name="userName" formControlName="userName" autocomplete="off"
+              [ngClass]="{'is-invalid': userForm.controls['userName'].invalid && userForm.get('userName')?.touched }" />
 
             <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
   validation: 'required',
@@ -162,15 +155,15 @@ control: userForm.controls['userName']
 
           </div>
         </div>
-      <!-- Username -->
+        <!-- Username -->
 
-      <!-- Emial -->
+        <!-- Emial -->
         <div class="row mb-6">
           <label class="col-lg-4 col-form-label fw-bold fs-6">Email</label>
           <div class="col-lg-8 fv-row">
 
-            <input type="email" class="form-control form-control-lg" name="email"
-              formControlName="email" autocomplete="off" [ngClass]="{
+            <input type="email" class="form-control form-control-lg" name="email" formControlName="email"
+              autocomplete="off" [ngClass]="{
               'is-invalid': userForm.controls['email'].invalid 
             }" />
 
@@ -188,14 +181,14 @@ control: userForm.controls['userName']
             }"></ng-container>
           </div>
         </div>
-      <!-- Emial -->    
-      
-      <!-- Phone Number -->
+        <!-- Emial -->
+
+        <!-- Phone Number -->
         <div class="row mb-6">
           <label class="col-lg-4 col-form-label required fw-bold fs-6">Phone Number</label>
           <div class="col-lg-8 fv-row">
-            <input class="form-control form-control-lg" name="phoneNumber"
-              formControlName="phoneNumber" autocomplete="off" [ngClass]="{
+            <input class="form-control form-control-lg" name="phoneNumber" formControlName="phoneNumber"
+              autocomplete="off" [ngClass]="{
                                                   'is-invalid': userForm.controls['phoneNumber'].invalid && userForm.get('phoneNumber')?.touched
                                                 }" />
 
@@ -219,8 +212,8 @@ control: userForm.controls['userName']
                           }"></ng-container>
           </div>
         </div>
-      <!-- Phone Number --> 
-      
+        <!-- Phone Number -->
+
       </div>
       <div class="card-footer d-flex justify-content-end py-6 px-9">
         <button type="button" class="btn btn-primary" [disabled]="isLoading" (click)="saveSettings()">

@@ -16,7 +16,7 @@ export class AuthModel {
   phoneNumber: string;
   password: string;
   photoUrl: string;
-
+  photo : File;
 
   setAuth(auth: AuthModel) {
     this.authToken = auth.authToken;

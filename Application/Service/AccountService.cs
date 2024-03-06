@@ -1,5 +1,6 @@
 ﻿using Application.DTOs.User;
 using Application.ServiceInterface;
+using AutoMapper;
 using Domain.Entities.User;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -9,10 +10,13 @@ namespace Application.Service;
 public class AccountService : IAccountService
 {
     private readonly UserManager<AuthUser> _userManager;
+    private readonly IMapper _mapper;
 
-    public AccountService(UserManager<AuthUser> userManager)
+    public AccountService(UserManager<AuthUser> userManager
+        , IMapper mapper)
     {
         _userManager = userManager;
+        _mapper = mapper;
     }
     public async Task<bool> IsUserExist(string userName)
     {
@@ -26,5 +30,6 @@ public class AccountService : IAccountService
                     .Users
                     .SingleOrDefaultAsync(c => c.UserName.ToLower() == username.ToLower());
 
+ 
     }
 }

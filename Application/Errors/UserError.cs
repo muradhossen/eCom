@@ -10,4 +10,7 @@ public static class UserError
     public static Error UpdateFailed(string username) => new Error(
         "User.UpdateFailed", $"Failed to update user {username}");
 
+    public static readonly Error ImageUploadFailed = new Error(
+    "User.PhotoUploadFailed", "Failed to save photo!");
+
 }

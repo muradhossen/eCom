@@ -1,14 +1,14 @@
 using Application;
 using Application.Common;
 using Application.Common.Mapper;
+using Application.DTOs;
 using Application.Middleware;
 using Domain.Entities.User;
 using Infrastructure;
 using Infrastructure.Persistance;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore; 
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
@@ -18,6 +18,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
 
 builder.Services.AddSwaggerGen(option =>
 {
