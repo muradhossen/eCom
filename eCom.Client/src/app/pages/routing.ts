@@ -12,7 +12,12 @@ const Routing: Routes = [
       import('../modules/account/account.module').then((m) => m.AccountModule),
     // data: { layout: 'dark-header' },
   },
- 
+  {
+    path: 'manage/categories',
+    loadChildren: () =>
+      import('../modules/apps/category/category.module').then((m) => m.CategoryModule),
+     
+  },
  
   {
     path: '',
