@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CreateButtonSetting, PageInfoService } from 'src/app/_metronic/layout';
 
 @Component({
   selector: 'app-category',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CategoryComponent implements OnInit {
 
-  constructor() { }
+  constructor(private pageInfoService : PageInfoService) { }
 
   ngOnInit() {
+    this.pageInfoService.setToolbarCreateBtnSettings(new CreateButtonSetting('/manage/categories/create',true));
   }
 
 }

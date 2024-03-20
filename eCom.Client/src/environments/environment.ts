@@ -4,7 +4,7 @@
 
 export const environment = {
 baseUrl : "http://localhost:5051/api/",
-
+defaultItemImagePath : "./assets/media/avatars/blank.png",
 
 
 

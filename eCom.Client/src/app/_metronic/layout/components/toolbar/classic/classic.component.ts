@@ -1,6 +1,8 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { LayoutService } from '../../../core/layout.service';
+import { CreateButtonSetting, PageInfoService } from '../../../core/page-info.service';
+import { ManuEnum } from '../../../manu';
 
 @Component({
   selector: 'app-classic',
@@ -24,7 +26,12 @@ export class ClassicComponent implements OnInit, OnDestroy {
   filterButtonClass: string = '';
   daterangepickerButtonClass: string = '';
 
-  constructor(private layout: LayoutService) {}
+  navigation = "/dashboard";
+
+  createBtnSettings : CreateButtonSetting;
+
+  constructor(private layout: LayoutService,
+    private pageInfo: PageInfoService) { }
 
   ngOnInit(): void {
     this.updateProps();
@@ -34,8 +41,16 @@ export class ClassicComponent implements OnInit, OnDestroy {
         this.updateProps();
       });
     this.unsubscribe.push(subscr);
+
+
+    this.pageInfo.createButtonSetting.subscribe(setting => {
+ 
+      this.createBtnSettings = setting;
+
+    });
   }
 
+  
   updateProps() {
     this.appToolbarPrimaryButton = this.layout.getProp(
       'app.toolbar.primaryButton'
@@ -81,6 +96,8 @@ export class ClassicComponent implements OnInit, OnDestroy {
       ? 'btn-light'
       : 'bg-body btn-color-gray-700 btn-active-color-primary';
   }
+
+ 
 
   ngOnDestroy() {
     this.unsubscribe.forEach((sb) => sb.unsubscribe());

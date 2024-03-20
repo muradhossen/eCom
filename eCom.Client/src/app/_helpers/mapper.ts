@@ -1,6 +1,7 @@
+import { Category } from "../modules/apps/models/category";
 import { AuthModel } from "../modules/auth/models/auth.model";
 
-export function userToFormData( user : AuthModel){
+export function userToFormData(user: AuthModel) {
 
     const formData = new FormData();
     formData.append('firstName', user.firstName);
@@ -13,5 +14,20 @@ export function userToFormData( user : AuthModel){
     formData.append('email', user.email);
     formData.append('photo', user.photo);
 
+    return formData;
+}
+
+
+export function categoryToFormData(category: Category) {
+
+    const formData = new FormData();
+    formData.append('name', category.name);
+    if (category.description) {
+        formData.append('description', category.description);
+    }
+    if (category.code) {
+        formData.append('code', category.code);
+    }
+    formData.append('image', category.image);
     return formData;
 }

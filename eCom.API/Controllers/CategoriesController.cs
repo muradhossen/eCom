@@ -16,27 +16,38 @@ namespace eCom.API.Controllers
         private readonly ICategoryService _categoryService;
         private readonly IMapper _mapper;
         private readonly ICurrentUserService _currentUser;
+        private readonly IPhotoService _photoService;
 
         public CategoriesController(ICategoryService categoryService
             , IMapper mapper
-            , ICurrentUserService currentUser)
+            , ICurrentUserService currentUser
+            , IPhotoService photoService)
         {
             _categoryService = categoryService;
             _mapper = mapper;
             _currentUser = currentUser;
+            _photoService = photoService;
         }
         [HttpPost]
-        public async Task<IActionResult> CreateCategory([FromBody] CategoryCreateDto dto)
+        public async Task<IActionResult> CreateCategory([FromForm] CategoryCreateDto dto)
         {
             if (dto is null)
             {
                 return BadRequest(Result.Failure(CommonError.InvalidRequest));
-            }
-            var category = _mapper.Map<Category>(dto);
-            category.CreatedById = 1;
-            category.CreatedOn = DateTime.UtcNow;
-            category.Code = new Random().Next(1,100).ToString();
+            } 
 
+            var photoUploadResult = await _photoService.AddPhotoAsync(dto.Image);
+            if (photoUploadResult.Error != null)
+            {
+                return BadRequest(Result.Failure(CategoryError.ImageUploadFailed));
+            }
+
+            var category = _mapper.Map<Category>(dto);
+            if (photoUploadResult.SecureUrl != null)
+            {
+                category.ImageUrl = photoUploadResult.SecureUrl.AbsoluteUri;
+                category.PhotoPublicId = photoUploadResult.PublicId;
+            }
 
             if (await _categoryService.AddAsync(category))
             {
@@ -47,7 +58,7 @@ namespace eCom.API.Controllers
                     id = category.Id,
                     
                 };
-                return CreatedAtRoute(routeValues, category);
+                return CreatedAtRoute(routeValues, Result.Success(category));
             }
             return BadRequest(Result.Failure(CategoryError.CreateFailed));
         }
@@ -61,7 +72,10 @@ namespace eCom.API.Controllers
                 return NotFound(Result.Failure(CategoryError.NotFound));
             }
             Response.AddPaginationHeader(categories.CurrentPage, categories.PageSize, categories.TotalCount, categories.TotalPage);
-            return Ok(_mapper.Map<List<CategoryDto>>(categories));
+
+          var result =  _mapper.Map<List<CategoryDto>>(categories).SetSlNumber(categories.CurrentPage,categories.PageSize);
+             
+            return Ok(result);
         }
 
         [HttpGet("{id}")]
@@ -79,15 +93,15 @@ namespace eCom.API.Controllers
                 return NotFound(Result.Failure(CategoryError.NotFound));
             }
 
-            return Ok(_mapper.Map<CategoryDto>(category));
+            return Ok(Result.Success(_mapper.Map<CategoryDto>(category)));
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateCategoryById(long id, [FromBody] CategoryDto dto)
+        public async Task<IActionResult> UpdateCategoryById(long id, [FromForm] CategoryDto dto)
         {
             if (id <= 0 || dto is null)
             {
-                return BadRequest("Invalid request!");
+                return BadRequest(Result.Failure(CommonError.InvalidRequest));
             }
 
             var category = await _categoryService.GetByIdAsync(id);
@@ -97,9 +111,20 @@ namespace eCom.API.Controllers
               return NotFound(Result.Failure(CategoryError.NotFound));
             }
 
+            var photoUploadResult = await _photoService.AddPhotoAsync(dto.Image);
+            if (photoUploadResult.Error != null)
+            {
+                return BadRequest(Result.Failure(CategoryError.ImageUploadFailed));
+            }
+
             _mapper.Map(dto,category,opt=> opt.AfterMap((src, des) =>
             {
-                des.Id = id; 
+                des.Id = id;
+                if (photoUploadResult.SecureUrl != null)
+                {
+                    category.ImageUrl = photoUploadResult.SecureUrl.AbsoluteUri;
+                    category.PhotoPublicId = photoUploadResult.PublicId;
+                }
             }));
 
             if(await _categoryService.UpdateAsync(category))

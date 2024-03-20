@@ -233,8 +233,7 @@ control: userForm.controls['userName']
 
 
 </div>
-
-<div>Is loading : {{isLoading}}</div>
+ 
 
 <ng-template #formError let-control="control" let-message="message" let-validation="validation">
   <ng-container *ngIf="control.hasError(validation) && (control.dirty || control.touched)">

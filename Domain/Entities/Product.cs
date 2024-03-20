@@ -13,6 +13,8 @@ public class Product : AuditableWithBaseEntity<long>
     [MaxLength(55, ErrorMessage = $"The {nameof(Name)} field cannot exceed 55 characters.")]
     public string Name { get; set; }
     public string ImageUrl { get; set; }
+    public string PhotoPublicId { get; set; }
+
     [MaxLength(1000, ErrorMessage = $"The {nameof(Description)} field cannot exceed 1000 characters.")]
     public string Description { get; set; }
     [MaxLength(1000, ErrorMessage = $"The {nameof(Details)} field cannot exceed 1000 characters.")]

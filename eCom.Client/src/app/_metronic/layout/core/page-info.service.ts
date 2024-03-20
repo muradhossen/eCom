@@ -13,6 +13,18 @@ export class PageInfo {
   title: string = '';
 }
 
+export class CreateButtonSetting{
+  name : string;
+  route : string;
+  isVisible : boolean;
+ 
+  constructor(btnRoute : string,isVisible : boolean = false,btnName : string = 'Create') {
+   this.name = btnName;
+   this.route = btnRoute;
+   this.isVisible = isVisible;
+  }
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -25,7 +37,14 @@ export class PageInfoService {
     Array<PageLink>
   >([]);
 
+  public createButtonSetting: BehaviorSubject<CreateButtonSetting> = new BehaviorSubject<CreateButtonSetting>(
+    new CreateButtonSetting( '/dashboard', false,"Create", ));
+
   constructor() {}
+
+  setToolbarCreateBtnSettings(setting : CreateButtonSetting){
+  this.createButtonSetting.next(setting);
+  }
 
   public setTitle(_title: string) {
     this.title.next(_title);

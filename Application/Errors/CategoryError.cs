@@ -16,4 +16,7 @@ public static class CategoryError
 
     public static readonly Error DeleteFailed = new Error(
     "Categories.DeleteFailed", "Failed to delete category");
+
+    public static readonly Error ImageUploadFailed = new Error(
+    "Category.PhotoUploadFailed", "Failed to save photo!");
 }

@@ -77,7 +77,7 @@ export class ProfileDetailsComponent implements OnInit, OnDestroy {
     this.authService.updateAuthUser(user).subscribe(
       {
         next: (res) => {
-          debugger
+         
           this.setUser(res);
          },
         error: error => this.isLoading$.next(false),
