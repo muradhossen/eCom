@@ -31,7 +31,7 @@ public class SubCategoryRepository : Repository<SubCategory>, ISubCategoryReposi
 
         if (subcategoryIds.Any())
         {
-            await _productRepository.BulkSoftDeleteBySubCategoryIds(subcategoryIds,userId);
+            await _productRepository.BulkSoftDeleteByProductsAsync(subcategoryIds,userId);
         }
 
       var deletedRows = await _dbContext.SubCategories

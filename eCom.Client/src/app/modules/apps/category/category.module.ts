@@ -6,6 +6,7 @@ import { CategoryTableComponent } from './category-table/category-table.componen
 import { CategoryFormComponent } from './category-form/category-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
   imports: [
@@ -13,7 +14,8 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
     CategoryRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    PaginationModule.forRoot()
+    PaginationModule.forRoot(),
+    ModalModule.forRoot()
   ],
   declarations: [
     CategoryComponent,

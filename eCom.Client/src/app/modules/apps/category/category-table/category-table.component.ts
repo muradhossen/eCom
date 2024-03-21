@@ -1,8 +1,9 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, TemplateRef } from '@angular/core';
 import { CategoryService } from '../../services/category.service';
 import { Category } from '../../models/category';
 import { Pagination } from '../../models/pagination';
 import { Router } from '@angular/router';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-category-table',
@@ -22,9 +23,14 @@ export class CategoryTableComponent implements OnInit {
   };
 
 
+  modalRef?: BsModalRef;
+  message?: string;
+  selectedCategoryId : number;
+
   constructor(private categoryService: CategoryService,
      private cdr: ChangeDetectorRef,
-     private router : Router) { }
+     private router : Router,
+     private modalService: BsModalService ) { }
 
   ngOnInit() {
 
@@ -50,4 +56,26 @@ export class CategoryTableComponent implements OnInit {
     this.router.navigate(['/manage/categories/edit/'+id]);
   }
 
+  openModal(template: TemplateRef<void>, name : string,id : number) {
+    this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
+    
+    this.selectedCategoryId = id;
+    this.message = `Are you sure you want to delete ${name} category?`;
+  }
+ 
+  confirm(): void { 
+    
+    this.categoryService.deleteCategory(this.selectedCategoryId).subscribe(
+      res => {
+      if (res.isSuccess) {
+        this.loadCategories(); 
+      } 
+
+    },error => { },
+
+    () => this.modalRef?.hide())
+   
+  }
+ 
+  
 }

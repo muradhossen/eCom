@@ -7,5 +7,5 @@ namespace Application.RepositoryInterface;
 public interface IProductRepository : IRepository<Product>
 {
     IQueryable<VwSearch> GetSearchesQueryable();
-    Task<bool> BulkSoftDeleteBySubCategoryIds(List<long> subcategoryIds,long userId);
+    Task<bool> BulkSoftDeleteByProductsAsync(List<long> subcategoryIds,long userId);
 }

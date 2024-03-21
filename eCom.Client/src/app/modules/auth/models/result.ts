@@ -6,6 +6,8 @@ public error : Error;
 public data : T;
 }
 
+
+    
 export class Error {
     public Code : string;
     public Description : string;

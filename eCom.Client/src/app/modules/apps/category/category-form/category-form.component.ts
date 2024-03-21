@@ -17,7 +17,7 @@ export class CategoryFormComponent implements OnInit {
   private unsubscribe: Subscription[] = [];
   categoryForm: FormGroup;
   categoryImage: File;
-  defaultImage = environment.defaultItemImagePath;
+  categoryImageUrl = environment.defaultItemImagePath;
   id: number;
   isEdit: boolean;
   category: Category;
@@ -76,10 +76,14 @@ export class CategoryFormComponent implements OnInit {
   }
 
   submit() {
+    debugger
     const category = new Category();
     category.name = this.categoryForm.get('name')?.value;
     category.description = this.categoryForm.get('description')?.value; 
     category.image = this.categoryImage;
+    if (!this.categoryImage) {
+      category.imageUrl = this.category.imageUrl;
+    } 
     category.code = this.categoryForm.get('code')?.value; 
 
     if (this.isEdit) {
@@ -104,7 +108,7 @@ export class CategoryFormComponent implements OnInit {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = (e: any) => {
-        this.defaultImage = e.target.result;
+        this.categoryImageUrl = e.target.result;
         this.cdr.detectChanges();
       };
 
@@ -116,10 +120,9 @@ export class CategoryFormComponent implements OnInit {
   getCategory(id: number) {
     this.categoryService.getCategory(id).subscribe(category => {
 debugger
-      this.category = category;
-      console.log(this.defaultImage)
+      this.category = category; 
       this.categoryForm.patchValue(this.category);
-      this.defaultImage = this.category.imageUrl ?? this.defaultImage;
+      this.categoryImageUrl = this.category.imageUrl ?? this.categoryImageUrl;
 
       this.cdr.detectChanges();
     });

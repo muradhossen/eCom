@@ -52,7 +52,7 @@ internal class SubCategoryService : Service<SubCategory>, ISubCategoryService
         }
         if (await _repository.RemoveAsync(subcategory))
         {
-            await _productRepository.BulkSoftDeleteBySubCategoryIds(new List<long> { subcategoryId }, userId);
+            await _productRepository.BulkSoftDeleteByProductsAsync(new List<long> { subcategoryId }, userId);
             return Result.Success();
         }
         return Result.Failure(SubCategoryError.DeleteFailed);

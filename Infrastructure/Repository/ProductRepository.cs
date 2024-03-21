@@ -20,7 +20,7 @@ public class ProductRepository : Repository<Product>, IProductRepository
     {
         return _dbContext.VwSearches.AsQueryable();
     }
-    public async Task<bool> BulkSoftDeleteBySubCategoryIds(List<long> subcategoryIds,long userId)
+    public async Task<bool> BulkSoftDeleteByProductsAsync(List<long> subcategoryIds,long userId)
     {
         int affectedRows = await _dbContext
                .Products

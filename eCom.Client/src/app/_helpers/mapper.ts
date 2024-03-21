@@ -28,6 +28,11 @@ export function categoryToFormData(category: Category) {
     if (category.code) {
         formData.append('code', category.code);
     }
-    formData.append('image', category.image);
+    if (category.image) {
+        formData.append('image', category.image);
+    }
+    if (category.imageUrl) {
+        formData.append('ImageUrl', category.imageUrl);
+    }
     return formData;
 }

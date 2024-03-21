@@ -20,7 +20,7 @@
         <td>{{category.description}}</td>
         <td>
           <button class="btn btn-secondary btn-sm" (click)="edit(category.id)">Edit</button>
-          <button class="btn btn-danger btn-sm m-1" (click)="edit(category.id)">Delete</button>
+          <button class="btn btn-danger btn-sm m-1" (click)="openModal(template,category.name,category.id)">Delete</button>
         </td>
       </tr> 
     </tbody>
@@ -38,4 +38,14 @@ nextText="&rsaquo;"
  lastText="&raquo;">
 </pagination>
 
+ 
+<ng-template #template>
+  <div class="modal-body text-center">
+    <p>{{message}}</p>
+    <button type="button" class="btn btn-danger btn-sm" (click)="confirm()" >Yes</button>
+    <button type="button" class="btn btn-default" (click)="modalRef?.hide()" >No</button>
+  </div>
+</ng-template>
+
 </div>
+

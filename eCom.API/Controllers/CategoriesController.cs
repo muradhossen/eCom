@@ -151,7 +151,7 @@ namespace eCom.API.Controllers
 
             var result = await _categoryService.DeleteWithHierarchyAsync(id, _currentUser.UserId);
 
-            if (result.IsFailure)
+            if (result.IsSuccess)
             {
                 return Ok(result);
             }
