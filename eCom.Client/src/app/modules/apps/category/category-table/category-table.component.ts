@@ -4,11 +4,13 @@ import { Category } from '../../models/category';
 import { Pagination } from '../../models/pagination';
 import { Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { ConfirmService } from 'src/app/_bsCommon/confirm.service';
 
 @Component({
   selector: 'app-category-table',
   templateUrl: './category-table.component.html',
-  styleUrls: ['./category-table.component.scss']
+  styleUrls: ['./category-table.component.scss'],
+  providers: [ConfirmService]
 })
 export class CategoryTableComponent implements OnInit {
   pageNumber = 1;
@@ -24,13 +26,12 @@ export class CategoryTableComponent implements OnInit {
 
 
   modalRef?: BsModalRef;
-  message?: string;
-  selectedCategoryId : number;
+ 
 
   constructor(private categoryService: CategoryService,
-     private cdr: ChangeDetectorRef,
-     private router : Router,
-     private modalService: BsModalService ) { }
+    private cdr: ChangeDetectorRef,
+    private router: Router, 
+    private confirmService: ConfirmService) { }
 
   ngOnInit() {
 
@@ -52,30 +53,27 @@ export class CategoryTableComponent implements OnInit {
     });
   }
 
-  edit(id : number){ 
-    this.router.navigate(['/manage/categories/edit/'+id]);
+  edit(id: number) {
+    this.router.navigate(['/manage/categories/edit/' + id]);
+  } 
+
+  deleteCategory(id: number, name: string) {
+
+    this.confirmService.confirm("Delete message!", `Are you sure to delete <b> ${name} </b> category?`).subscribe((result) => {
+      if (result) {
+
+        this.categoryService.deleteCategory(id).subscribe(
+          {
+            next: res => {
+              if (res.isSuccess) {
+                this.loadCategories();
+              }
+            },
+            complete: () => this.modalRef?.hide()
+          })
+      }
+    });
+
   }
 
-  openModal(template: TemplateRef<void>, name : string,id : number) {
-    this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
-    
-    this.selectedCategoryId = id;
-    this.message = `Are you sure you want to delete ${name} category?`;
-  }
- 
-  confirm(): void { 
-    
-    this.categoryService.deleteCategory(this.selectedCategoryId).subscribe(
-      res => {
-      if (res.isSuccess) {
-        this.loadCategories(); 
-      } 
-
-    },error => { },
-
-    () => this.modalRef?.hide())
-   
-  }
- 
-  
 }
