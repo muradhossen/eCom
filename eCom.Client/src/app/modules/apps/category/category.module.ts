@@ -15,8 +15,7 @@ import { BsCommonModule } from 'src/app/_bsCommon/bs-common.module';
     CategoryRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    PaginationModule.forRoot(),
-    // ModalModule.forRoot(),
+    PaginationModule.forRoot(), 
     BsCommonModule,
   ],
   declarations: [

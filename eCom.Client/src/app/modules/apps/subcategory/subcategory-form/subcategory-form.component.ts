@@ -7,11 +7,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-category-form',
-  templateUrl: './category-form.component.html',
-  styleUrls: ['./category-form.component.scss']
+  selector: 'app-subcategory-form',
+  templateUrl: './subcategory-form.component.html',
+  styleUrls: ['./subcategory-form.component.scss']
 })
-export class CategoryFormComponent implements OnInit {
+export class SubcategoryFormComponent implements OnInit {
+
   isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   isLoading: boolean;
   private unsubscribe: Subscription[] = [];
@@ -88,12 +89,12 @@ export class CategoryFormComponent implements OnInit {
 
     if (this.isEdit) {
       this.categoryService.updateCategory(this.id,category).subscribe(res => {
-        this.router.navigate(['/manage/categories']);
+        this.router.navigate(['/manage/subcategories']);
       });
     }
     else {
       this.categoryService.createCategory(category).subscribe(res => {
-        this.router.navigate(['/manage/categories']);
+        this.router.navigate(['/manage/subcategories']);
       });
     }
   }
@@ -128,4 +129,5 @@ debugger
     });
 
   }
+
 }
