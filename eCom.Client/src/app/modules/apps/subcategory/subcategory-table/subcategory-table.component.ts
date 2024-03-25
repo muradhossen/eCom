@@ -1,10 +1,10 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { CategoryService } from '../../services/category.service';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core'; 
 import { Category } from '../../models/category';
 import { Pagination } from '../../models/pagination';
 import { Router } from '@angular/router';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { ConfirmService } from 'src/app/_bsCommon/confirm.service';
+import { SubcategoryService } from '../../services/subcategory.service';
 
 @Component({
   selector: 'app-subcategory-table',
@@ -28,24 +28,24 @@ export class SubcategoryTableComponent implements OnInit {
   modalRef?: BsModalRef;
  
 
-  constructor(private categoryService: CategoryService,
+  constructor(private subCategoryService: SubcategoryService,
     private cdr: ChangeDetectorRef,
     private router: Router, 
     private confirmService: ConfirmService) { }
 
   ngOnInit() {
 
-    this.loadCategories();
+    this.loadSubCategories();
   }
 
   pageChanged(event: any) {
 
     this.pageNumber = event.page;
-    this.loadCategories();
+    this.loadSubCategories();
   }
 
-  loadCategories() {
-    this.categoryService.getCategories(this.pageSize, this.pageNumber).subscribe(res => {
+  loadSubCategories() {
+    this.subCategoryService.getSubCategories(this.pageSize, this.pageNumber).subscribe(res => {
       this.categories = res.result;
       this.pagination = res.pagination;
 
@@ -54,19 +54,19 @@ export class SubcategoryTableComponent implements OnInit {
   }
 
   edit(id: number) {
-    this.router.navigate(['/manage/categories/edit/' + id]);
+    this.router.navigate(['/manage/subcategories/edit/' + id]);
   } 
 
-  deleteCategory(id: number, name: string) {
+  deleteSubCategory(id: number, name: string) {
 
-    this.confirmService.confirm("Delete message!", `Are you sure to delete <b> ${name} </b> category?`).subscribe((result) => {
+    this.confirmService.confirm("Delete message!", `Are you sure to delete <b> ${name} </b> subcategory?`).subscribe((result) => {
       if (result) {
 
-        this.categoryService.deleteCategory(id).subscribe(
+        this.subCategoryService.deleteSubCategory(id).subscribe(
           {
             next: res => {
               if (res.isSuccess) {
-                this.loadCategories();
+                this.loadSubCategories();
               }
             },
             complete: () => this.modalRef?.hide()

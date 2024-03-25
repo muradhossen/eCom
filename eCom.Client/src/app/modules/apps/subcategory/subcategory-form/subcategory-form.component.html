@@ -2,7 +2,7 @@
 
   <div id="kt_account_profile_details" class="collapse show">
 
-    <form novalidate="" class="form" [formGroup]="categoryForm">
+    <form novalidate="" class="form" [formGroup]="subCategoryForm">
       <div class="card-body border-top p-9">
 
         <div class="row mb-6">
@@ -11,8 +11,8 @@
             <div class="image-input image-input-outline" data-kt-image-input="true"
               [style.background-image]="'url(./assets/media/avatars/blank.png)'">
 
-              <img [src]="categoryImageUrl" alt="User image" class="image-input-wrapper w-125px h-125px">
- 
+              <img [src]="subCategoryImageUrl" alt="User image" class="image-input-wrapper w-125px h-125px">
+
               <!-- Photo upload : Begine -->
               <label for="file-upload" class="file-upload">
                 <i class="bi bi-camera-fill fs-2hx"></i>
@@ -30,10 +30,30 @@
           <label class="col-lg-4 col-form-label required fw-bold fs-6">Code</label>
           <div class="col-lg-8 fv-row">
             <input readonly class="form-control form-control-lg" name="name" formControlName="code" autocomplete="off"
-              [ngClass]="{'is-invalid': categoryForm.controls['code'].invalid && categoryForm.get('code')?.touched }" />
+              [ngClass]="{'is-invalid': subCategoryForm.controls['code'].invalid && subCategoryForm.get('code')?.touched }" />
           </div>
         </div>
         <!-- Code -->
+
+
+        <!-- Category dropdown -->
+        <div class="row mb-6">
+          <label class="col-lg-4 col-form-label required fw-bold fs-6">Category</label>
+          <div class="col-lg-8 fv-row">
+
+            <input class="form-control form-control-lg" name="categoryId" formControlName="categoryId" autocomplete="off"
+              [ngClass]="{'is-invalid': subCategoryForm.controls['categoryId'].invalid && subCategoryForm.get('categoryId')?.touched }" />
+
+            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                      validation: 'required',
+                      message: 'Category is required',
+                      control: subCategoryForm.controls['categoryId']
+                    }">
+            </ng-container> 
+
+          </div>
+        </div>
+        <!-- Category dropdown -->
 
         <!-- Name -->
         <div class="row mb-6">
@@ -41,20 +61,20 @@
           <div class="col-lg-8 fv-row">
 
             <input class="form-control form-control-lg" name="name" formControlName="name" autocomplete="off"
-              [ngClass]="{'is-invalid': categoryForm.controls['name'].invalid && categoryForm.get('name')?.touched }" />
+              [ngClass]="{'is-invalid': subCategoryForm.controls['name'].invalid && subCategoryForm.get('name')?.touched }" />
 
             <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
               validation: 'required',
-              message: 'Category name is required',
-              control: categoryForm.controls['name']
+              message: 'SubCategory name is required',
+              control: subCategoryForm.controls['name']
             }">
             </ng-container>
 
 
             <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
             validation: 'maxlength',
-            message: 'Category name have maximum 55 symbols',
-            control: categoryForm.controls['name']
+            message: 'SubCategory name have maximum 55 symbols',
+            control: subCategoryForm.controls['name']
             }"></ng-container>
 
           </div>
@@ -67,13 +87,13 @@
           <div class="col-lg-8 fv-row">
             <textarea class="form-control form-control-lg" name="description" formControlName="description"
               autocomplete="off" [ngClass]="{
-                              'is-invalid': categoryForm.controls['description'].invalid 
+                              'is-invalid': subCategoryForm.controls['description'].invalid 
                             }" rows="3"></textarea>
 
             <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
                 validation: 'maxlength',
                 message: 'Description have maximum 1000 symbols',
-                control: categoryForm.controls['description']
+                control: subCategoryForm.controls['description']
                 }"></ng-container>
 
           </div>
@@ -82,7 +102,7 @@
 
       </div>
       <div class="card-footer d-flex justify-content-end py-6 px-9">
-        <button type="button" class="btn btn-primary" [disabled]="isLoading || categoryForm.invalid" (click)="submit()">
+        <button type="button" class="btn btn-primary" [disabled]="isLoading || subCategoryForm.invalid" (click)="submit()">
           <ng-container *ngIf="!isLoading">Save Changes</ng-container>
           <ng-container *ngIf="isLoading">
             <span clas="indicator-progress" [style.display]="'block'">

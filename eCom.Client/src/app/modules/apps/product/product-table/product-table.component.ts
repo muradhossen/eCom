@@ -55,7 +55,7 @@ export class ProductTableComponent implements OnInit {
   }
 
   edit(id: number) {
-    this.router.navigate(['/manage/categories/edit/' + id]);
+    this.router.navigate(['/manage/products/edit/' + id]);
   } 
 
   deleteCategory(id: number, name: string) {

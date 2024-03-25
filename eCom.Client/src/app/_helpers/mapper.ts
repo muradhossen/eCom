@@ -1,4 +1,5 @@
 import { Category } from "../modules/apps/models/category";
+import { SubCategory } from "../modules/apps/models/subcategory";
 import { AuthModel } from "../modules/auth/models/auth.model";
 
 export function userToFormData(user: AuthModel) {
@@ -33,6 +34,28 @@ export function categoryToFormData(category: Category) {
     }
     if (category.imageUrl) {
         formData.append('ImageUrl', category.imageUrl);
+    }
+    return formData;
+}
+
+
+export function subCategoryToFormData(subCategory: SubCategory) {
+
+    const formData = new FormData();
+    formData.append('name', subCategory.name);
+    formData.append('categoryId',subCategory.categoryId.toString());
+    
+    if (subCategory.description) {
+        formData.append('description', subCategory.description);
+    }
+    if (subCategory.code) {
+        formData.append('code', subCategory.code);
+    }
+    if (subCategory.image) {
+        formData.append('image', subCategory.image);
+    }
+    if (subCategory.imageUrl) {
+        formData.append('ImageUrl', subCategory.imageUrl);
     }
     return formData;
 }
