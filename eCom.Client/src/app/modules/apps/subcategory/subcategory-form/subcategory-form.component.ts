@@ -5,6 +5,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { SubcategoryService } from '../../services/subcategory.service';
 import { SubCategory } from '../../models/subcategory';
+import { CategoryService } from '../../services/category.service';
+import { Category } from '../../models/category';
+import { Pagination } from '../../models/pagination';
 
 @Component({
   selector: 'app-subcategory-form',
@@ -22,9 +25,24 @@ export class SubcategoryFormComponent implements OnInit {
   id: number;
   isEdit: boolean;
   subCategory: SubCategory = new SubCategory();
+  selectedCategoryId : number;
+
+  pageNumber = 1;
+  pageSize = 10;
+  categories: Category[] = [];
+
+  pagination: Pagination = {
+    currentPage: 1,
+    itemsPerPage: this.pageSize,
+    totalCount: 0,
+    totalItems: 0,
+    totalPages : 0
+  };
+
 
   constructor(private fb: FormBuilder,
     private subCategoryService: SubcategoryService,
+    private categoryService : CategoryService,
     private router: Router,
     private cdr: ChangeDetectorRef,
     private route: ActivatedRoute) {
@@ -41,12 +59,14 @@ export class SubcategoryFormComponent implements OnInit {
 
   ngOnInit() {
 
+    this.loadCategories();
+
     this.route.params.subscribe(params => {
 
       this.id = params['id'];
       if (this.id) {
         this.isEdit = true;
-        this.getCategory(this.id);
+        this.getSubCategory(this.id);
       }
     });
 
@@ -120,10 +140,11 @@ export class SubcategoryFormComponent implements OnInit {
     }
   }
 
-  getCategory(id: number) {
+  getSubCategory(id: number) {
     this.subCategoryService.getSubCategory(id).subscribe(subCategory => {
-debugger
-      this.subCategory = subCategory;
+  
+      this.subCategory = subCategory;  
+
       this.subCategoryForm.patchValue(this.subCategory);
       this.subCategoryImageUrl = this.subCategory.imageUrl ?? this.subCategoryImageUrl;
 
@@ -132,4 +153,30 @@ debugger
 
   }
 
+ 
+ 
+
+    loadCategories() {
+      // this.categoryService.getCategories(this.pageSize, this.pageNumber).subscribe(res => {
+      //   this.categories = this.categories.concat(res.result);
+      //   this.pagination = res.pagination; 
+    
+      //   this.cdr.detectChanges();
+      // });
+
+      this.categoryService.getDropdownCategories().subscribe(categories => {
+        this.categories = this.categories.concat(categories);
+        this.cdr.detectChanges();
+      })
+    }
+
+    onScrollToEnd() {
+    //   this.pageNumber = this.pageNumber + 1
+    //  if(this.pageNumber <= this.pagination.totalPages){
+    //    this.loadCategories();
+    //  }
+
+ 
+    }
+  
 }

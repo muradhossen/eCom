@@ -41,8 +41,14 @@
           <label class="col-lg-4 col-form-label required fw-bold fs-6">Category</label>
           <div class="col-lg-8 fv-row">
 
-            <input class="form-control form-control-lg" name="categoryId" formControlName="categoryId" autocomplete="off"
-              [ngClass]="{'is-invalid': subCategoryForm.controls['categoryId'].invalid && subCategoryForm.get('categoryId')?.touched }" />
+            <ng-select class="form-control form-control-sm border-none" [items]="categories" 
+            bindLabel="name" 
+            bindValue="id" 
+            formControlName="categoryId" 
+            [virtualScroll]="true"
+            placeholder="Select category" 
+            >
+            </ng-select>
 
             <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
                       validation: 'required',
@@ -99,6 +105,8 @@
           </div>
         </div>
         <!-- description -->
+
+ 
 
       </div>
       <div class="card-footer d-flex justify-content-end py-6 px-9">

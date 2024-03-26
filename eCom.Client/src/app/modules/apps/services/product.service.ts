@@ -57,6 +57,6 @@ export class ProductService {
 
   deleteProduct(id: number) {
     return this.http.delete<Result<any>>(this.endpoint + id);
-  }
-
+  } 
+  
 }

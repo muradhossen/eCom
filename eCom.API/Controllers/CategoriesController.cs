@@ -157,5 +157,16 @@ namespace eCom.API.Controllers
             }
             return BadRequest(result);
         }
+        [HttpGet("dropdown")]
+        public async Task<IActionResult> GetAll()
+        {
+            var categories = await _categoryService.GetAllAsync();
+            if (categories.IsNullOrEmpty())
+            {
+                return NotFound(Result.Failure(CategoryError.NotFound));
+            }
+
+            return Ok(Result.Success(categories));
+        }
     }
 }

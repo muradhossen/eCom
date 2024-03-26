@@ -55,4 +55,10 @@ export class CategoryService {
     return this.http.delete<Result<any>>(this.endpoint + id);
   }
 
+  getDropdownCategories(){
+    return this.http.get<Result<Category>>(this.endpoint + "dropdown").pipe(map(res => {
+      return res.data;
+    }))
+  }
+
 }

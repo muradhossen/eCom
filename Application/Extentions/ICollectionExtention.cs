@@ -8,7 +8,7 @@ public static class ICollectionExtention
 {
     public static bool IsNullOrEmpty<T>(this ICollection<T> collection)
     {
-        if (collection is not null || collection.Count == 0)
+        if (collection is null || collection.Count == 0)
         {
             return true;
         }

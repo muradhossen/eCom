@@ -56,4 +56,10 @@ export class SubcategoryService {
     return this.http.delete<Result<any>>(this.endpoint + id);
   }
 
+  getDropdownSubCategories(){
+    return this.http.get<Result<SubCategory>>(this.endpoint + "dropdown").pipe(map(res => {
+      return res.data;
+    }))
+  }
+
 }

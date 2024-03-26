@@ -41,7 +41,7 @@ internal class ProductService : Service<Product>, IProductService
                 || c.Code.Contains(searchKey));
         }
 
-        query = query.OrderBy(c => c.Name);
+        query = query.OrderByDescending(c => c.Id);
 
         return await PagedList<Product>.CreateAsync(query, pageParam.PageSize, pageParam.PageNumber);
     }

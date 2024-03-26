@@ -21,7 +21,8 @@ export class CategoryTableComponent implements OnInit {
     currentPage: 1,
     itemsPerPage: this.pageSize,
     totalCount: 0,
-    totalItems: 0
+    totalItems: 0,
+    totalPages : 0,
   };
 
 

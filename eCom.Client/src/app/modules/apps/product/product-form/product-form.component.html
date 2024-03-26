@@ -60,27 +60,27 @@
 
           </div>
         </div>
-        <!-- Name -->
+        <!-- Name --> 
 
-
-        <!-- SubCategory -->
+        <!-- SubCategory dropdown -->
         <div class="row mb-6">
-          <label class="col-lg-4 col-form-label required fw-bold fs-6">SubCategory</label>
+          <label class="col-lg-4 col-form-label required fw-bold fs-6">Subcategory</label>
           <div class="col-lg-8 fv-row">
 
-            <input class="form-control form-control-lg" name="subCategoryId" formControlName="subCategoryId" autocomplete="off"
-              [ngClass]="{'is-invalid': productForm.controls['subCategoryId'].invalid && productForm.get('subCategoryId')?.touched }" />
+            <ng-select class="form-control form-control-sm border-none" [items]="subcategories" bindLabel="name"
+              bindValue="id" formControlName="subCategoryId" [virtualScroll]="true" placeholder="Select subcategory">
+            </ng-select>
 
             <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
                               validation: 'required',
-                              message: 'SubCategory name is required',
-                              control: productForm.controls['name']
+                              message: 'Subcategory is required',
+                              control: productForm.controls['subCategoryId']
                             }">
-            </ng-container> 
+            </ng-container>
 
           </div>
         </div>
-        <!-- SubCategory -->
+        <!-- SubCategory dropdown -->
 
         <!-- Details -->
         <div class="row mb-6">
@@ -120,7 +120,7 @@
           <label class="col-lg-4 col-form-label fw-bold fs-6">USP</label>
           <div class="col-lg-8 fv-row">
             <textarea class="form-control form-control-lg" name="usp" formControlName="usp" autocomplete="off"
-              [ngClass]="{'is-invalid': productForm.controls['usp'].invalid && productForm.get('usp')?.touched }" >
+              [ngClass]="{'is-invalid': productForm.controls['usp'].invalid && productForm.get('usp')?.touched }">
               </textarea>
           </div>
         </div>

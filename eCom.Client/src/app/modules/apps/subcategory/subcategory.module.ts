@@ -7,6 +7,7 @@ import { SubcategoryFormComponent } from './subcategory-form/subcategory-form.co
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { BsCommonModule } from 'src/app/_bsCommon/bs-common.module';
 import { SubcategoryTableComponent } from './subcategory-table/subcategory-table.component';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { SubcategoryTableComponent } from './subcategory-table/subcategory-table
     ReactiveFormsModule,
     PaginationModule.forRoot(), 
     BsCommonModule,
+    NgSelectModule
   ],
   declarations: [
     SubcategoryComponent,

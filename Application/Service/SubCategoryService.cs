@@ -34,7 +34,7 @@ internal class SubCategoryService : Service<SubCategory>, ISubCategoryService
                 || c.Code.Contains(searchKey));
         }
 
-        query = query.OrderBy(c => c.Name);
+        query = query.OrderByDescending(c => c.Id);
 
         return await PagedList<SubCategory>.CreateAsync(query, pageParam.PageSize, pageParam.PageNumber);
     }

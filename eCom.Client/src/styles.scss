@@ -16,6 +16,7 @@
 /* Importing Datepicker SCSS file. */
 @import "node_modules/ngx-bootstrap/datepicker/bs-datepicker";
  
+@import "~@ng-select/ng-select/themes/default.theme.css"; 
  
 .border-radius-5px {
     border-radius: 5px;
@@ -23,4 +24,10 @@
 
 .mr-left-right-10px{
     margin: 0px 10px;
+}
+
+ 
+.ng-select.border-none .ng-select-container  {            
+    border: none;
+    font-size: 1.1rem;
 }

@@ -7,6 +7,7 @@ import { ProductFormComponent } from './product-form/product-form.component';
 import { ProductTableComponent } from './product-table/product-table.component';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { BsCommonModule } from 'src/app/_bsCommon/bs-common.module';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { BsCommonModule } from 'src/app/_bsCommon/bs-common.module';
     PaginationModule.forRoot(), 
     BsCommonModule,
     FormsModule,
+    NgSelectModule
   ],
   declarations: [
     ProductComponent,

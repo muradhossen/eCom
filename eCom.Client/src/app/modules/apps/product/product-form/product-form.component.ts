@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { ProductService } from '../../services/product.service';
 import { Product } from '../../models/product';
+import { SubcategoryService } from '../../services/subcategory.service';
 
 @Component({
   selector: 'app-product-form',
@@ -26,11 +27,14 @@ export class ProductFormComponent implements OnInit {
   isEdit: boolean;
   category: Category = new Category();
 
+  subcategories: Category[] = [];
+
   constructor(private fb: FormBuilder,
     private productService: ProductService,
     private router: Router,
     private cdr: ChangeDetectorRef,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private subcategoryService : SubcategoryService) {
 
     const loadingSubscr = this.isLoading$
       .asObservable()
@@ -44,6 +48,8 @@ export class ProductFormComponent implements OnInit {
 
   ngOnInit() {
 
+    this.loadSubCategories();
+    
     this.route.params.subscribe(params => {
 
       this.id = params['id'];
@@ -86,7 +92,7 @@ export class ProductFormComponent implements OnInit {
   }
 
   submit() {
-    debugger
+     
     const product = new Product();
     product.name = this.productForm.get('name')?.value;
     product.description = this.productForm.get('description')?.value; 
@@ -132,7 +138,7 @@ export class ProductFormComponent implements OnInit {
 
   getCategory(id: number) {
     this.productService.getProduct(id).subscribe(product => {
-debugger
+ 
       this.category = product; 
       this.productForm.patchValue(this.category);
       this.productImageUrl = this.category.imageUrl ?? this.productImageUrl;
@@ -140,5 +146,13 @@ debugger
       this.cdr.detectChanges();
     });
 
+  }
+  
+  loadSubCategories() {
+  
+    this.subcategoryService.getDropdownSubCategories().subscribe(subcategories => {
+      this.subcategories = this.subcategories.concat(subcategories);
+      this.cdr.detectChanges();
+    })
   }
 }
