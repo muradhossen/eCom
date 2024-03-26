@@ -8,6 +8,7 @@ using Domain.Entities;
 using eCom.API.Controllers.Base;
 using Application.Extentions;
 using Microsoft.AspNetCore.Mvc;
+using Application.Service;
 
 namespace eCom.API.Controllers
 {
@@ -16,32 +17,42 @@ namespace eCom.API.Controllers
     {
         private readonly IProductService _productService;
         private readonly IMapper _mapper;
+        private readonly IPhotoService _photoService;
 
         public ProductsController(IProductService productService
-            , IMapper mapper)
+            , IMapper mapper
+            , IPhotoService photoService)
         {
             _productService = productService;
             _mapper = mapper;
+            _photoService = photoService;
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateProduct([FromBody] ProductCreateDto dto)
+        public async Task<IActionResult> CreateProduct([FromForm] ProductCreateDto dto)
         {
             if (dto is null)
             {
                 return BadRequest(Result.Failure(CommonError.InvalidRequest));
             }
 
-            if (dto.Section is null || dto.Section.PricingItems.IsNullOrEmpty())
-            {
-                return BadRequest(Result.Failure(ProductError.NoPricintItemToCreate));
-            }
+            //if (dto.Section is null || dto.Section.PricingItems.IsNullOrEmpty())
+            //{
+            //    return BadRequest(Result.Failure(ProductError.NoPricintItemToCreate));
+            //}
 
             var product = _mapper.Map<Product>(dto);
-            product.CreatedById = 1;
-            product.CreatedOn = DateTime.UtcNow;
-            product.Code = new Random().Next(1, 100).ToString();
 
+            var photoUploadResult = await _photoService.AddPhotoAsync(dto.Image);
+            if (photoUploadResult.Error != null)
+            {
+                return BadRequest(Result.Failure(SubCategoryError.ImageUploadFailed));
+            }
+            if (photoUploadResult.SecureUrl != null)
+            {
+                product.ImageUrl = photoUploadResult.SecureUrl.AbsoluteUri;
+                product.PhotoPublicId = photoUploadResult.PublicId;
+            }
 
             if (await _productService.AddAsync(product))
             {
@@ -52,7 +63,7 @@ namespace eCom.API.Controllers
                     id = product.Id,
 
                 };
-                return CreatedAtRoute(routeValues, _mapper.Map<ProductDto>(product));
+                return CreatedAtRoute(routeValues, Result.Success(_mapper.Map<ProductDto>(product)));
             }
             return BadRequest(Result.Failure(ProductError.CreateFailed));
         }
@@ -66,7 +77,7 @@ namespace eCom.API.Controllers
                 return NotFound(Result.Failure(ProductError.NotFound));
             }
             Response.AddPaginationHeader(products.CurrentPage, products.PageSize, products.TotalCount, products.TotalPage);
-            return Ok(_mapper.Map<List<ProductDto>>(products));
+            return Ok(Result.Success(_mapper.Map<List<ProductDto>>(products)));
         }
 
         [HttpGet("{id}")]
@@ -84,11 +95,11 @@ namespace eCom.API.Controllers
                 return NotFound(Result.Failure(ProductError.NotFound));
             }
 
-            return Ok(_mapper.Map<ProductDto>(product));
+            return Ok(Result.Success(_mapper.Map<ProductDto>(product)));
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateProductById(long id, [FromBody] ProductDto dto)
+        public async Task<IActionResult> UpdateProductById(long id, [FromForm] ProductDto dto)
         {
             if (id <= 0 || dto is null)
             {
@@ -102,9 +113,20 @@ namespace eCom.API.Controllers
                 return NotFound(Result.Failure(ProductError.NotFound));
             }
 
+            var photoUploadResult = await _photoService.AddPhotoAsync(dto.Image);
+            if (photoUploadResult.Error != null)
+            {
+                return BadRequest(Result.Failure(ProductError.ImageUploadFailed));
+            }
+
             _mapper.Map(dto, product, opt => opt.AfterMap((src, des) =>
             {
                 des.Id = id;
+                if (photoUploadResult.SecureUrl != null)
+                {
+                    product.ImageUrl = photoUploadResult.SecureUrl.AbsoluteUri;
+                    product.PhotoPublicId = photoUploadResult.PublicId;
+                }
             }));
 
             if (await _productService.UpdateAsync(product))

@@ -1,10 +1,10 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { CategoryService } from '../../services/category.service';
-import { Category } from '../../models/category';
 import { Pagination } from '../../models/pagination';
 import { Router } from '@angular/router';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { ConfirmService } from 'src/app/_bsCommon/confirm.service';
+import { ProductService } from '../../services/product.service';
+import { Product } from '../../models/product';
 
 @Component({
   selector: 'app-product-table',
@@ -16,7 +16,7 @@ export class ProductTableComponent implements OnInit {
 
   pageNumber = 1;
   pageSize = 10;
-  categories: Category[] = [];
+  products: Product[] = [];
 
   pagination: Pagination = {
     currentPage: 1,
@@ -29,25 +29,25 @@ export class ProductTableComponent implements OnInit {
   modalRef?: BsModalRef;
  
 
-  constructor(private categoryService: CategoryService,
+  constructor(private productService: ProductService,
     private cdr: ChangeDetectorRef,
     private router: Router, 
     private confirmService: ConfirmService) { }
 
   ngOnInit() {
 
-    this.loadCategories();
+    this.loadProducts();
   }
 
   pageChanged(event: any) {
 
     this.pageNumber = event.page;
-    this.loadCategories();
+    this.loadProducts();
   }
 
-  loadCategories() {
-    this.categoryService.getCategories(this.pageSize, this.pageNumber).subscribe(res => {
-      this.categories = res.result;
+  loadProducts() {
+    this.productService.getProducts(this.pageSize, this.pageNumber).subscribe(res => { 
+      this.products = res.result.data;
       this.pagination = res.pagination;
 
       this.cdr.detectChanges();
@@ -58,16 +58,16 @@ export class ProductTableComponent implements OnInit {
     this.router.navigate(['/manage/products/edit/' + id]);
   } 
 
-  deleteCategory(id: number, name: string) {
+  deleteProduct(id: number, name: string) {
 
-    this.confirmService.confirm("Delete message!", `Are you sure to delete <b> ${name} </b> category?`).subscribe((result) => {
+    this.confirmService.confirm("Delete message!", `Are you sure to delete <b> ${name} </b> product?`).subscribe((result) => {
       if (result) {
 
-        this.categoryService.deleteCategory(id).subscribe(
+        this.productService.deleteProduct(id).subscribe(
           {
             next: res => {
               if (res.isSuccess) {
-                this.loadCategories();
+                this.loadProducts();
               }
             },
             complete: () => this.modalRef?.hide()

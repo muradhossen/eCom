@@ -2,7 +2,7 @@
 
   <div id="kt_account_profile_details" class="collapse show">
 
-    <form novalidate="" class="form" [formGroup]="categoryForm">
+    <form novalidate="" class="form" [formGroup]="productForm">
       <div class="card-body border-top p-9">
 
         <div class="row mb-6">
@@ -11,8 +11,8 @@
             <div class="image-input image-input-outline" data-kt-image-input="true"
               [style.background-image]="'url(./assets/media/avatars/blank.png)'">
 
-              <img [src]="categoryImageUrl" alt="User image" class="image-input-wrapper w-125px h-125px">
- 
+              <img [src]="productImageUrl" alt="User image" class="image-input-wrapper w-125px h-125px">
+
               <!-- Photo upload : Begine -->
               <label for="file-upload" class="file-upload">
                 <i class="bi bi-camera-fill fs-2hx"></i>
@@ -30,10 +30,11 @@
           <label class="col-lg-4 col-form-label required fw-bold fs-6">Code</label>
           <div class="col-lg-8 fv-row">
             <input readonly class="form-control form-control-lg" name="name" formControlName="code" autocomplete="off"
-              [ngClass]="{'is-invalid': categoryForm.controls['code'].invalid && categoryForm.get('code')?.touched }" />
+              [ngClass]="{'is-invalid': productForm.controls['code'].invalid && productForm.get('code')?.touched }" />
           </div>
         </div>
         <!-- Code -->
+
 
         <!-- Name -->
         <div class="row mb-6">
@@ -41,25 +42,59 @@
           <div class="col-lg-8 fv-row">
 
             <input class="form-control form-control-lg" name="name" formControlName="name" autocomplete="off"
-              [ngClass]="{'is-invalid': categoryForm.controls['name'].invalid && categoryForm.get('name')?.touched }" />
+              [ngClass]="{'is-invalid': productForm.controls['name'].invalid && productForm.get('name')?.touched }" />
 
             <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-              validation: 'required',
-              message: 'Category name is required',
-              control: categoryForm.controls['name']
-            }">
+                      validation: 'required',
+                      message: 'Product name is required',
+                      control: productForm.controls['name']
+                    }">
             </ng-container>
 
 
             <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-            validation: 'maxlength',
-            message: 'Category name have maximum 55 symbols',
-            control: categoryForm.controls['name']
-            }"></ng-container>
+                    validation: 'maxlength',
+                    message: 'Product name have maximum 55 symbols',
+                    control: productForm.controls['name']
+                    }"></ng-container>
 
           </div>
         </div>
         <!-- Name -->
+
+
+        <!-- SubCategory -->
+        <div class="row mb-6">
+          <label class="col-lg-4 col-form-label required fw-bold fs-6">SubCategory</label>
+          <div class="col-lg-8 fv-row">
+
+            <input class="form-control form-control-lg" name="subCategoryId" formControlName="subCategoryId" autocomplete="off"
+              [ngClass]="{'is-invalid': productForm.controls['subCategoryId'].invalid && productForm.get('subCategoryId')?.touched }" />
+
+            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                              validation: 'required',
+                              message: 'SubCategory name is required',
+                              control: productForm.controls['name']
+                            }">
+            </ng-container> 
+
+          </div>
+        </div>
+        <!-- SubCategory -->
+
+        <!-- Details -->
+        <div class="row mb-6">
+          <label class="col-lg-4 col-form-label fw-bold fs-6">Details</label>
+          <div class="col-lg-8 fv-row">
+
+            <textarea class="form-control form-control-lg" name="details" formControlName="details" autocomplete="off"
+              [ngClass]="{'is-invalid': productForm.controls['details'].invalid && productForm.get('details')?.touched }">
+            </textarea>
+
+
+          </div>
+        </div>
+        <!-- Details -->
 
         <!-- description -->
         <div class="row mb-6">
@@ -67,22 +102,33 @@
           <div class="col-lg-8 fv-row">
             <textarea class="form-control form-control-lg" name="description" formControlName="description"
               autocomplete="off" [ngClass]="{
-                              'is-invalid': categoryForm.controls['description'].invalid 
+                              'is-invalid': productForm.controls['description'].invalid 
                             }" rows="3"></textarea>
 
             <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
                 validation: 'maxlength',
                 message: 'Description have maximum 1000 symbols',
-                control: categoryForm.controls['description']
+                control: productForm.controls['description']
                 }"></ng-container>
 
           </div>
         </div>
         <!-- description -->
 
+        <!-- USP -->
+        <div class="row mb-6">
+          <label class="col-lg-4 col-form-label fw-bold fs-6">USP</label>
+          <div class="col-lg-8 fv-row">
+            <textarea class="form-control form-control-lg" name="usp" formControlName="usp" autocomplete="off"
+              [ngClass]="{'is-invalid': productForm.controls['usp'].invalid && productForm.get('usp')?.touched }" >
+              </textarea>
+          </div>
+        </div>
+        <!-- USP -->
+
       </div>
       <div class="card-footer d-flex justify-content-end py-6 px-9">
-        <button type="button" class="btn btn-primary" [disabled]="isLoading || categoryForm.invalid" (click)="submit()">
+        <button type="button" class="btn btn-primary" [disabled]="isLoading || productForm.invalid" (click)="submit()">
           <ng-container *ngIf="!isLoading">Save Changes</ng-container>
           <ng-container *ngIf="isLoading">
             <span clas="indicator-progress" [style.display]="'block'">

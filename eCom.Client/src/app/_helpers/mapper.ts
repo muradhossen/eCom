@@ -1,4 +1,5 @@
 import { Category } from "../modules/apps/models/category";
+import { Product } from "../modules/apps/models/product";
 import { SubCategory } from "../modules/apps/models/subcategory";
 import { AuthModel } from "../modules/auth/models/auth.model";
 
@@ -57,5 +58,32 @@ export function subCategoryToFormData(subCategory: SubCategory) {
     if (subCategory.imageUrl) {
         formData.append('ImageUrl', subCategory.imageUrl);
     }
+    return formData;
+}
+
+export function productToFormData(product: Product) {
+
+    const formData = new FormData();
+    formData.append('name', product.name);
+    formData.append('subcategoryId',product.subCategoryId.toString());
+    
+    if (product.description) {
+        formData.append('description', product.description);
+    }
+    if (product.details) {
+        formData.append('details', product.details);
+    }
+    if (product.usp) {
+        formData.append('usp', product.usp);
+    }
+    if (product.code) {
+        formData.append('code', product.code);
+    }
+    if (product.image) {
+        formData.append('image', product.image);
+    }
+    if (product.imageUrl) {
+        formData.append('ImageUrl', product.imageUrl);
+    } 
     return formData;
 }

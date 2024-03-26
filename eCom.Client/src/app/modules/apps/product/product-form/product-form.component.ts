@@ -5,6 +5,8 @@ import { Category } from '../../models/category';
 import { CategoryService } from '../../services/category.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { ProductService } from '../../services/product.service';
+import { Product } from '../../models/product';
 
 @Component({
   selector: 'app-product-form',
@@ -17,15 +19,15 @@ export class ProductFormComponent implements OnInit {
   isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   isLoading: boolean;
   private unsubscribe: Subscription[] = [];
-  categoryForm: FormGroup;
-  categoryImage: File;
-  categoryImageUrl = environment.defaultItemImagePath;
+  productForm: FormGroup;
+  productImage: File;
+  productImageUrl = environment.defaultItemImagePath;
   id: number;
   isEdit: boolean;
   category: Category = new Category();
 
   constructor(private fb: FormBuilder,
-    private categoryService: CategoryService,
+    private productService: ProductService,
     private router: Router,
     private cdr: ChangeDetectorRef,
     private route: ActivatedRoute) {
@@ -57,9 +59,15 @@ export class ProductFormComponent implements OnInit {
 
 
   initForm() {
-    this.categoryForm = this.fb.group({
+    this.productForm = this.fb.group({
       
       code: [''],
+      details: [ '',
+      Validators.compose([
+        Validators.maxLength(1000)
+      ])],
+      usp: [''],
+      subCategoryId: ['', Validators.compose([Validators.required])],
       name: [
         '',
         Validators.compose([
@@ -71,7 +79,7 @@ export class ProductFormComponent implements OnInit {
         '',
         Validators.compose([
           Validators.maxLength(1000)
-        ]),
+        ])
       ],
       image: ''
     });
@@ -79,22 +87,25 @@ export class ProductFormComponent implements OnInit {
 
   submit() {
     debugger
-    const category = new Category();
-    category.name = this.categoryForm.get('name')?.value;
-    category.description = this.categoryForm.get('description')?.value; 
-    category.image = this.categoryImage;
-    if (!this.categoryImage) {
-      category.imageUrl = this.category.imageUrl;
+    const product = new Product();
+    product.name = this.productForm.get('name')?.value;
+    product.description = this.productForm.get('description')?.value; 
+    product.image = this.productImage;
+    if (!this.productImage) {
+      product.imageUrl = this.category.imageUrl;
     } 
-    category.code = this.categoryForm.get('code')?.value; 
+    product.code = this.productForm.get('code')?.value; 
+    product.details = this.productForm.get('details')?.value; 
+    product.usp = this.productForm.get('usp')?.value; 
+    product.subCategoryId = this.productForm.get('subCategoryId')?.value; 
 
     if (this.isEdit) {
-      this.categoryService.updateCategory(this.id,category).subscribe(res => {
+      this.productService.updateProduct(this.id,product).subscribe(res => {
         this.router.navigate(['/manage/products']);
       });
     }
     else {
-      this.categoryService.createCategory(category).subscribe(res => {
+      this.productService.createProduct(product).subscribe(res => {
         this.router.navigate(['/manage/products']);
       });
     }
@@ -105,12 +116,12 @@ export class ProductFormComponent implements OnInit {
   onFileSelected(event: any) {
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
-      this.categoryImage = file;
+      this.productImage = file;
 
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = (e: any) => {
-        this.categoryImageUrl = e.target.result;
+        this.productImageUrl = e.target.result;
         this.cdr.detectChanges();
       };
 
@@ -120,11 +131,11 @@ export class ProductFormComponent implements OnInit {
   }
 
   getCategory(id: number) {
-    this.categoryService.getCategory(id).subscribe(category => {
+    this.productService.getProduct(id).subscribe(product => {
 debugger
-      this.category = category; 
-      this.categoryForm.patchValue(this.category);
-      this.categoryImageUrl = this.category.imageUrl ?? this.categoryImageUrl;
+      this.category = product; 
+      this.productForm.patchValue(this.category);
+      this.productImageUrl = this.category.imageUrl ?? this.productImageUrl;
 
       this.cdr.detectChanges();
     });

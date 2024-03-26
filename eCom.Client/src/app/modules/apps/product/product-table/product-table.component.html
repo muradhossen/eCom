@@ -11,16 +11,16 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let category of categories; let sl = index" >
+      <tr *ngFor="let product of products; let sl = index" >
 
-        <th scope="row">{{category.sl}}</th>
-        <th>{{category.code}}</th>
-        <td><img *ngIf="category.imageUrl" src="{{category.imageUrl}}" alt="{{category.name}}" class="h-40px w-40px border-radius-5px"></td>
-        <td>{{category.name}}</td>
-        <td>{{category.description}}</td>
+        <th scope="row">{{product.sl}}</th>
+        <th>{{product.code}}</th>
+        <td><img *ngIf="product.imageUrl" src="{{product.imageUrl}}" alt="{{product.name}}" class="h-40px w-40px border-radius-5px"></td>
+        <td>{{product.name}}</td>
+        <td>{{product.description}}</td>
         <td>
-          <button class="btn btn-secondary btn-sm" (click)="edit(category.id)">Edit</button> 
-          <button class="btn btn-danger btn-sm m-1" (click)="deleteCategory(category.id,category.name)">Delete</button>
+          <button class="btn btn-secondary btn-sm" (click)="edit(product.id)">Edit</button> 
+          <button class="btn btn-danger btn-sm m-1" (click)="deleteProduct(product.id,product.name)">Delete</button>
         </td>
       </tr> 
     </tbody>
