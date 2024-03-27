@@ -11,16 +11,16 @@ export class Product implements SlNumber {
     usp: string;
     image: File;
     subCategoryId: number;
-    section : SectionCreate;
+    section : Section = new Section();
 }
 
 
-export class SectionCreate {
+export class Section {
     public name: string;
-    public pricingItems: PricingItemCreate[];
+    public pricingItems: PricingItem[] = [];
 }
 
-export class PricingItemCreate {
+export class PricingItem {
     public price: number;
     public label: string;
 }

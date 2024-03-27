@@ -6,7 +6,7 @@
         <th scope="col">Code</th>
         <th scope="col">Image</th>
         <th scope="col">Name</th>
-        <th scope="col">Description</th>
+        <th scope="col">Details</th> 
         <th scope="col">Action</th>
       </tr>
     </thead>
@@ -17,7 +17,8 @@
         <th>{{product.code}}</th>
         <td><img *ngIf="product.imageUrl" src="{{product.imageUrl}}" alt="{{product.name}}" class="h-40px w-40px border-radius-5px"></td>
         <td>{{product.name}}</td>
-        <td>{{product.description}}</td>
+        <td [title]="product.details">{{product.details | substring : 50}}</td> 
+
         <td>
           <button class="btn btn-secondary btn-sm" (click)="edit(product.id)">Edit</button> 
           <button class="btn btn-danger btn-sm m-1" (click)="deleteProduct(product.id,product.name)">Delete</button>

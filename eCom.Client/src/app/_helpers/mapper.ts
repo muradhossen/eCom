@@ -85,5 +85,18 @@ export function productToFormData(product: Product) {
     if (product.imageUrl) {
         formData.append('ImageUrl', product.imageUrl);
     } 
+
+        // Append section data
+        if (product.section) {
+            formData.append('section[name]', product.section.name);
+    
+            // Append pricing items data
+            if (product.section.pricingItems && product.section.pricingItems.length > 0) {
+                product.section.pricingItems.forEach((item, index) => {
+                    formData.append(`section[pricingItems][${index}][price]`, item.price.toString());
+                    formData.append(`section[pricingItems][${index}][label]`, item.label);
+                });
+            }
+        }
     return formData;
 }

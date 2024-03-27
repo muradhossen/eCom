@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -8,13 +8,14 @@ import { SubCategory } from '../../models/subcategory';
 import { CategoryService } from '../../services/category.service';
 import { Category } from '../../models/category';
 import { Pagination } from '../../models/pagination';
+ 
 
 @Component({
   selector: 'app-subcategory-form',
   templateUrl: './subcategory-form.component.html',
   styleUrls: ['./subcategory-form.component.scss']
 })
-export class SubcategoryFormComponent implements OnInit {
+export class SubcategoryFormComponent implements OnInit  {
 
   isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   isLoading: boolean;
@@ -31,6 +32,7 @@ export class SubcategoryFormComponent implements OnInit {
   pageSize = 10;
   categories: Category[] = [];
 
+ 
   pagination: Pagination = {
     currentPage: 1,
     itemsPerPage: this.pageSize,
@@ -76,6 +78,9 @@ export class SubcategoryFormComponent implements OnInit {
 
 
   initForm() {
+
+    
+
     this.subCategoryForm = this.fb.group({
 
       code: [''],
@@ -174,9 +179,8 @@ export class SubcategoryFormComponent implements OnInit {
     //   this.pageNumber = this.pageNumber + 1
     //  if(this.pageNumber <= this.pagination.totalPages){
     //    this.loadCategories();
-    //  }
+    //  }  
+    }
 
  
-    }
-  
 }

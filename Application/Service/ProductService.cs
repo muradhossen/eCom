@@ -46,5 +46,12 @@ internal class ProductService : Service<Product>, IProductService
         return await PagedList<Product>.CreateAsync(query, pageParam.PageSize, pageParam.PageNumber);
     }
 
+    public override async Task<Product> GetByIdAsync(object id)
+    {
+       return await _repository.TableNoTracking
+            .Include(s => s.Section).ThenInclude(c => c.PricingItems)
+            .FirstOrDefaultAsync();
 
+
+    }
 }

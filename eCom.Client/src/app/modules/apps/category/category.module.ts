@@ -7,7 +7,8 @@ import { CategoryFormComponent } from './category-form/category-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 // import { ModalModule } from 'ngx-bootstrap/modal';
-import { BsCommonModule } from 'src/app/_bsCommon/bs-common.module';
+import { BsCommonModule } from 'src/app/_bsCommon/bs-common.module'; 
+import { SharedPipeModule } from 'src/app/_pipe/shared-pipe.module';
 
 @NgModule({
   imports: [
@@ -17,11 +18,13 @@ import { BsCommonModule } from 'src/app/_bsCommon/bs-common.module';
     ReactiveFormsModule,
     PaginationModule.forRoot(), 
     BsCommonModule,
+    SharedPipeModule
   ],
   declarations: [
     CategoryComponent,
     CategoryTableComponent,
     CategoryFormComponent,
+     
   ]
 })
 export class CategoryModule { }

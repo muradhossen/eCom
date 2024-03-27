@@ -17,7 +17,7 @@
         <th>{{category.code}}</th>
         <td><img *ngIf="category.imageUrl" src="{{category.imageUrl}}" alt="{{category.name}}" class="h-40px w-40px border-radius-5px"></td>
         <td>{{category.name}}</td>
-        <td>{{category.description}}</td>
+        <td [title]="category.description">{{category.description | substring : 50}}</td>
         <td>
           <button class="btn btn-secondary btn-sm" (click)="edit(category.id)">Edit</button> 
           <button class="btn btn-danger btn-sm m-1" (click)="deleteCategory(category.id,category.name)">Delete</button>

@@ -36,10 +36,10 @@ namespace eCom.API.Controllers
                 return BadRequest(Result.Failure(CommonError.InvalidRequest));
             }
 
-            //if (dto.Section is null || dto.Section.PricingItems.IsNullOrEmpty())
-            //{
-            //    return BadRequest(Result.Failure(ProductError.NoPricintItemToCreate));
-            //}
+            if (dto.Section is null || dto.Section.PricingItems.IsNullOrEmpty())
+            {
+                return BadRequest(Result.Failure(ProductError.NoPricintItemToCreate));
+            }
 
             var product = _mapper.Map<Product>(dto);
 

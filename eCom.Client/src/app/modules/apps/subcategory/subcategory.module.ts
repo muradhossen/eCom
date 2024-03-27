@@ -7,7 +7,8 @@ import { SubcategoryFormComponent } from './subcategory-form/subcategory-form.co
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { BsCommonModule } from 'src/app/_bsCommon/bs-common.module';
 import { SubcategoryTableComponent } from './subcategory-table/subcategory-table.component';
-import { NgSelectModule } from '@ng-select/ng-select';
+import { NgSelectModule } from '@ng-select/ng-select'; 
+import { SharedPipeModule } from 'src/app/_pipe/shared-pipe.module';
 
 @NgModule({
   imports: [
@@ -17,12 +18,13 @@ import { NgSelectModule } from '@ng-select/ng-select';
     ReactiveFormsModule,
     PaginationModule.forRoot(), 
     BsCommonModule,
-    NgSelectModule
+    NgSelectModule,
+    SharedPipeModule
   ],
   declarations: [
     SubcategoryComponent,
     SubcategoryFormComponent,
-    SubcategoryTableComponent
+    SubcategoryTableComponent, 
   ]
 })
 export class SubcategoryModule { }

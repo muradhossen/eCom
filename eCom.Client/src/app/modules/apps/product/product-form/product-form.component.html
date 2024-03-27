@@ -100,10 +100,10 @@
         <div class="row mb-6">
           <label class="col-lg-4 col-form-label fw-bold fs-6">Description</label>
           <div class="col-lg-8 fv-row">
-            <textarea class="form-control form-control-lg" name="description" formControlName="description"
-              autocomplete="off" [ngClass]="{
-                              'is-invalid': productForm.controls['description'].invalid 
-                            }" rows="3"></textarea>
+
+            <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"> </ngx-editor-menu>
+            <ngx-editor [editor]="editor"  formControlName="description" [disabled]="false"></ngx-editor>
+           
 
             <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
                 validation: 'maxlength',
@@ -119,12 +119,71 @@
         <div class="row mb-6">
           <label class="col-lg-4 col-form-label fw-bold fs-6">USP</label>
           <div class="col-lg-8 fv-row">
-            <textarea class="form-control form-control-lg" name="usp" formControlName="usp" autocomplete="off"
+
+
+            <ngx-editor-menu [editor]="uspEditor" [toolbar]="uspToolbar"> </ngx-editor-menu>
+            <ngx-editor [editor]="uspEditor"  formControlName="usp" [disabled]="false"></ngx-editor>
+           
+
+            <!-- <textarea class="form-control form-control-lg" name="usp" formControlName="usp" autocomplete="off"
               [ngClass]="{'is-invalid': productForm.controls['usp'].invalid && productForm.get('usp')?.touched }">
-              </textarea>
+              </textarea> -->
           </div>
         </div>
         <!-- USP -->
+<!-- 
+        <div formArrayName="pricingItems">
+          <div *ngFor="let item of pricingItemsFormArray.controls; let i = index" [formGroupName]="i">
+            <input type="number" formControlName="price" placeholder="price">
+            <input formControlName="label" placeholder="label">
+            
+          </div>
+        </div> -->
+
+        <div formArrayName="pricingItems" class="row mb-6">
+          <label class="col-lg-4 col-form-label required fw-bold fs-6">Pricing</label>
+          <div class="col-lg-8">
+            <div class="row" *ngFor="let item of pricingItemsFormArray.controls; let i = index" [formGroupName]="i">
+              <!-- First name start -->
+              <div class="col-lg-6 fv-row">
+
+                <div class="col-md">
+                  <input class="form-control" name="label" formControlName="label"
+                    autocomplete="off"
+                    [ngClass]="{'is-invalid': pricingItemsFormArray.at(i).get('label')?.invalid && pricingItemsFormArray.at(i).get('label')?.touched}">
+                </div>
+
+                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{ 
+                          validation: 'required',
+                          message: 'First name is required',
+                          control: pricingItemsFormArray.at(i).get('label')
+                }"></ng-container>
+
+                <!-- <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                    validation: 'minlength',
+                    message: 'First name should have at least 3 symbols',
+                    control: userForm.controls['firstName']
+                }"></ng-container>
+
+                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                  validation: 'maxlength',
+                  message: 'First name should have maximum 320 symbols',
+                  control: userForm.controls['firstName']
+              }"></ng-container> -->
+              </div>
+              <!-- First name end -->
+
+              <!-- Last name start -->
+              <div class="col-lg-6 fv-row">
+
+                <input class="form-control form-control-lg" name="price" formControlName="price"
+                  autocomplete="off"/>
+
+              </div>
+              <!-- Last name end -->
+            </div>
+          </div>
+        </div>
 
       </div>
       <div class="card-footer d-flex justify-content-end py-6 px-9">
@@ -143,7 +202,11 @@
     </form>
   </div>
 
-
+  <!-- <div class="NgxEditor__Wrapper">
+    <ngx-editor-menu [editor]="editor"> </ngx-editor-menu>
+    <ngx-editor [editor]="editor" [ngModel]="html" [disabled]="false" [placeholder]="'Type here...'"></ngx-editor>
+  </div> -->
+  
 </div>
 
 
