@@ -89,12 +89,28 @@ export function productToFormData(product: Product) {
         // Append section data
         if (product.section) {
             formData.append('section[name]', product.section.name);
+            formData.append('section[id]', product.section?.id);
     
             // Append pricing items data
             if (product.section.pricingItems && product.section.pricingItems.length > 0) {
                 product.section.pricingItems.forEach((item, index) => {
+                    formData.append(`section[pricingItems][${index}][id]`, item.id?.toString());
                     formData.append(`section[pricingItems][${index}][price]`, item.price.toString());
                     formData.append(`section[pricingItems][${index}][label]`, item.label);
+                    if (product.section?.id) {
+                        formData.append(`section[pricingItems][${index}][sectionId]`, product.section?.id?.toString());
+                    }
+                    if (item.discountType) {
+                        formData.append(`section[pricingItems][${index}][discountType]`, item.discountType);                        
+                    }
+                    if (item?.discountAmount) {
+                        formData.append(`section[pricingItems][${index}][discountAmount]`, item.discountAmount?.toString());
+                        
+                    }
+                    if (item?.discountPercentage) {
+                        formData.append(`section[pricingItems][${index}][discountPercentage]`, item.discountPercentage?.toString());
+                        
+                    }
                 });
             }
         }

@@ -60,7 +60,7 @@
 
           </div>
         </div>
-        <!-- Name --> 
+        <!-- Name -->
 
         <!-- SubCategory dropdown -->
         <div class="row mb-6">
@@ -102,8 +102,8 @@
           <div class="col-lg-8 fv-row">
 
             <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"> </ngx-editor-menu>
-            <ngx-editor [editor]="editor"  formControlName="description" [disabled]="false"></ngx-editor>
-           
+            <ngx-editor [editor]="editor" formControlName="description" [disabled]="false"></ngx-editor>
+
 
             <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
                 validation: 'maxlength',
@@ -119,68 +119,68 @@
         <div class="row mb-6">
           <label class="col-lg-4 col-form-label fw-bold fs-6">USP</label>
           <div class="col-lg-8 fv-row">
-
-
             <ngx-editor-menu [editor]="uspEditor" [toolbar]="uspToolbar"> </ngx-editor-menu>
-            <ngx-editor [editor]="uspEditor"  formControlName="usp" [disabled]="false"></ngx-editor>
-           
-
-            <!-- <textarea class="form-control form-control-lg" name="usp" formControlName="usp" autocomplete="off"
-              [ngClass]="{'is-invalid': productForm.controls['usp'].invalid && productForm.get('usp')?.touched }">
-              </textarea> -->
+            <ngx-editor [editor]="uspEditor" formControlName="usp" [disabled]="false"></ngx-editor>
           </div>
         </div>
         <!-- USP -->
-<!-- 
-        <div formArrayName="pricingItems">
-          <div *ngFor="let item of pricingItemsFormArray.controls; let i = index" [formGroupName]="i">
-            <input type="number" formControlName="price" placeholder="price">
-            <input formControlName="label" placeholder="label">
-            
-          </div>
-        </div> -->
+
+        <!-- SectionId -->
+        <input formControlName="sectionId" hidden autocomplete="off">
+        <!-- SectionId -->
 
         <div formArrayName="pricingItems" class="row mb-6">
-          <label class="col-lg-4 col-form-label required fw-bold fs-6">Pricing</label>
-          <div class="col-lg-8">
+          <!-- <label class="col-lg-4 col-form-label required fw-bold fs-6">Pricing</label> -->
+          <div class="col-lg-12">
             <div class="row" *ngFor="let item of pricingItemsFormArray.controls; let i = index" [formGroupName]="i">
-              <!-- First name start -->
-              <div class="col-lg-6 fv-row">
 
+              <input formControlName="id" hidden autocomplete="off">
+
+              <!-- Label start -->
+              <div class="col-lg-3 fv-row">
                 <div class="col-md">
-                  <input class="form-control" name="label" formControlName="label"
-                    autocomplete="off"
+                  <label class="col-form-label fw-bold">Label</label>
+                  <input class="form-control" name="label" formControlName="label" autocomplete="off" id="label"
                     [ngClass]="{'is-invalid': pricingItemsFormArray.at(i).get('label')?.invalid && pricingItemsFormArray.at(i).get('label')?.touched}">
                 </div>
-
-                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{ 
-                          validation: 'required',
-                          message: 'First name is required',
-                          control: pricingItemsFormArray.at(i).get('label')
-                }"></ng-container>
-
-                <!-- <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                    validation: 'minlength',
-                    message: 'First name should have at least 3 symbols',
-                    control: userForm.controls['firstName']
-                }"></ng-container>
-
-                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                  validation: 'maxlength',
-                  message: 'First name should have maximum 320 symbols',
-                  control: userForm.controls['firstName']
-              }"></ng-container> -->
               </div>
-              <!-- First name end -->
+              <!-- Label end -->
 
-              <!-- Last name start -->
-              <div class="col-lg-6 fv-row">
-
-                <input class="form-control form-control-lg" name="price" formControlName="price"
-                  autocomplete="off"/>
-
+              <!-- price start -->
+              <div class="col-lg-3 fv-row">
+                <label class="col-form-label fw-bold">Price</label>
+                <input class="form-control form-control-lg" name="price" formControlName="price" autocomplete="off" />
               </div>
-              <!-- Last name end -->
+              <!-- price end -->
+
+              <!-- discount type start -->
+              <div class="col-lg-3 fv-row">
+                <label class="col-form-label fw-bold">Discount Type</label>
+                <ng-select class="form-control form-control-sm border-none" [items]="discountTypes" bindLabel="name"
+                  bindValue="id" formControlName="discountType" [virtualScroll]="true"
+                  placeholder="Select discount type">
+                </ng-select>
+              </div>
+              <!-- discount type end -->
+
+              <!-- discount amount start -->
+              <div class="col-lg-3 fv-row"
+                *ngIf="pricingItemsFormArray.at(i).get('discountType')?.value == discountTypes[0].id">
+                <label class="col-form-label fw-bold">Amount</label>
+                <input class="form-control form-control-lg" name="discountAmount" formControlName="discountAmount"
+                  autocomplete="off" />
+              </div>
+              <!-- discount amount end -->
+
+              <!-- discount percentage start -->
+              <div class="col-lg-3 fv-row"
+                *ngIf="pricingItemsFormArray.at(i).get('discountType')?.value == discountTypes[1].id">
+                <label class="col-form-label fw-bold">Percentage</label>
+                <input class="form-control form-control-lg" name="discountPercentage"
+                  formControlName="discountPercentage" autocomplete="off" />
+              </div>
+              <!-- discount percentage end -->
+
             </div>
           </div>
         </div>
@@ -202,11 +202,8 @@
     </form>
   </div>
 
-  <!-- <div class="NgxEditor__Wrapper">
-    <ngx-editor-menu [editor]="editor"> </ngx-editor-menu>
-    <ngx-editor [editor]="editor" [ngModel]="html" [disabled]="false" [placeholder]="'Type here...'"></ngx-editor>
-  </div> -->
-  
+
+
 </div>
 
 

@@ -48,8 +48,9 @@ internal class ProductService : Service<Product>, IProductService
 
     public override async Task<Product> GetByIdAsync(object id)
     {
-       return await _repository.TableNoTracking
+       return await _repository.GetQueryable()
             .Include(s => s.Section).ThenInclude(c => c.PricingItems)
+            .Where(c => c.Id == (long)id)
             .FirstOrDefaultAsync();
 
 

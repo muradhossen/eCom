@@ -10,12 +10,17 @@ import { PricingItem, Product } from '../../models/product';
 import { SubcategoryService } from '../../services/subcategory.service';
 import { Editor, Toolbar } from 'ngx-editor';
 
+export interface DiscountType {
+  id: string;
+  name: string;
+}
+
 @Component({
   selector: 'app-product-form',
   templateUrl: './product-form.component.html',
   styleUrls: ['./product-form.component.scss']
 })
-export class ProductFormComponent implements OnInit,OnDestroy  {
+export class ProductFormComponent implements OnInit, OnDestroy {
 
 
   isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
@@ -30,20 +35,25 @@ export class ProductFormComponent implements OnInit,OnDestroy  {
 
   subcategories: Category[] = [];
 
+  discountTypes: DiscountType[] = [
+    { name: 'Flat', id: 'flat' },
+    { name: 'Percentage', id: 'percentage' }
+  ];
+
   editor: Editor;
   uspEditor: Editor;
 
   toolbar: Toolbar = [
     ['bold', 'italic'],
-    ['underline'], 
+    ['underline'],
     ['ordered_list', 'bullet_list'],
     [{ heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }],
     ['link', 'image'],
-    ['text_color', 'background_color']    
+    ['text_color', 'background_color']
   ];
-  
-  uspToolbar: Toolbar = [      
-    ['ordered_list', 'bullet_list']     
+
+  uspToolbar: Toolbar = [
+    ['ordered_list', 'bullet_list']
   ];
 
   constructor(private fb: FormBuilder,
@@ -51,7 +61,7 @@ export class ProductFormComponent implements OnInit,OnDestroy  {
     private router: Router,
     private cdr: ChangeDetectorRef,
     private route: ActivatedRoute,
-    private subcategoryService : SubcategoryService) {
+    private subcategoryService: SubcategoryService) {
 
     const loadingSubscr = this.isLoading$
       .asObservable()
@@ -66,7 +76,7 @@ export class ProductFormComponent implements OnInit,OnDestroy  {
   ngOnInit() {
 
     this.loadSubCategories();
-    
+
     this.route.params.subscribe(params => {
 
       this.id = params['id'];
@@ -87,23 +97,28 @@ export class ProductFormComponent implements OnInit,OnDestroy  {
     this.uspEditor = new Editor();
 
     this.productForm = this.fb.group({
-      
+
       code: [''],
-      details: [ '',Validators.compose([Validators.maxLength(1000)])],
+      details: ['', Validators.compose([Validators.maxLength(1000)])],
       usp: [''],
       subCategoryId: ['', Validators.compose([Validators.required])],
       name: [
         '',
-        Validators.compose([Validators.required,Validators.maxLength(55)]),
+        Validators.compose([Validators.required, Validators.maxLength(55)]),
       ],
       description: [
         '',
         Validators.compose([Validators.maxLength(1000)])
       ],
       image: '',
-      pricingItems : this.fb.array([this.fb.group({
-        label : [''],
-        price : [0]
+      sectionId: '',
+      pricingItems: this.fb.array([this.fb.group({
+        id: [],
+        label: ['Label-01'],
+        price: [0],
+        discountType: [''],
+        discountAmount : [],
+        discountPercentage : [],
       })])
     });
   }
@@ -114,38 +129,58 @@ export class ProductFormComponent implements OnInit,OnDestroy  {
   }
 
   submit() {
-     debugger
-    const product = new Product();
-    product.name = this.productForm.get('name')?.value;
-    product.description = this.productForm.get('description')?.value; 
-    product.image = this.productImage;
-    if (!this.productImage) {
-      product.imageUrl = this.product.imageUrl;
-    } 
-    product.code = this.productForm.get('code')?.value; 
-    product.details = this.productForm.get('details')?.value; 
-    product.usp = this.productForm.get('usp')?.value; 
-    product.subCategoryId = this.productForm.get('subCategoryId')?.value; 
-    
-    const pricingItems = new PricingItem();
-    pricingItems.price = this.pricingItemsFormArray.controls[0].get('price')?.value;
-    pricingItems.label = this.pricingItemsFormArray.controls[0].get('label')?.value;
-    product.section.name = "Section-01";
-    product.section.pricingItems.push(pricingItems);
+   
+    this.isLoading$.next(true); 
 
     if (this.isEdit) {
-      this.productService.updateProduct(this.id,product).subscribe(res => {
-        this.router.navigate(['/manage/products']);
+      this.productService.updateProduct(this.id,  this.getProductToSave()).subscribe({
+        next : res => {
+          this.router.navigate(['/manage/products']);
+        },
+        complete : () => this.isLoading$.next(false)
       });
     }
     else {
-      this.productService.createProduct(product).subscribe(res => {
-        this.router.navigate(['/manage/products']);
+      this.productService.createProduct( this.getProductToSave()).subscribe({
+        next : res => {
+          this.router.navigate(['/manage/products']);
+        },
+        complete : () => this.isLoading$.next(false)
       });
     }
   }
 
 
+  getProductToSave(){
+    debugger
+    const product = new Product();
+    product.name = this.productForm.get('name')?.value;
+    product.description = this.productForm.get('description')?.value;
+    product.image = this.productImage;
+    if (!this.productImage) {
+      product.imageUrl = this.product.imageUrl;
+    }
+    product.code = this.productForm.get('code')?.value;
+    product.details = this.productForm.get('details')?.value;
+    product.usp = this.productForm.get('usp')?.value;
+    product.subCategoryId = this.productForm.get('subCategoryId')?.value;
+
+    const pricingItems = new PricingItem();
+    pricingItems.id = this.pricingItemsFormArray.controls[0].get('id')?.value;
+    pricingItems.price = this.pricingItemsFormArray.controls[0].get('price')?.value;
+    pricingItems.label = this.pricingItemsFormArray.controls[0].get('label')?.value;
+    pricingItems.discountType = this.pricingItemsFormArray.controls[0].get('discountType')?.value;
+    pricingItems.discountAmount = this.pricingItemsFormArray.controls[0].get('discountAmount')?.value;
+    pricingItems.discountPercentage = this.pricingItemsFormArray.controls[0].get('discountPercentage')?.value;
+
+
+    product.section.name = "Section-01";
+    product.section.id = this.productForm.get('sectionId')?.value;;
+
+    product.section.pricingItems.push(pricingItems);
+
+    return product;
+  }
   // Method to handle file selection
   onFileSelected(event: any) {
     if (event.target.files.length > 0) {
@@ -158,30 +193,30 @@ export class ProductFormComponent implements OnInit,OnDestroy  {
         this.productImageUrl = e.target.result;
         this.cdr.detectChanges();
       };
-
-
-
     }
   }
 
   getCategory(id: number) {
     this.productService.getProduct(id).subscribe(product => {
- 
-      this.product = product; 
+debugger
+      this.product = product;
       this.productForm.patchValue(this.product);
-      this.productImageUrl = this.product.imageUrl ?? this.productImageUrl;
       
+      this.productForm.get('sectionId')?.setValue(this.product?.section?.id);
+
+      this.productImageUrl = this.product.imageUrl ?? this.productImageUrl;
+
       if (this.product && this.product.section) {
-        this.pricingItemsFormArray.patchValue(this.product.section.pricingItems);        
+        this.pricingItemsFormArray.patchValue(this.product.section.pricingItems);
       }
 
       this.cdr.detectChanges();
     });
 
   }
-  
+
   loadSubCategories() {
-  
+
     this.subcategoryService.getDropdownSubCategories().subscribe(subcategories => {
       this.subcategories = this.subcategories.concat(subcategories);
       this.cdr.detectChanges();

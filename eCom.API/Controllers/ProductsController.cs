@@ -127,6 +127,7 @@ namespace eCom.API.Controllers
                     product.ImageUrl = photoUploadResult.SecureUrl.AbsoluteUri;
                     product.PhotoPublicId = photoUploadResult.PublicId;
                 }
+                des.Section.ProductId = id; 
             }));
 
             if (await _productService.UpdateAsync(product))
@@ -138,7 +139,7 @@ namespace eCom.API.Controllers
                     id = product.Id,
 
                 };
-                return CreatedAtRoute(routeValues, product);
+                return CreatedAtRoute(routeValues, dto);
             }
             return BadRequest(Result.Failure(ProductError.UpdateFailed(product.Code)));
         }

@@ -17,11 +17,16 @@ export class Product implements SlNumber {
 
 export class Section {
     public name: string;
+    public id: string;
     public pricingItems: PricingItem[] = [];
 }
 
 export class PricingItem {
+    public id : number;
     public price: number;
     public label: string;
+    public discountType : string;
+    public discountAmount : number;
+    public discountPercentage : number;
 }
 
