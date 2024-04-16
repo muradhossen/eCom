@@ -28,10 +28,16 @@ const Routing: Routes = [
     loadChildren: () =>
       import('../modules/apps/product/product.module').then((m) => m.ProductModule), 
   },
+  {
+    path: '',
+    loadChildren: () =>
+      import('../modules/website/website.module').then((m) => m.WebsiteModule), 
+      data: { layout: 'light-header' },
+  },
  
   {
     path: '',
-    redirectTo: '/dashboard',
+    redirectTo: '',
     pathMatch: 'full',
   },
   {

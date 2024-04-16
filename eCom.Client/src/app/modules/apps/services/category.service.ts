@@ -56,7 +56,7 @@ export class CategoryService {
   }
 
   getDropdownCategories(){
-    return this.http.get<Result<Category>>(this.endpoint + "dropdown").pipe(map(res => {
+    return this.http.get<Result<Category[]>>(this.endpoint + "dropdown").pipe(map(res => {
       return res.data;
     }))
   }
