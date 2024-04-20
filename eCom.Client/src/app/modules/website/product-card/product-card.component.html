@@ -1,0 +1,24 @@
+<div class="card" style="width: 19rem; position: relative; ">
+
+  <img
+    [src]="product.imageUrl || 'https://res.cloudinary.com/do7pdjcnd/image/upload/v1661704771/samples/ecommerce/analog-classic.jpg'"
+    class="card-img-top" alt="..." style="position: relative;">
+
+  <div class="card-body">
+    <h5 class="card-title" style="height: 30px;">{{product.name | substring : 39}}</h5>
+    <p class="card-text" style="text-align: center;">
+      
+      <b class="kt-primary-text-color" style="margin-right: 10px;">
+       BDT {{getProductPrice(product.section.pricingItems[0])}}
+      </b> 
+ 
+      <s *ngIf="hasDiscount(product.section.pricingItems[0])" 
+      class="badge badge-light border border-dark-subtle rounded-pill text-danger" > MRP {{product.section.pricingItems[0].price}}</s>
+    </p>
+
+    <button class="hover-button"> 
+      <i class="bi bi-bag-plus" style="color: #009ef7;font-size: large;"></i>
+    </button>
+  </div>
+
+</div>

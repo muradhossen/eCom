@@ -43,6 +43,7 @@
     "ngx-clipboard": "15.1.0",
     "ngx-drag-scroll": "^17.0.1",
     "ngx-editor": "^15.3.0",
+    "ngx-owl-carousel-o": "^16.0.0",
     "ngx-toastr": "^18.0.0",
     "nouislider": "^15.7.0",
     "object-path": "0.11.8",

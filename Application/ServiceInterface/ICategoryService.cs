@@ -10,4 +10,5 @@ public interface ICategoryService : IService<Category>
 {
     Task<PagedList<Category>> GetCategoriesAsync(CategoryPageParam pageParam);
     Task<Result> DeleteWithHierarchyAsync(long id, long userId);
+    Task<Result> GetCategoryHierarchy(int? size);
 }

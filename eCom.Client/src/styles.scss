@@ -17,6 +17,10 @@
 @import "node_modules/ngx-bootstrap/datepicker/bs-datepicker";
  
 @import "~@ng-select/ng-select/themes/default.theme.css";  
+
+@import 'ngx-owl-carousel-o/lib/styles/scss/owl.carousel';
+@import 'ngx-owl-carousel-o/lib/styles/scss/owl.theme.default';
+
 .border-radius-5px {
     border-radius: 5px;
 }
@@ -29,4 +33,28 @@
 .ng-select.border-none .ng-select-container  {            
     border: none;
     font-size: 1.1rem;
+}
+
+// owl carosoul customization start
+.owl-nav{
+    position: absolute;
+    top: 50%;
+    right: 0;
+}
+
+.owl-nav {
+    display: none;
+  }
+  .owl-carousel:hover .owl-nav {
+    // display: block;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  } 
+  
+//owl carosoul customization end
+
+
+.m-tb-26px{
+    margin: 26px 0px;
 }

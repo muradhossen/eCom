@@ -34,7 +34,7 @@ namespace eCom.API.Controllers
             if (dto is null)
             {
                 return BadRequest(Result.Failure(CommonError.InvalidRequest));
-            } 
+            }
 
             var photoUploadResult = await _photoService.AddPhotoAsync(dto.Image);
             if (photoUploadResult.Error != null)
@@ -56,7 +56,7 @@ namespace eCom.API.Controllers
                     action = nameof(GetCategoryById),
                     controller = "Categories",
                     id = category.Id,
-                    
+
                 };
                 return CreatedAtRoute(routeValues, Result.Success(category));
             }
@@ -73,8 +73,8 @@ namespace eCom.API.Controllers
             }
             Response.AddPaginationHeader(categories.CurrentPage, categories.PageSize, categories.TotalCount, categories.TotalPage);
 
-          var result =  _mapper.Map<List<CategoryDto>>(categories).SetSlNumber(categories.CurrentPage,categories.PageSize);
-             
+            var result = _mapper.Map<List<CategoryDto>>(categories).SetSlNumber(categories.CurrentPage, categories.PageSize);
+
             return Ok(result);
         }
 
@@ -86,7 +86,7 @@ namespace eCom.API.Controllers
                 return BadRequest(Result.Failure(CommonError.InvalidRequest));
             }
 
-           var category = await _categoryService.GetByIdAsync(id);
+            var category = await _categoryService.GetByIdAsync(id);
 
             if (category is null)
             {
@@ -107,8 +107,8 @@ namespace eCom.API.Controllers
             var category = await _categoryService.GetByIdAsync(id);
 
             if (category is null)
-            {                 
-              return NotFound(Result.Failure(CategoryError.NotFound));
+            {
+                return NotFound(Result.Failure(CategoryError.NotFound));
             }
 
             var photoUploadResult = await _photoService.AddPhotoAsync(dto.Image);
@@ -117,7 +117,7 @@ namespace eCom.API.Controllers
                 return BadRequest(Result.Failure(CategoryError.ImageUploadFailed));
             }
 
-            _mapper.Map(dto,category,opt=> opt.AfterMap((src, des) =>
+            _mapper.Map(dto, category, opt => opt.AfterMap((src, des) =>
             {
                 des.Id = id;
                 if (photoUploadResult.SecureUrl != null)
@@ -127,7 +127,7 @@ namespace eCom.API.Controllers
                 }
             }));
 
-            if(await _categoryService.UpdateAsync(category))
+            if (await _categoryService.UpdateAsync(category))
             {
                 var routeValues = new
                 {
@@ -167,6 +167,11 @@ namespace eCom.API.Controllers
             }
 
             return Ok(Result.Success(categories));
+        }
+        [HttpGet("hierarchy")]
+        public async Task<ActionResult<Result>> GetCategoryHierarchy([FromQuery] int? size)
+        {
+            return await _categoryService.GetCategoryHierarchy(size);
         }
     }
 }

@@ -19,4 +19,5 @@ public class SubCategory : AuditableWithBaseEntity<long>
     public string Description { get; set; }
     public long CategoryId { get; set; }
     public Category Category { get; set; }
+    public IEnumerable<Product> Products { get; set; }
 }

@@ -1,17 +1,59 @@
-<ul>
-  <li class="style-type-none" *ngFor="let category of categories">{{category.name}}</li>
-</ul>
+<div class="row">
+  <div class="col-md-2">
 
+    <div class="list-group outer-div">
 
-<!-- <carousel [(activeSlide)]="activeSlideIndex"  >
-  <slide *ngFor="let slide of slides; let index=index">
-    <img [src]="slide.image" alt="image slide">
+      <a href="#" (mouseenter)="setMenuSubcategory(item)" *ngFor="let item of hierarchy"
+        class="list-group-item list-group-item-action"><b>{{item.value |
+          substring : 19 }}</b>
+      </a>
 
-    <div class="carousel-caption">
-      <h4>Slide {{index}}</h4>
-      <p>{{slide.text}}</p>
+      <div class="rounded-2 hover-div">
+        <ul class="subcategory-list">
+          <li style="list-style:none;cursor: pointer;" *ngFor="let subcategoryItem of menuSubcategories">
+            <b>{{subcategoryItem.value | substring : 19 }}</b>
+          </li>
+        </ul>
+      </div>
+
+      <a href="#" class="list-group-item list-group-item-action active">
+        View all
+      </a>
+
     </div>
-  </slide>
-</carousel> -->
+  </div>
+  <div class="col-md-10">
+    <owl-carousel-o [options]="customOptions">
+      <ng-container *ngFor="let slide of slides">
+        <ng-template carouselSlide>
+          <img style="height: 265px;" class="rounded-3" [src]="slide.image" [title]="slide.text">
 
+        </ng-template>
+      </ng-container>
+    </owl-carousel-o>
+  </div>
+</div>
 
+<div>
+  <div class="row">
+    <div class="m-tb-26px" style="display: flex; justify-content: space-between;">
+   
+      <h1>Products</h1> 
+      <a  class="btn btn-sm fw-bold btn-primary">View more</a>     
+    </div>
+    <hr>
+  </div>
+
+  <div class="row">
+    <owl-carousel-o [options]="productOptions">
+      <ng-container *ngFor="let product of products">
+        <ng-template carouselSlide>
+          <app-product-card [product]="product">
+
+          </app-product-card>
+
+        </ng-template>
+      </ng-container>
+    </owl-carousel-o>
+  </div>
+</div>

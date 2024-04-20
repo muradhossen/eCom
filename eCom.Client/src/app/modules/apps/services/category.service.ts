@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Category } from '../models/category';
@@ -6,6 +6,7 @@ import { getPaginatedResult, getPaginationHeader } from './paginationHelper';
 import { Result } from '../../auth/models/result';
 import { categoryToFormData } from 'src/app/_helpers/mapper';
 import { map } from 'rxjs';
+import { Hierarchy } from '../models/category copy';
 
 @Injectable({
   providedIn: 'root'
@@ -61,4 +62,15 @@ export class CategoryService {
     }))
   }
 
+  getCategoryHierarchy(size? : number){
+    let params = new HttpParams();
+
+    if (size) {
+      params = params.append("size", size.toString());      
+    }
+    
+    return this.http.get<Result<Hierarchy[]>>(this.endpoint + "hierarchy",{params}).pipe(map(res => {
+      return res.data;
+    }))
+  }
 }

@@ -1,3 +1,38 @@
 .style-type-none {
     list-style-type: none;
   }
+
+
+
+ /* my-component.component.css */
+.outer-div {
+  position: relative;
+  
+}
+
+.hover-div {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  padding: 10px;
+}
+
+.outer-div:hover .hover-div {
+  top: 0;
+  display: block;
+  left: 100%;
+  width: 350px;
+  height: 268px;
+  z-index: 999;
+  margin-left: 2px;
+}
+
+.subcategory-list{
+  display: grid;
+    grid-template-rows: repeat(8, 20px);
+    grid-auto-flow: column;
+    gap: 10px 15px;
+}

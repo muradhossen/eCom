@@ -21,9 +21,13 @@ export class ProductService {
 
   constructor(private http: HttpClient) { }
 
-  getProducts(pageSize: number, pageNumber: number) {
+  getProducts(pageSize: number, pageNumber: number, IncludePricing? : boolean) {
 
     let params = getPaginationHeader(pageNumber, pageSize);
+
+    if (IncludePricing) {
+      params = params.append("IncludePricing",IncludePricing);
+    }
 
     return getPaginatedResult<Result<Product[]>>(this.endpoint, params, this.http);
   }

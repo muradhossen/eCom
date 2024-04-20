@@ -1,0 +1,16 @@
+.hover-button {
+    position: absolute;
+    top: 10px; /* Adjust top position as needed */
+    right: 10px; /* Adjust right position as needed */
+    display: none;
+    background-color: ghostwhite; /* Make the background color transparent */
+    border: 1px solid #fff; /* Add a border for visibility */
+    color: #fff; /* Set text color to white for contrast */
+    padding: 5px 10px; /* Add padding for button appearance */ 
+    border-radius: 50%;
+  }
+  
+  .card:hover .hover-button {
+    display: block;
+  }
+  

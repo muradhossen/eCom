@@ -1,3 +1,4 @@
+import { DiscountType } from "../enums/discountType";
 import { SlNumber } from "./sl-number";
 
 export class Product implements SlNumber {
@@ -22,6 +23,9 @@ export class Section {
 }
 
 export class PricingItem {
+
+    constructor(){}
+
     public id : number;
     public price: number;
     public label: string;

@@ -17,4 +17,5 @@ public class Category : AuditableWithBaseEntity<long>
     public string PhotoPublicId { get; set; }
     [MaxLength(1000, ErrorMessage = $"The {nameof(Description)} field cannot exceed 1000 characters.")]
     public string Description { get; set; }
+    public IEnumerable<SubCategory> SubCategories { get; set; }
 }
