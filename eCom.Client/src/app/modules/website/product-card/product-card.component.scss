@@ -1,4 +1,6 @@
-.hover-button {
+@import '/src/assets/sass/components/variables.custom';
+
+.cart-button {
     position: absolute;
     top: 10px; /* Adjust top position as needed */
     right: 10px; /* Adjust right position as needed */
@@ -8,9 +10,37 @@
     color: #fff; /* Set text color to white for contrast */
     padding: 5px 10px; /* Add padding for button appearance */ 
     border-radius: 50%;
+    cursor:pointer;
   }
   
-  .card:hover .hover-button {
+  .card:hover .cart-button {
+    display: block;
+  }
+
+  .card:hover .perview-button {
     display: block;
   }
   
+  
+  .product-price{
+    margin-right: 10px;
+  }
+  .add-to-cart-icon{
+    color: #009ef7;
+    font-size: large;
+  }
+
+
+  .perview-button {
+    position: absolute;
+    bottom: 130px;
+    right: 10px;
+    display: none;
+    border: 1px solid $primary;
+    padding: 5px 10px;
+    width: 93%;
+    // background: #009ef7;
+    background: $primary;
+    color: white;    
+  }
+ 

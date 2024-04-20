@@ -34,26 +34,7 @@
   </div>
 </div>
 
-<div>
-  <div class="row">
-    <div class="m-tb-26px" style="display: flex; justify-content: space-between;">
-   
-      <h1>Products</h1> 
-      <a  class="btn btn-sm fw-bold btn-primary">View more</a>     
-    </div>
-    <hr>
-  </div>
 
-  <div class="row">
-    <owl-carousel-o [options]="productOptions">
-      <ng-container *ngFor="let product of products">
-        <ng-template carouselSlide>
-          <app-product-card [product]="product">
-
-          </app-product-card>
-
-        </ng-template>
-      </ng-container>
-    </owl-carousel-o>
-  </div>
-</div>
+<app-product-container>
+</app-product-container>
+ 

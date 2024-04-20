@@ -2,23 +2,28 @@
 
   <img
     [src]="product.imageUrl || 'https://res.cloudinary.com/do7pdjcnd/image/upload/v1661704771/samples/ecommerce/analog-classic.jpg'"
-    class="card-img-top" alt="..." style="position: relative;">
+    class="card-img-top" alt="Product Image" style="position: relative;">
 
   <div class="card-body">
+   <a href="">
     <h5 class="card-title" style="height: 30px;">{{product.name | substring : 39}}</h5>
+   </a> 
     <p class="card-text" style="text-align: center;">
-      
-      <b class="kt-primary-text-color" style="margin-right: 10px;">
-       BDT {{getProductPrice(product.section.pricingItems[0])}}
-      </b> 
- 
-      <s *ngIf="hasDiscount(product.section.pricingItems[0])" 
-      class="badge badge-light border border-dark-subtle rounded-pill text-danger" > MRP {{product.section.pricingItems[0].price}}</s>
+
+      <b class="product-price">
+        BDT {{getProductPrice(product.section.pricingItems[0])}}
+      </b>
+
+      <s *ngIf="hasDiscount(product.section.pricingItems[0])"
+        class="badge badge-light border border-dark-subtle rounded-pill text-danger"> MRP
+        {{product.section.pricingItems[0].price}}</s>
     </p>
 
-    <button class="hover-button"> 
-      <i class="bi bi-bag-plus" style="color: #009ef7;font-size: large;"></i>
-    </button>
+    <a class="cart-button">
+      <i class="bi bi-bag-plus add-to-cart-icon"></i>
+    </a>   
   </div>
+
+  <button class="perview-button rounded-3">Quick view</button>
 
 </div>

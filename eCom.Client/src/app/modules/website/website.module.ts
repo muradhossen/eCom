@@ -5,6 +5,7 @@ import { WebsiteRoutingModule } from './website.routing.module';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { SharedPipeModule } from 'src/app/_pipe/shared-pipe.module';
 import { ProductCardComponent } from './product-card/product-card.component';
+import { ProductContainerComponent } from './product-container/product-container.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { ProductCardComponent } from './product-card/product-card.component';
   ],
   declarations: [
     WebsiteComponent,
-    ProductCardComponent
+    ProductCardComponent,
+    ProductContainerComponent
   ]
 })
 export class WebsiteModule { }

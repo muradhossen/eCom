@@ -38,7 +38,7 @@
 // owl carosoul customization start
 .owl-nav{
     position: absolute;
-    top: 50%;
+    top: 40%;
     right: 0;
 }
 
@@ -46,7 +46,7 @@
     display: none;
   }
   .owl-carousel:hover .owl-nav {
-    // display: block;
+    
     width: 100%;
     display: flex;
     justify-content: space-between;
