@@ -33,6 +33,10 @@ export class ConfirmService {
     return new Observable<boolean>(this.getResult());
   }
 
+
+
+
+
   private getResult() {
     return (observer: { next: (arg0: any) => void; complete: () => void; }) => {
       if (this.bsModalRef.onHidden) {
@@ -46,7 +50,7 @@ export class ConfirmService {
             subcription.unsubscribe();
           }
         }
-      } 
+      }
     }
 
   }

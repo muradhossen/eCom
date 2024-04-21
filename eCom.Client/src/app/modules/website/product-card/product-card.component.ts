@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { PricingItem, Product } from '../../apps/models/product';
 import { DiscountType } from '../../apps/enums/discountType';
+import { ConfirmService } from 'src/app/_bsCommon/confirm.service';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-product-card',
@@ -9,10 +11,20 @@ import { DiscountType } from '../../apps/enums/discountType';
 })
 export class ProductCardComponent implements OnInit {
 
-  @Input() product : Product;
-  constructor() { }
+  @Input() product: Product;
+   
+  productDetailsRoute : string
+  modalRef?: BsModalRef;
+  config = {
+    animated: true,
+    class: 'modal-dialog modal-dialog-centered modal-lg' 
+  };
+  constructor(private modalService: BsModalService) {}
+ 
 
   ngOnInit() {
+
+    this.productDetailsRoute = '/products/'+ this.product.name;
   }
 
   getProductPrice(pricingItem: PricingItem): number {
@@ -23,18 +35,25 @@ export class ProductCardComponent implements OnInit {
     }
   }
 
-  public hasDiscount(pricingItem: PricingItem){
+  public hasDiscount(pricingItem: PricingItem) {
     return pricingItem.discountAmount || pricingItem.discountPercentage;
-}
-
-public getDiscountAmount(pricingItem: PricingItem){
-   
-      if (pricingItem.discountType == DiscountType.flat) {
-          return pricingItem.discountAmount;
-      }
-      if (pricingItem.discountType == DiscountType.percentage) {
-          return  (pricingItem.price * pricingItem.discountPercentage) / 100;
-      }
-      return 0;
   }
+
+  public getDiscountAmount(pricingItem: PricingItem) {
+
+    if (pricingItem.discountType == DiscountType.flat) {
+      return pricingItem.discountAmount;
+    }
+    if (pricingItem.discountType == DiscountType.percentage) {
+      return (pricingItem.price * pricingItem.discountPercentage) / 100;
+    }
+    return 0;
+  }
+
+  showProductQuickView(product: Product,template : any) {
+    
+
+    this.modalRef = this.modalService.show(template, this.config);
+  }
+
 }

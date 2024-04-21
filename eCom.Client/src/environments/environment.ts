@@ -5,7 +5,7 @@
 export const environment = {
 baseUrl : "http://localhost:5051/api/",
 defaultItemImagePath : "./assets/media/avatars/blank.png",
-
+websiteUrl : 'http://localhost:4200/',
 
 
 
@@ -24,7 +24,7 @@ defaultItemImagePath : "./assets/media/avatars/blank.png",
     'https://preview.keenthemes.com/metronic8/angular/demo1',
   appPreviewDocsUrl: 'https://preview.keenthemes.com/metronic8/angular/docs',
   appPreviewChangelogUrl:
-    'https://preview.keenthemes.com/metronic8/angular/docs/changelog',
+    'https://preview.keenthemes.com/metronic8/angular/docs/changelog', 
   appDemos: {
     demo1: {
       title: 'Demo 1',

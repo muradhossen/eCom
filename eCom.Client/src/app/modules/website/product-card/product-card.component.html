@@ -5,9 +5,9 @@
     class="card-img-top" alt="Product Image" style="position: relative;">
 
   <div class="card-body">
-   <a href="">
-    <h5 class="card-title" style="height: 30px;">{{product.name | substring : 39}}</h5>
-   </a> 
+    <a [routerLink]="productDetailsRoute">
+      <h5 class="card-title" style="height: 30px;">{{product.name | substring : 39}}</h5>
+    </a>
     <p class="card-text" style="text-align: center;">
 
       <b class="product-price">
@@ -21,9 +21,40 @@
 
     <a class="cart-button">
       <i class="bi bi-bag-plus add-to-cart-icon"></i>
-    </a>   
+    </a>
   </div>
 
-  <button class="perview-button rounded-3">Quick view</button>
+  <button (click)="showProductQuickView(product,template)" class="perview-button btn btn-sm">Quick view</button>
 
 </div>
+
+
+
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Quick view</h4>
+    <button type="button" class="close btn-close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-md-6">
+        <img class="w-100 h-100 rounded-3" [src]="product.imageUrl" alt="Product image">
+      </div>
+      <div class="col-md-6">
+        <h1 class="modal-product-title">{{product.name}}</h1>
+        <h2 class="modal-product-price text-primary">
+          BDT {{getProductPrice(product.section.pricingItems[0])}}
+          <s *ngIf="hasDiscount(product.section.pricingItems[0])"
+            class="badge badge-light border border-dark-subtle rounded-pill text-danger"> MRP
+            {{product.section.pricingItems[0].price}}</s>
+        </h2>
+        <div style="min-height: 185px;" [innerHTML]="product.usp"></div>
+        <hr>
+        <button class="btn btn-lg fw-bold btn-primary w-100">Add to cart</button>
+        <hr>
+      </div>
+    </div>
+  </div>
+</ng-template>

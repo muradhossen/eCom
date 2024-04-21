@@ -8,6 +8,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     CommonModule,
     ModalModule.forRoot(),
   ],
-  declarations: [BsConfirmModalComponent]
+  declarations: [
+    BsConfirmModalComponent, 
+  ]
 })
 export class BsCommonModule { }

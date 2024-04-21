@@ -1,11 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { CategoryService } from '../apps/services/category.service';
-import { Category } from '../apps/models/category';
-import { Pagination } from '../apps/models/pagination';
+import { CategoryService } from '../apps/services/category.service'; 
 import { OwlOptions } from 'ngx-owl-carousel-o';
-import { Hierarchy } from '../apps/models/category copy';
-import { ProductService } from '../apps/services/product.service';
-import { Product } from '../apps/models/product';
+import { Hierarchy } from '../apps/models/category copy'; 
  
 
 @Component({

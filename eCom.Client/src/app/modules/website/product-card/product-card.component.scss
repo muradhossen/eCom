@@ -43,4 +43,29 @@
     background: $primary;
     color: white;    
   }
+
+  .add-to-cart-btn {
+    position: absolute;
+    bottom: 130px;
+    right: 10px;
+    border: 1px solid $primary;
+    padding: 5px 10px;
+    width: 93%;
+    background: $primary;
+    color: white;    
+  }
  
+  .modal-product-price{
+    margin: 25px 0px; 
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 5%;
+    font-size: xx-large;
+    font-weight: 900;
+  }
+
+  .modal-product-title{
+    // font-size: 2rem;
+    font-weight: bolder;
+  }
