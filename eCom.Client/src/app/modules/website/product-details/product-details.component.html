@@ -1,3 +1,20 @@
-<p>
-  product-details works!
-</p>
+<div class="row">
+
+  <div class="col-md-6">
+    <img class="w-100 h-100 rounded-3" [src]="product.imageUrl" alt="Product image">
+  </div>
+  <div class="col-md-6">
+    <h1 class="product-title">{{product.name}}</h1>
+    <h2 class="product-price text-primary">
+      BDT {{getProductPrice(product.section.pricingItems[0])}}
+      <s *ngIf="hasDiscount(product.section.pricingItems[0])"
+        class="badge badge-light border border-dark-subtle rounded-pill text-danger"> MRP
+        {{product.section.pricingItems[0].price}}</s>
+    </h2>
+    <div style="min-height: 185px;" [innerHTML]="product.usp"></div>
+    <hr>
+    <button class="btn btn-lg fw-bold btn-primary w-100">Add to cart</button>
+    <hr>
+  </div>
+
+</div>

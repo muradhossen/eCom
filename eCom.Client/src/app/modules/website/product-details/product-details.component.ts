@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { ProductService } from '../../apps/services/product.service';
+import { PricingItem, Product } from '../../apps/models/product';
+import { getProductPrice, hasDiscount } from 'src/app/_helpers/ProductPriceHelper';
 
 @Component({
   selector: 'app-product-details',
@@ -7,9 +11,48 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProductDetailsComponent implements OnInit {
 
-  constructor() { }
+  product: Product;
+
+  constructor(private activatedRoute: ActivatedRoute,
+    private productService: ProductService,
+    private cdr : ChangeDetectorRef
+  ) { }
 
   ngOnInit() {
+    this.activatedRoute.params.subscribe(params => {
+      const productAndId = params["name"];
+      const productId = this.extractProductId(productAndId);
+      this.getProduct(productId);
+    });
   }
+  extractProductId(productAndId: string) {
+
+
+    const parts = productAndId.split('---');
+
+    if (parts.length === 2) {      
+     return parseInt(parts[1].trim());
+    } else {
+      // Handle invalid text format
+      console.error('Invalid text format');
+    }
+    return 0;
+  }
+
+  getProduct(id: number) {
+    this.productService.getProduct(id).subscribe(product => {
+      this.product = product;
+      this.cdr.detectChanges();
+    })
+  }
+
+  getProductPrice(pricingItem: PricingItem): number {
+    return getProductPrice(pricingItem);
+  }
+
+  hasDiscount(pricingItem: PricingItem) {
+    return hasDiscount(pricingItem)
+  }
+
 
 }
