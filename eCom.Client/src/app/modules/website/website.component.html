@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-md-2">
 
-    <div class="list-group outer-div">
+    <!-- <div class="list-group outer-div">
 
       <a href="#" (mouseenter)="setMenuSubcategory(item)" *ngFor="let item of hierarchy"
         class="list-group-item list-group-item-action"><b>{{item.value |
@@ -20,7 +20,10 @@
         View all
       </a>
 
-    </div>
+    </div> -->
+
+
+    
   </div>
   <div class="col-md-10">
     <owl-carousel-o [options]="customOptions">
@@ -34,7 +37,14 @@
   </div>
 </div>
 
+<app-category-container>  
+</app-category-container>
 
 <app-product-container>
 </app-product-container>
+  
+
+ 
+
+
  

@@ -1,3 +1,50 @@
-<p>
-  products works!
-</p>
+<div class="row">
+
+  <div class="col-md-3">
+    <h1>Filter</h1>
+    <accordion [isAnimated]="true">
+      <accordion-group heading="Categories">
+
+        <ul class="no-style" style="height: 300px;overflow: scroll;">
+          <li  class="m-2" *ngFor="let category of categories">
+            <div class="form-check">
+              <input (change)="processCategorySelection(category.id)" [checked]="hasCategoryId(category.id)" class="form-check-input" type="checkbox" id="{{category.code}}">
+              <label  style="cursor: pointer;" class="form-check-label category-lable" for="{{category.code}}">
+                {{category.name}}
+              </label>
+            </div>
+          </li>
+
+
+        </ul>
+
+      </accordion-group>
+      <accordion-group heading="Another group">
+        <p>Some content</p>
+      </accordion-group>
+      <accordion-group heading="Another group">
+        <p>Some content</p>
+      </accordion-group>
+      <accordion-group heading="Another group">
+        <p>Some content</p>
+      </accordion-group>
+    </accordion>
+  </div>
+
+  <div class="col-md-9">
+    <h1>Products</h1>
+
+    <div class="d-flex flex-wrap">
+      <app-product-card class="m-4" *ngFor="let product of products" [product]="product">
+
+      </app-product-card>      
+    </div> 
+
+    <div *ngIf="productPagination.totalPages !== productPageNumber" class="d-grid gap-2 col-6 mx-auto"> 
+      <button class="btn btn-primary" type="button" (click)="loadMoreProducts()">Load more</button>
+    </div>
+
+  </div>
+</div>
+
+

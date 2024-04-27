@@ -21,6 +21,7 @@ const routes: Routes = [
           { path: ':name', component: ProductDetailsComponent },
         ]
       },
+      {path : "categories" , component : ProductsComponent},
       { path: '', redirectTo: 'web', pathMatch: 'full' },
       { path: '**', redirectTo: 'web', pathMatch: 'full' },
     ],

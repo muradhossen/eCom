@@ -1,0 +1,8 @@
+<div class="category-img-container"> 
+
+<a  routerLink="/categories" [queryParams]="{id : category.id}">
+  <img class="category-img" [src]="category.imageUrl || 'https://images.othoba.com/images/thumbs/0556670_household-festival.jpeg'" [alt]="category.name">
+  {{category.name}}
+</a>
+  
+</div>

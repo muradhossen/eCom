@@ -9,6 +9,11 @@ import { ProductContainerComponent } from './product-container/product-container
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { ProductsComponent } from './products/products.component';
+import { TabsModule } from 'ngx-bootstrap/tabs';
+import { CategoryContainerComponent } from './category-container/category-container.component';
+import { CategoryCardComponent } from './category-card/category-card.component';
+import { AccordionModule } from 'ngx-bootstrap/accordion';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -16,14 +21,20 @@ import { ProductsComponent } from './products/products.component';
     WebsiteRoutingModule,
     CarouselModule,
     SharedPipeModule,
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    TabsModule,
+    AccordionModule,
+    FormsModule
   ],
   declarations: [
     WebsiteComponent,
     ProductCardComponent,
     ProductContainerComponent,
     ProductDetailsComponent,
-    ProductsComponent
+    ProductsComponent,
+    CategoryContainerComponent,
+    CategoryCardComponent,
+    
   ]
 })
 export class WebsiteModule { }

@@ -25,7 +25,7 @@ export class ProductContainerComponent implements OnInit {
   
   productOptions: OwlOptions = {
     loop: false,
-    // autoplay: true,
+    autoplay: true,
     mouseDrag: true,
     touchDrag: false,
     pullDrag: false,

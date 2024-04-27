@@ -1,0 +1,24 @@
+
+<div>
+  <div class="row">
+    <div class="m-tb-26px" style="display: flex; justify-content: space-between;">
+   
+      <h1>Categories</h1> 
+      <a  routerLink="/categories" class="btn btn-sm fw-bold btn-primary">View more</a>     
+    </div>
+    <hr>
+  </div>
+
+  <div class="row">
+    <owl-carousel-o [options]="categoryOptions">
+      <ng-container *ngFor="let category of categories">
+        <ng-template carouselSlide>
+          <app-category-card [category]="category">
+
+          </app-category-card>
+
+        </ng-template>
+      </ng-container>
+    </owl-carousel-o>
+  </div>
+</div>
