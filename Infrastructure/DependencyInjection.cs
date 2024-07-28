@@ -20,6 +20,8 @@ namespace Infrastructure
             services.AddDbContext<ApplicationDbContext>(option =>
             {
                 option.UseNpgsql(configuration.GetConnectionString("DefaultConnection"));
+
+                 
             });
 
             services.AddIdentityCore<AuthUser>(opt =>
@@ -36,6 +38,7 @@ namespace Infrastructure
             services.AddTransient<ISubCategoryRepository, SubCategoryRepository>();
             services.AddTransient<IProductRepository, ProductRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IOrderRepository, OrderRepository>();
 
             return services;
         }

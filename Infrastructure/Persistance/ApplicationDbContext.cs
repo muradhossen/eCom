@@ -11,6 +11,7 @@ using Domain.Common;
 using System;
 using Application.Common.CurrentUser;
 using System.Reflection.Emit;
+using Domain.Entities.Orders;
 
 namespace Infrastructure.Persistance
 {
@@ -32,6 +33,10 @@ namespace Infrastructure.Persistance
         public DbSet<Product> Products { get; set; }
         public DbSet<Section> Sections { get; set; }
         public DbSet<PricingItem> PricingItems { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderDetail> OrderDetails { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<DiscountItem> DiscountItems { get; set; }
         public DbSet<VwSearch> VwSearches { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -49,7 +54,7 @@ namespace Infrastructure.Persistance
                 .WithOne(u => u.Role)
                 .HasForeignKey(ur => ur.RoleId)
                 .IsRequired();
-
+                    
             builder.Entity<VwSearch>()
                 .HasNoKey()
                 .ToView("VwSearch");

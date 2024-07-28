@@ -19,6 +19,7 @@ namespace Application
             services.AddTransient<ICurrentUserService, CurrentUserService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IPhotoService, PhotoService>();
+            services.AddTransient<IOrderService, OrderService>();
             return services;
         }
     }

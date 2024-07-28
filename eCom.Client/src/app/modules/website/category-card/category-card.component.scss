@@ -2,8 +2,13 @@
     border-radius: 61%;
     width: 95px !important;
     height: 95px;
+
+    transition: transform 0.3s ease;
 }
 
+.category-img:hover {
+    transform: scale(0.8); 
+}
 .category-img-container{
     width: 100px;
     height: 150px;
