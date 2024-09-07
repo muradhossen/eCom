@@ -16,7 +16,7 @@ import { FakeAPIService } from './_fake/fake-api.service';
 import { JwtInterceptor } from './modules/auth/services/jwt.interceptor'; 
 import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
-import { FormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms'; 
 
 registerLocaleData(en);
 // #fake-end#
@@ -50,6 +50,7 @@ function appInitializer(authService: AuthService) {
     InlineSVGModule.forRoot(),
     NgbModule,
     FormsModule,
+   
   ],
   providers: [
     {

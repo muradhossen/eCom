@@ -52,7 +52,7 @@
         </h2>
         <div style="min-height: 185px;" [innerHTML]="product.usp"></div>
         <hr>
-        <button class="btn btn-lg fw-bold btn-primary w-100">Add to cart</button>
+        <button class="btn btn-lg fw-bold btn-primary w-100" (click)="onAddToCart(product)">Add to cart</button>
         <hr>
       </div>
     </div>

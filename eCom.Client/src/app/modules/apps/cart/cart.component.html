@@ -1,0 +1,29 @@
+<div (click)="openNoBackdrop(content)" class="square-box">
+  <div class="cart-items">
+    <h1>{{cart.getTotalItems()}}</h1>
+    <strong>Item(s)</strong>
+  </div>
+
+  <div class="cart-amount">
+    {{this.cart?.getTotalPrice() ?? 0 | number : '1.2-2'}}
+  </div>
+</div>
+
+<!-- <button class="btn btn-lg btn-outline-primary mb-2 me-2" (click)="openNoBackdrop(content)">No backdrop</button> -->
+
+
+<ng-template #content let-offcanvas>
+  <div class="offcanvas-header">
+    <h4 class="offcanvas-title">Cart items</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="offcanvas.dismiss('Cross click')"></button>
+  </div>
+  <div class="offcanvas-body">
+
+    <p *ngFor="let productContainer of cart.items">
+      {{productContainer.key.name}} -- {{productContainer.getTotalItems()}} -- {{ productContainer.getItemPrice() }} <span (click)="removeProductFromCart(productContainer)">X</span>
+    </p>
+    <div class="text-end">
+      <h2>Total : {{cart.getTotalPrice() | number : '1.2-2'}}</h2>
+    </div>
+  </div>
+</ng-template>

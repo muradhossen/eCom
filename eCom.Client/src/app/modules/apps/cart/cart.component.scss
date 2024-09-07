@@ -1,0 +1,34 @@
+@import "../../../../assets/sass/components/variables.custom";
+
+.container {
+    flex-grow: 1; 
+}
+
+.square-box {
+    position: fixed;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    width: 85px;
+    height: 100px;
+    // background-color: white;
+    z-index: 100;
+    border-radius: 5px;
+    padding: 7px;
+
+    -webkit-box-shadow: -1px 3px 17.5px 5px #dddddd;
+    -moz-box-shadow: -1px 3px 17.5px 5px #dddddd;
+    box-shadow: -1px 3px 17.5px 5px #dddddd;
+}
+
+.cart-amount{
+    background-color: white;
+     height: 30%;
+     border-top: 1px solid black;
+}
+ .cart-items{
+    // background-color: #dddddd;
+    height: 70%;
+
+ }
+ 

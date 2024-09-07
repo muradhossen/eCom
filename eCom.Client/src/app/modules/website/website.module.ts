@@ -14,6 +14,9 @@ import { CategoryContainerComponent } from './category-container/category-contai
 import { CategoryCardComponent } from './category-card/category-card.component';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { FormsModule } from '@angular/forms';
+import { CartModule } from '../apps/cart/cart.module';
+import { CartComponent } from '../apps/cart/cart.component';
+import { AddToCartProductCardComponent } from './add-to-cart-product-card/add-to-cart-product-card.component';
 
 @NgModule({
   imports: [
@@ -24,7 +27,8 @@ import { FormsModule } from '@angular/forms';
     ModalModule.forRoot(),
     TabsModule,
     AccordionModule,
-    FormsModule
+    FormsModule,
+    // CartModule
   ],
   declarations: [
     WebsiteComponent,
@@ -34,6 +38,8 @@ import { FormsModule } from '@angular/forms';
     ProductsComponent,
     CategoryContainerComponent,
     CategoryCardComponent,
+    CartComponent,
+    AddToCartProductCardComponent
     
   ]
 })

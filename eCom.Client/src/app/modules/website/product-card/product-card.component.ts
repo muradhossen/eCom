@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { PricingItem, Product } from '../../apps/models/product';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { getProductPrice, hasDiscount } from 'src/app/_helpers/ProductPriceHelper';
+import { AddToCartService } from '../../apps/services/add-to-cart.service';
  
 @Component({
   selector: 'app-product-card',
@@ -18,7 +19,9 @@ export class ProductCardComponent implements OnInit {
     animated: true,
     class: 'modal-dialog modal-dialog-centered modal-lg'
   };
-  constructor(private modalService: BsModalService) { }
+  constructor(private modalService: BsModalService
+    , private addToCartService : AddToCartService
+  ) { }
 
 
   ngOnInit() {
@@ -42,4 +45,8 @@ export class ProductCardComponent implements OnInit {
     this.modalRef = this.modalService.show(template, this.config);
   }
 
+  onAddToCart(product: Product){
+this.addToCartService.sendProductToCart(product);
+
+  }
 }
