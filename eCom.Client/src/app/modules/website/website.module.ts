@@ -17,7 +17,7 @@ import { FormsModule } from '@angular/forms';
 import { CartModule } from '../apps/cart/cart.module';
 import { CartComponent } from '../apps/cart/cart.component';
 import { AddToCartProductCardComponent } from './add-to-cart-product-card/add-to-cart-product-card.component';
-
+import { AlertModule } from 'ngx-bootstrap/alert';
 @NgModule({
   imports: [
     CommonModule,
@@ -29,6 +29,7 @@ import { AddToCartProductCardComponent } from './add-to-cart-product-card/add-to
     AccordionModule,
     FormsModule,
     // CartModule
+    AlertModule
   ],
   declarations: [
     WebsiteComponent,

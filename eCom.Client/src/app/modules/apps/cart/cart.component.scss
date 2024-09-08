@@ -8,17 +8,14 @@
     position: fixed;
     top: 50%;
     right: 20px;
-    transform: translateY(-50%);
+    /* transform: translateY(-50%); */
     width: 85px;
     height: 100px;
-    // background-color: white;
     z-index: 100;
     border-radius: 5px;
-    padding: 7px;
-
-    -webkit-box-shadow: -1px 3px 17.5px 5px #dddddd;
-    -moz-box-shadow: -1px 3px 17.5px 5px #dddddd;
-    box-shadow: -1px 3px 17.5px 5px #dddddd;
+    text-align: center;
+    box-shadow: -8px 0px 21.5px -5px black;
+    background: ghostwhite;
 }
 
 .cart-amount{

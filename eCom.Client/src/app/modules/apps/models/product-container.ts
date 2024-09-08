@@ -8,12 +8,13 @@ export class ProductContainer {
     return this.getItemPrice() * this.getTotalItems();
   }
   getTotalDiscount() {
-    return (this.getItemDiscountPrice() ?? 0) * this.getTotalItems();
+    return this.getItemDiscountPrice()  * this.getTotalItems();
   }
 
   getItemPrice() {
+     
     const pricingItem = this.key.section.pricingItems[0];
-    return pricingItem.price - (this.getTotalDiscount() ?? 0);
+    return pricingItem.price - this.getItemDiscountPrice();
   }
   getItemDiscountPrice() {
     const pricingItem = this.key.section.pricingItems[0];
@@ -21,7 +22,6 @@ export class ProductContainer {
     if (!pricingItem.discountType) {
       return 0;
     }
-
     if (pricingItem.discountType == DiscountType.flat) {
       return pricingItem.discountAmount;
     }
@@ -29,6 +29,7 @@ export class ProductContainer {
     if (pricingItem.discountType == DiscountType.percentage) {
       return (pricingItem.discountPercentage / 100) * pricingItem.price;
     }
+    return 0;
   }
 
   getTotalItems() {
