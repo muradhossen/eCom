@@ -8,6 +8,7 @@ using eCom.API.Controllers.Base;
 using Microsoft.AspNetCore.Mvc;
 using Application.Extentions;
 using Application.Common.CurrentUser;
+using Microsoft.AspNetCore.Authorization;
 
 namespace eCom.API.Controllers
 {
@@ -62,6 +63,7 @@ namespace eCom.API.Controllers
             }
             return BadRequest(Result.Failure(CategoryError.CreateFailed));
         }
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetCategories([FromQuery] CategoryPageParam pageParam)
         {

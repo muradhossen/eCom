@@ -9,6 +9,7 @@ using eCom.API.Controllers.Base;
 using Application.Extentions;
 using Microsoft.AspNetCore.Mvc;
 using Application.Service;
+using Microsoft.AspNetCore.Authorization;
 
 namespace eCom.API.Controllers
 {
@@ -67,6 +68,7 @@ namespace eCom.API.Controllers
             }
             return BadRequest(Result.Failure(ProductError.CreateFailed));
         }
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetProducts([FromQuery] ProductPageParam pageParam)
         {
@@ -79,7 +81,7 @@ namespace eCom.API.Controllers
             Response.AddPaginationHeader(products.CurrentPage, products.PageSize, products.TotalCount, products.TotalPage);
             return Ok(Result.Success(_mapper.Map<List<ProductDto>>(products)));
         }
-
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetProductById(long id)
         {
