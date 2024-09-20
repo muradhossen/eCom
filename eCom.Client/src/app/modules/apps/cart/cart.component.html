@@ -22,6 +22,8 @@
     <p *ngFor="let productContainer of cart.items">
       <app-add-to-cart-product-card [productContainer]="productContainer"
         (onRemoveProduct)="removeProductFromCart($event)"></app-add-to-cart-product-card>
+     
+
     </p>
 
   </div>

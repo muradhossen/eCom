@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../../apps/services/product.service';
 import { PricingItem, Product } from '../../apps/models/product';
 import { getProductPrice, hasDiscount } from 'src/app/_helpers/ProductPriceHelper';
+import { AddToCartService } from '../../apps/services/add-to-cart.service';
 
 @Component({
   selector: 'app-product-details',
@@ -15,7 +16,8 @@ export class ProductDetailsComponent implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute,
     private productService: ProductService,
-    private cdr : ChangeDetectorRef
+    private cdr : ChangeDetectorRef,
+    private addToCartService : AddToCartService
   ) { }
 
   ngOnInit() {
@@ -54,5 +56,7 @@ export class ProductDetailsComponent implements OnInit {
     return hasDiscount(pricingItem)
   }
 
-
+  onAddToCart(product: Product) {
+    this.addToCartService.sendProductToCart(product);
+  }
 }

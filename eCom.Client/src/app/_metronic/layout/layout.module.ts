@@ -35,6 +35,8 @@ import { ClassicComponent } from './components/toolbar/classic/classic.component
  
 import {SharedModule} from "../shared/shared.module";
 import { UserDropdownComponent } from '../partials/layout/user-dropdown/user-dropdown.component';
+import { CartModule } from 'src/app/modules/apps/cart/cart.module';
+import { CartComponent } from 'src/app/modules/apps/cart/cart.component';
 
 const routes: Routes = [
   {
@@ -63,7 +65,8 @@ const routes: Routes = [
     SidebarFooterComponent,
     NavbarComponent, 
     ClassicComponent, 
-    UserDropdownComponent
+    UserDropdownComponent,
+    
   ],
   imports: [
     CommonModule,
@@ -76,7 +79,8 @@ const routes: Routes = [
     NgbTooltipModule,
     TranslateModule,
     ThemeModeModule,
-    SharedModule
+    SharedModule,
+    CartModule
   ],
   exports: [RouterModule],
 })

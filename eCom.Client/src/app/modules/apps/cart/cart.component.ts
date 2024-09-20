@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AddToCartService } from '../services/add-to-cart.service';
 import { Product } from '../models/product';
 import { inject, TemplateRef } from '@angular/core';
@@ -21,11 +21,17 @@ export class CartComponent implements OnInit {
   products : Product[] = [];
   cart : Cart = new Cart();
 
-  constructor(private addToCartService : AddToCartService) { }
+  constructor(private addToCartService : AddToCartService) {
+    this.cart = this.addToCartService.getCart();
+   }
+  // ngOnDestroy(): void { 
+  //   this.addToCartService.setCart(this.cart);
+  // }
 
-  ngOnInit() {
+  ngOnInit() { 
 
     this.addToCartService.product$.subscribe(product => {
+      debugger
         this.products.push(product);
 
         this.cart.addProductToCart(product);
@@ -45,4 +51,5 @@ export class CartComponent implements OnInit {
   removeProductFromCart(productContainer : ProductContainer){
     this.cart.removeProduct(productContainer);
   }
+  
 }

@@ -11,9 +11,9 @@
         class="badge badge-light border border-dark-subtle rounded-pill text-danger"> MRP
         {{product.section.pricingItems[0].price}}</s>
     </h2>
-    <div style="min-height: 185px;" [innerHTML]="product.usp"></div>
+    <div style="min-height: 185px;" [innerHTML]="product?.usp"></div>
     <hr>
-    <button class="btn btn-lg fw-bold btn-primary w-100">Add to cart</button>
+    <button class="btn btn-lg fw-bold btn-primary w-100" (click)="onAddToCart(product)">Add to cart</button>
     <hr>
   </div>
 
@@ -22,10 +22,10 @@
 <div class="m-2">
   <tabset>
     <tab heading="Description" id="description">
-      <div class="m-4" [innerHTML]="product.description || 'No description found!'"></div>
+      <div class="m-4" [innerHTML]="product?.description || 'No description found!'"></div>
     </tab>
     <tab heading="Details" id="details">
-    <div class="m-4"  [innerHTML]="product.details || 'No details found!!'"></div>
+    <div class="m-4"  [innerHTML]="product?.details || 'No details found!!'"></div>
     </tab>
   </tabset>
 </div>

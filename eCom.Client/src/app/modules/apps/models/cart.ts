@@ -23,9 +23,9 @@ export class Cart {
   }
 
   addProductToCart(product: Product) {
-    if (this.items.some((c) => c.key == product)) {
+    if (this.items.some((c) => c.key.code == product.code)) {
       this.items.forEach((pc) => {
-        if (pc.key == product) {
+        if (pc.key.code == product.code) {
           pc.values.push(product);
         }
       });

@@ -170,6 +170,7 @@ namespace eCom.API.Controllers
 
             return Ok(Result.Success(categories));
         }
+        [AllowAnonymous]
         [HttpGet("hierarchy")]
         public async Task<ActionResult<Result>> GetCategoryHierarchy([FromQuery] int? size)
         {

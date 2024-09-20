@@ -29,7 +29,7 @@ import { AlertModule } from 'ngx-bootstrap/alert';
     AccordionModule,
     FormsModule,
     // CartModule
-    AlertModule
+    
   ],
   declarations: [
     WebsiteComponent,
@@ -39,8 +39,8 @@ import { AlertModule } from 'ngx-bootstrap/alert';
     ProductsComponent,
     CategoryContainerComponent,
     CategoryCardComponent,
-    CartComponent,
-    AddToCartProductCardComponent
+    // CartComponent,
+  
     
   ]
 })
