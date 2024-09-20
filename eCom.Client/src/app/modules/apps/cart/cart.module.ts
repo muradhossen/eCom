@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 import { CartComponent } from './cart.component';
 import { AddToCartProductCardComponent } from '../../website/add-to-cart-product-card/add-to-cart-product-card.component';
 import { AlertModule } from 'ngx-bootstrap/alert';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [
     CommonModule,
-    AlertModule
+    AlertModule,
+    RouterModule
   ],
   declarations: [
     CartComponent,

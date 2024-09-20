@@ -22,6 +22,11 @@ const routes: Routes = [
         ]
       },
       {path : "categories" , component : ProductsComponent},
+      {
+        path: 'checkout', 
+        loadChildren: () =>
+          import('./checkout/checkout.module').then((m) => m.CheckoutModule),
+      },
       { path: '', redirectTo: 'web', pathMatch: 'full' },
       { path: '**', redirectTo: 'web', pathMatch: 'full' },
     ],
