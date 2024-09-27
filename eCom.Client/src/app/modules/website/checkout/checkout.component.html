@@ -1,3 +1,26 @@
-<p>
-  checkout works!
-</p>
+<!-- 
+<ol class="list-group list-group-numbered">
+  <li *ngFor="let productContainer of cart.items" class="list-group-item d-flex justify-content-between align-items-start">
+    <div class="ms-2 me-auto">
+      <div class="fw-bold">{{productContainer.key.name}}</div>
+      
+    </div>
+    <span class="badge text-bg-primary rounded-pill">{{productContainer.getTotalItems()}}</span>
+  </li> 
+</ol>
+ -->
+
+
+<div class="row">
+  <div class="col-md-4">
+    <ul class="list-group">
+      <li *ngFor="let productContainer of cart.items"
+      class="list-group-item d-flex justify-content-between align-items-center">
+      {{productContainer.key.name}}
+      <span class="badge text-bg-primary rounded-pill">{{productContainer.getTotalItems()}}</span>
+    </li>
+  </ul>
+</div>
+<div class="col-md-4"></div>
+  <div class="col-md-4"></div>
+</div>

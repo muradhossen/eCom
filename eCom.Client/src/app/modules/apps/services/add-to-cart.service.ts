@@ -14,6 +14,8 @@ export class AddToCartService {
   constructor() {}
 
   sendProductToCart(product: Product) {
+    this.cart.addProductToCart(product);
+    
     this.productSource.next(product);
   }
   setCart(cart: Cart) {

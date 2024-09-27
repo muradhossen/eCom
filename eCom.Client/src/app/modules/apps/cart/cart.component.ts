@@ -21,17 +21,13 @@ export class CartComponent implements OnInit {
   products : Product[] = [];
   cart : Cart = new Cart();
 
-  constructor(private addToCartService : AddToCartService) {
-    this.cart = this.addToCartService.getCart();
-   }
-  // ngOnDestroy(): void { 
-  //   this.addToCartService.setCart(this.cart);
-  // }
+  constructor(private addToCartService : AddToCartService) { }
+ 
 
   ngOnInit() { 
 
     this.addToCartService.product$.subscribe(product => {
-      debugger
+       
         this.products.push(product);
 
         this.cart.addProductToCart(product);

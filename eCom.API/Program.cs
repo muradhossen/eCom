@@ -79,7 +79,8 @@ builder.Services.AddCors(o => o.AddPolicy("CorsPolicy", policyBuilder =>
     .AllowAnyHeader()
     .AllowAnyMethod()
     .AllowCredentials()
-    .WithOrigins("http://localhost:4200", "https://localhost:4200");
+    .WithOrigins("http://localhost:4200", "https://localhost:4200",
+    "http://13.233.148.217/", "https://13.233.148.217/");
 }));
 
 var app = builder.Build();
@@ -94,11 +95,11 @@ await Seed.SeedUsers(roleManager);
 
 app.UseMiddleware<ExceptionMiddleware>();
 
-if (app.Environment.IsDevelopment())
-{
+//if (app.Environment.IsDevelopment())
+//{
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+//}
 
 app.UseHttpsRedirection();
 
