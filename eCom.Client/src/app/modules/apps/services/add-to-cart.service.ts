@@ -11,11 +11,15 @@ export class AddToCartService {
   product$ = this.productSource.asObservable();
   private cart: Cart = new Cart();
 
+  private cartSource = new Subject<Cart>();
+  cart$ = this.cartSource.asObservable();
+
   constructor() {}
 
   sendProductToCart(product: Product) {
     this.cart.addProductToCart(product);
     
+    this.cartSource.next(this.cart);
     this.productSource.next(product);
   }
   setCart(cart: Cart) {

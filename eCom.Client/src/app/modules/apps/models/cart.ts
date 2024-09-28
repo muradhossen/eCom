@@ -3,7 +3,8 @@ import { ProductContainer } from './product-container';
 
 export class Cart {
   items: ProductContainer[] = [];
-
+  deliveryAddress : string;
+  mobile : string;
   getTotalPrice() {
     let totalPrice = 0;
 

@@ -1,26 +1,49 @@
-<!-- 
-<ol class="list-group list-group-numbered">
-  <li *ngFor="let productContainer of cart.items" class="list-group-item d-flex justify-content-between align-items-start">
-    <div class="ms-2 me-auto">
-      <div class="fw-bold">{{productContainer.key.name}}</div>
-      
-    </div>
-    <span class="badge text-bg-primary rounded-pill">{{productContainer.getTotalItems()}}</span>
-  </li> 
-</ol>
- -->
-
-
 <div class="row">
+  <div class="col-md-4">
+    <form [formGroup]="checkoutCartForm" (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <label for="deliveryAddress" class="form-label">Delivery address</label>
+        <input formControlName="deliveryAddress" type="text" class="form-control" id="deliveryAddress"
+          aria-describedby="deliveryAddressHelp">
+        <div id="deliveryAddressHelp" class="form-text">Write your full address here.Ex : House 1, Road 1, Shukrabad,
+          Dhanmondi,Dhaka</div>
+      </div>
+      <label for="mobile" class="form-label">Phone number</label>
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon3">+88</span>
+        <input formControlName="mobile" type="number" class="form-control" id="mobile">
+      </div>
+    </form>
+  </div>
+  <div class="col-md-4"></div>
   <div class="col-md-4">
     <ul class="list-group">
       <li *ngFor="let productContainer of cart.items"
-      class="list-group-item d-flex justify-content-between align-items-center">
-      {{productContainer.key.name}}
-      <span class="badge text-bg-primary rounded-pill">{{productContainer.getTotalItems()}}</span>
-    </li>
-  </ul>
+        class="list-group-item d-flex justify-content-between align-items-start">
+        <div class="ms-2 me-auto">
+          <div class="fw-bold">
+            <img [src]="productContainer.key.imageUrl" height="40px" width="40px">
+            {{productContainer.key.name}} <div class="vr"></div>
+            {{productContainer.getItemPrice()}} x {{productContainer.getTotalItems()}}
+            = {{productContainer.getTotalPrice() | number:'1.2-2'}}
+          </div>
+
+        </div>
+        <span class="badge text-bg-primary rounded-pill">{{productContainer.getTotalItems()}}</span>
+      </li>
+    </ul>
+  </div>
+
 </div>
-<div class="col-md-4"></div>
+
+<div class="border-dashed row p-3 m-2">
+  <div class="col-md-4 d-grid">
+    <a (click)="confirmOrder()" class="btn btn-lg fw-bold btn-primary" data-bs-toggle="modal"
+      data-bs-target="#kt_modal_create_app">Confirm
+      order</a>
+  </div>
   <div class="col-md-4"></div>
+  <div class="col-md-4 align-content-md-center">
+    <h1>Total price : {{cart.getTotalPrice()}}</h1>
+  </div>
 </div>

@@ -12,6 +12,7 @@ using System;
 using Application.Common.CurrentUser;
 using System.Reflection.Emit;
 using Domain.Entities.Orders;
+using Domain.Entities.Carts;
 
 namespace Infrastructure.Persistance
 {
@@ -37,6 +38,7 @@ namespace Infrastructure.Persistance
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<DiscountItem> DiscountItems { get; set; }
+        public DbSet<Cart> Carts { get; set; }
         public DbSet<VwSearch> VwSearches { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)

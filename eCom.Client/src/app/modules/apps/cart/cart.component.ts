@@ -30,9 +30,13 @@ export class CartComponent implements OnInit {
        
         this.products.push(product);
 
-        this.cart.addProductToCart(product);
+        // this.cart.addProductToCart(product);
 
-    })
+    });
+
+    this.addToCartService.cart$.subscribe(cart => {
+      this.cart = cart;
+    });
   }
 
   private offcanvasService = inject(NgbOffcanvas);

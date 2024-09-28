@@ -13,6 +13,9 @@ public class OrderError
     public static readonly Error CreateFailed = new Error(
         "Order.CreateFailed", "Failed to create order");
 
+    public static readonly Error CartCreateFailed = new Error(
+    "Cart.CreateFailed", "Failed to save cart");
+
     public static readonly Error NoItemAddedToCreate = new Error(
        "Order.CreateFailed", "No items found to place order!");
 

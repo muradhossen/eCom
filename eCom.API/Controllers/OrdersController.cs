@@ -7,6 +7,9 @@ using Domain.Entities.Orders;
 using eCom.API.Controllers.Base;
 using Microsoft.AspNetCore.Mvc;
 using Application.Extentions;
+using Application.DTOs.Carts;
+using Application.Service;
+using Newtonsoft.Json;
 
 namespace eCom.API.Controllers
 { 
@@ -14,33 +17,43 @@ namespace eCom.API.Controllers
     {
         private readonly IOrderService _orderService;
         private readonly IMapper _mapper;
+        private readonly ICartService _cartService;
 
         public OrdersController(IOrderService orderService
-            , IMapper mapper)
+            , IMapper mapper
+            , ICartService cartService)
         {
             _orderService = orderService;
             _mapper = mapper;
+            _cartService = cartService;
         }
         [HttpPost]
-        public async Task<IActionResult> CreateOrder([FromBody] OrderCreateDto dto)
+        public async Task<IActionResult> CreateOrder()
         {
+            var dto = new CartDto();
+            using (var reader = new StreamReader(Request.Body))
+            {
+                var requestBody = await reader.ReadToEndAsync();
+
+                dto = JsonConvert.DeserializeObject<CartDto>(requestBody);
+            }
+
             if (dto is null)
             {
                 return BadRequest(Result.Failure(CommonError.InvalidRequest));
-            } 
+            }
+            var result = await _orderService.AddByCartAsync(dto);
 
-            var order = _mapper.Map<Order>(dto); 
-
-            if (await _orderService.AddAsync(order))
+            if (result.IsSuccess)
             {
                 var routeValues = new
                 {
                     action = nameof(GetOrderById),
                     controller = "Orders",
-                    id = order.Id,
+                    id = result.Data.Id,
 
                 };
-                return CreatedAtRoute(routeValues, Result.Success(_mapper.Map<OrderDto>(order)));
+                return CreatedAtRoute(routeValues, Result.Success(_mapper.Map<OrderDto>(result.Data)));
             }
             return BadRequest(Result.Failure(OrderError.CreateFailed));
         }

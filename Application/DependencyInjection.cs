@@ -20,6 +20,7 @@ namespace Application
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IPhotoService, PhotoService>();
             services.AddTransient<IOrderService, OrderService>();
+            services.AddTransient<ICartService, CartService>();
             return services;
         }
     }

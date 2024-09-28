@@ -8,9 +8,13 @@ public class OrderDetail : BaseEntity<long>
     public Order Order { get; set; }
     [Required]
     public string ShippingAddress { get; set; }
+    public string Mobile { get; set; }
+    /// <summary>
+    /// DeliveryType
+    /// </summary>
     public string Type { get; set; }
-    public List<DiscountItem>  DiscountItems { get; set; } 
-    public List<OrderItem> Items { get; set; }
+    public List<DiscountItem> DiscountItems { get; set; } = new();
+    public List<OrderItem> Items { get; set; } = new();
 }
 
 public class DiscountItem : BaseEntity<long>
@@ -19,7 +23,7 @@ public class DiscountItem : BaseEntity<long>
     public OrderDetail OrderDetail { get; set; }
     public string ReferenceType { get; set; } //couponId, productId
     public long ReferenceId { get; set; } //Id of coupon, product
-    public int DiscountAmount { get; set; }
+    public double DiscountAmount { get; set; }
     public string Type { get; set; } //coupon, flat discount, percentage discount
 }
 
