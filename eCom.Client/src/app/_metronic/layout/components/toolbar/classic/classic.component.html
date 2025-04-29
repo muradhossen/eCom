@@ -1,0 +1,13 @@
+ 
+ 
+
+<!--begin::Secondary button-->
+<a href="#" class="btn btn-sm btn-flex btn-light fw-bold">
+  Filter
+</a>
+<!--end::Secondary button-->
+
+<!--begin::Primary button-->
+<a  *ngIf="createBtnSettings && createBtnSettings.isVisible" [routerLink]="createBtnSettings.route" class="btn btn-sm fw-bold btn-primary" data-bs-toggle="modal"
+  data-bs-target="#kt_modal_create_app">{{createBtnSettings.name}}</a>
+<!--end::Primary button-->

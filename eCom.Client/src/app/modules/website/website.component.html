@@ -1,0 +1,54 @@
+<!-- <app-cart></app-cart> -->
+
+<div class="row">
+  <div class="col-md-2">
+
+    <!-- <div class="list-group outer-div">
+
+      <a href="#" (mouseenter)="setMenuSubcategory(item)" *ngFor="let item of hierarchy"
+        class="list-group-item list-group-item-action"><b>{{item.value |
+          substring : 19 }}</b>
+      </a>
+
+      <div class="rounded-2 hover-div">
+        <ul class="subcategory-list">
+          <li style="list-style:none;cursor: pointer;" *ngFor="let subcategoryItem of menuSubcategories">
+            <b>{{subcategoryItem.value | substring : 19 }}</b>
+          </li>
+        </ul>
+      </div>
+
+      <a href="#" class="list-group-item list-group-item-action active">
+        View all
+      </a>
+
+    </div> -->
+
+
+    
+  </div>
+  <div class="col-md-10">
+    <owl-carousel-o [options]="customOptions">
+      <ng-container *ngFor="let slide of slides">
+        <ng-template carouselSlide>
+          <img style="height: 265px;" class="rounded-3" [src]="slide.image" [title]="slide.text">
+
+        </ng-template>
+      </ng-container>
+    </owl-carousel-o>
+  </div>
+</div>
+
+<app-category-container>  
+</app-category-container>
+
+<app-product-container>
+</app-product-container>
+
+
+  
+
+ 
+
+
+ 

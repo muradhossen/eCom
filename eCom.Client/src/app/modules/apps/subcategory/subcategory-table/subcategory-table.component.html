@@ -1,0 +1,42 @@
+<div class="mr-left-right-10px">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Code</th>
+        <th scope="col">Image</th>
+        <th scope="col">Name</th>
+        <th scope="col">Description</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let category of categories; let sl = index" >
+
+        <th scope="row">{{category.sl}}</th>
+        <th>{{category.code}}</th>
+        <td><img *ngIf="category.imageUrl" src="{{category.imageUrl}}" alt="{{category.name}}" class="h-40px w-40px border-radius-5px"></td>
+        <td>{{category.name}}</td>
+        <td [title]="category.description">{{category.description | substring : 50}}</td>
+        <td>
+          <button class="btn btn-secondary btn-sm" (click)="edit(category.id)">Edit</button> 
+          <button class="btn btn-danger btn-sm m-1" (click)="deleteSubCategory(category.id,category.name)">Delete</button>
+        </td>
+      </tr> 
+    </tbody>
+  </table>
+
+  <pagination
+ [boundaryLinks]="true" 
+ [totalItems]="pagination.totalItems"
+ [itemsPerPage]="pagination.itemsPerPage"
+[(ngModel)]="pagination.currentPage" 
+(pageChanged)="pageChanged($event)" 
+previousText="&lsaquo;"
+nextText="&rsaquo;"
+ firstText="&laquo;" 
+ lastText="&raquo;">
+</pagination> 
+
+</div>
+

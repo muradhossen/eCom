@@ -1,0 +1,86 @@
+/* You can add global styles to this file, and also import other style files */
+@import "./assets/sass/style.scss";
+// Replace above style with this css file to enable RTL styles
+// @import "./assets/css/style.rtl";
+@import './assets/sass/plugins.scss';
+// @import "./assets/css/style.rtl.css";
+@import "./assets/sass/style.angular.scss";
+
+// Keenicons - High quality and pixel perfect font icons available in 3 styles, duotone, outline and solid for Metronic elements
+@import "./assets/plugins/keenicons/duotone/style.css";
+@import "./assets/plugins/keenicons/outline/style.css";
+@import "./assets/plugins/keenicons/solid/style.css";
+/* Importing Bootstrap SCSS file. */
+@import "./node_modules/bootstrap/scss/bootstrap";
+
+/* Importing Datepicker SCSS file. */
+@import "node_modules/ngx-bootstrap/datepicker/bs-datepicker";
+
+@import "~@ng-select/ng-select/themes/default.theme.css";
+
+@import 'ngx-owl-carousel-o/lib/styles/scss/owl.carousel';
+@import 'ngx-owl-carousel-o/lib/styles/scss/owl.theme.default';
+
+.border-radius-5px {
+  border-radius: 5px;
+}
+
+.mr-left-right-10px {
+  margin: 0px 10px;
+}
+
+
+.ng-select.border-none .ng-select-container {
+  border: none;
+  font-size: 1.1rem;
+}
+
+// owl carosoul customization start
+.owl-nav {
+  position: absolute;
+  top: 40%;
+  right: 0;
+}
+
+.owl-nav {
+  display: none;
+}
+
+//###########For hover on carousel#############
+// .owl-carousel:hover .owl-nav {
+//   display: flex;
+//   justify-content: end;
+//   top: -87px;
+// }
+//##############################################
+
+.owl-carousel .owl-nav {
+  display: flex;
+  justify-content: end;
+  top: -87px;
+}
+//owl carosoul customization end
+
+
+.m-tb-26px {
+  margin: 26px 0px;
+}
+
+.product-title {
+  // font-size: 2rem;
+  font-weight: bolder;
+}
+
+.product-price {
+  margin: 25px 0px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 5%;
+  font-size: xx-large;
+  font-weight: 900;
+}
+
+.no-style {
+  list-style: none;
+}

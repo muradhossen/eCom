@@ -1,0 +1,31 @@
+<div class="row" *ngIf="product">
+
+  <div class="col-md-6">
+    <img class="w-75 h-75 rounded-3" [src]="product.imageUrl || 'https://res.cloudinary.com/do7pdjcnd/image/upload/v1661704771/samples/ecommerce/analog-classic.jpg'" alt="Product image">
+  </div>
+  <div class="col-md-6">
+    <h1 class="product-title">{{product.name}}</h1>
+    <h2 class="product-price text-primary">
+      BDT {{getProductPrice(product.section.pricingItems[0])}}
+      <s *ngIf="hasDiscount(product.section.pricingItems[0])"
+        class="badge badge-light border border-dark-subtle rounded-pill text-danger"> MRP
+        {{product.section.pricingItems[0].price}}</s>
+    </h2>
+    <div style="min-height: 185px;" [innerHTML]="product?.usp"></div>
+    <hr>
+    <button class="btn btn-lg fw-bold btn-primary w-100" (click)="onAddToCart(product)">Add to cart</button>
+    <hr>
+  </div>
+
+</div>
+
+<div class="m-2">
+  <tabset>
+    <tab heading="Description" id="description">
+      <div class="m-4" [innerHTML]="product?.description || 'No description found!'"></div>
+    </tab>
+    <tab heading="Details" id="details">
+    <div class="m-4"  [innerHTML]="product?.details || 'No details found!!'"></div>
+    </tab>
+  </tabset>
+</div>

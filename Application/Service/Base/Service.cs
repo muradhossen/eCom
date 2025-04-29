@@ -87,7 +87,7 @@ public class Service<T> : IService<T> where T : class
         return await _repository.RemoveRangeAsync(entity);
     }
 
-    public async Task<T> GetByIdAsync(object id)
+    public virtual async Task<T> GetByIdAsync(object id)
     {
         return await _repository.GetByIdAsync(id);
     }

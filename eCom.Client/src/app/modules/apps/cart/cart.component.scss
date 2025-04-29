@@ -1,0 +1,35 @@
+@import "../../../../assets/sass/components/variables.custom";
+
+.container {
+    flex-grow: 1; 
+}
+
+.square-box {
+    position: fixed;
+    top: 50%;
+    right: 20px;
+    /* transform: translateY(-50%); */
+    width: 85px;
+    height: 100px;
+    z-index: 100;
+    border-radius: 5px;
+    text-align: center;
+    box-shadow: -8px 0px 21.5px -5px black;
+    background: ghostwhite;
+}
+
+.cart-amount{
+    background-color: white;
+     height: 30%;
+     border-top: 1px solid black;
+}
+ .cart-items{
+    // background-color: #dddddd;
+    height: 70%;
+
+ }
+ .perview-button { 
+    border: 1px solid $primary; 
+    background: $primary;
+    color: white;    
+  }

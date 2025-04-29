@@ -1,0 +1,43 @@
+<div class="mr-left-right-10px">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Code</th>
+        <th scope="col">Image</th>
+        <th scope="col">Name</th>
+        <th scope="col">Details</th> 
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products; let sl = index" >
+
+        <th scope="row">{{product.sl}}</th>
+        <th>{{product.code}}</th>
+        <td><img *ngIf="product.imageUrl" src="{{product.imageUrl}}" alt="{{product.name}}" class="h-40px w-40px border-radius-5px"></td>
+        <td>{{product.name}}</td>
+        <td [title]="product.details">{{product.details | substring : 50}}</td> 
+
+        <td>
+          <button class="btn btn-secondary btn-sm" (click)="edit(product.id)">Edit</button> 
+          <button class="btn btn-danger btn-sm m-1" (click)="deleteProduct(product.id,product.name)">Delete</button>
+        </td>
+      </tr> 
+    </tbody>
+  </table>
+
+  <pagination
+ [boundaryLinks]="true" 
+ [totalItems]="pagination.totalItems"
+ [itemsPerPage]="pagination.itemsPerPage"
+[(ngModel)]="pagination.currentPage" 
+(pageChanged)="pageChanged($event)" 
+previousText="&lsaquo;"
+nextText="&rsaquo;"
+ firstText="&laquo;" 
+ lastText="&raquo;">
+</pagination> 
+
+</div>
+

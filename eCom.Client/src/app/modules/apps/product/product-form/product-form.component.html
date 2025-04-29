@@ -1,0 +1,218 @@
+<div class="card mb-5 mb-xl-10">
+
+  <div id="kt_account_profile_details" class="collapse show">
+
+    <form novalidate="" class="form" [formGroup]="productForm">
+      <div class="card-body border-top p-9">
+
+        <div class="row mb-6">
+          <label class="col-lg-4 col-form-label fw-bold fs-6">Image</label>
+          <div class="col-lg-8">
+            <div class="image-input image-input-outline" data-kt-image-input="true"
+              [style.background-image]="'url(./assets/media/avatars/blank.png)'">
+
+              <img [src]="productImageUrl" alt="User image" class="image-input-wrapper w-125px h-125px">
+
+              <!-- Photo upload : Begine -->
+              <label for="file-upload" class="file-upload">
+                <i class="bi bi-camera-fill fs-2hx"></i>
+              </label>
+              <input type="file" id="file-upload" name="image" formControlName="image"
+                (change)="onFileSelected($event)">
+              <!-- Photo upload : End -->
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Code -->
+        <div *ngIf="isEdit" class="row mb-6">
+          <label class="col-lg-4 col-form-label required fw-bold fs-6">Code</label>
+          <div class="col-lg-8 fv-row">
+            <input readonly class="form-control form-control-lg" name="name" formControlName="code" autocomplete="off"
+              [ngClass]="{'is-invalid': productForm.controls['code'].invalid && productForm.get('code')?.touched }" />
+          </div>
+        </div>
+        <!-- Code -->
+
+
+        <!-- Name -->
+        <div class="row mb-6">
+          <label class="col-lg-4 col-form-label required fw-bold fs-6">Name</label>
+          <div class="col-lg-8 fv-row">
+
+            <input class="form-control form-control-lg" name="name" formControlName="name" autocomplete="off"
+              [ngClass]="{'is-invalid': productForm.controls['name'].invalid && productForm.get('name')?.touched }" />
+
+            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                      validation: 'required',
+                      message: 'Product name is required',
+                      control: productForm.controls['name']
+                    }">
+            </ng-container>
+
+
+            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                    validation: 'maxlength',
+                    message: 'Product name have maximum 55 symbols',
+                    control: productForm.controls['name']
+                    }"></ng-container>
+
+          </div>
+        </div>
+        <!-- Name -->
+
+        <!-- SubCategory dropdown -->
+        <div class="row mb-6">
+          <label class="col-lg-4 col-form-label required fw-bold fs-6">Subcategory</label>
+          <div class="col-lg-8 fv-row">
+
+            <ng-select class="form-control form-control-sm border-none" [items]="subcategories" bindLabel="name"
+              bindValue="id" formControlName="subCategoryId" [virtualScroll]="true" placeholder="Select subcategory">
+            </ng-select>
+
+            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                              validation: 'required',
+                              message: 'Subcategory is required',
+                              control: productForm.controls['subCategoryId']
+                            }">
+            </ng-container>
+
+          </div>
+        </div>
+        <!-- SubCategory dropdown -->
+
+        <!-- Details -->
+        <div class="row mb-6">
+          <label class="col-lg-4 col-form-label fw-bold fs-6">Details</label>
+          <div class="col-lg-8 fv-row">
+
+            <textarea class="form-control form-control-lg" name="details" formControlName="details" autocomplete="off"
+              [ngClass]="{'is-invalid': productForm.controls['details'].invalid && productForm.get('details')?.touched }">
+            </textarea>
+
+
+          </div>
+        </div>
+        <!-- Details -->
+
+        <!-- description -->
+        <div class="row mb-6">
+          <label class="col-lg-4 col-form-label fw-bold fs-6">Description</label>
+          <div class="col-lg-8 fv-row">
+
+            <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"> </ngx-editor-menu>
+            <ngx-editor [editor]="editor" formControlName="description" [disabled]="false"></ngx-editor>
+
+
+            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                validation: 'maxlength',
+                message: 'Description have maximum 1000 symbols',
+                control: productForm.controls['description']
+                }"></ng-container>
+
+          </div>
+        </div>
+        <!-- description -->
+
+        <!-- USP -->
+        <div class="row mb-6">
+          <label class="col-lg-4 col-form-label fw-bold fs-6">USP</label>
+          <div class="col-lg-8 fv-row">
+            <ngx-editor-menu [editor]="uspEditor" [toolbar]="uspToolbar"> </ngx-editor-menu>
+            <ngx-editor [editor]="uspEditor" formControlName="usp" [disabled]="false"></ngx-editor>
+          </div>
+        </div>
+        <!-- USP -->
+
+        <!-- SectionId -->
+        <input formControlName="sectionId" hidden autocomplete="off">
+        <!-- SectionId -->
+
+        <div formArrayName="pricingItems" class="row mb-6">
+          <!-- <label class="col-lg-4 col-form-label required fw-bold fs-6">Pricing</label> -->
+          <div class="col-lg-12">
+            <div class="row" *ngFor="let item of pricingItemsFormArray.controls; let i = index" [formGroupName]="i">
+
+              <input formControlName="id" hidden autocomplete="off">
+
+              <!-- Label start -->
+              <div class="col-lg-3 fv-row">
+                <div class="col-md">
+                  <label class="col-form-label fw-bold">Label</label>
+                  <input class="form-control" name="label" formControlName="label" autocomplete="off" id="label"
+                    [ngClass]="{'is-invalid': pricingItemsFormArray.at(i).get('label')?.invalid && pricingItemsFormArray.at(i).get('label')?.touched}">
+                </div>
+              </div>
+              <!-- Label end -->
+
+              <!-- price start -->
+              <div class="col-lg-3 fv-row">
+                <label class="col-form-label fw-bold">Price</label>
+                <input class="form-control form-control-lg" name="price" formControlName="price" autocomplete="off" />
+              </div>
+              <!-- price end -->
+
+              <!-- discount type start -->
+              <div class="col-lg-3 fv-row">
+                <label class="col-form-label fw-bold">Discount Type</label>
+                <ng-select class="form-control form-control-sm border-none" [items]="discountTypes" bindLabel="name"
+                  bindValue="id" formControlName="discountType" [virtualScroll]="true"
+                  placeholder="Select discount type">
+                </ng-select>
+              </div>
+              <!-- discount type end -->
+
+              <!-- discount amount start -->
+              <div class="col-lg-3 fv-row"
+                *ngIf="pricingItemsFormArray.at(i).get('discountType')?.value == discountTypes[0].id">
+                <label class="col-form-label fw-bold">Amount</label>
+                <input class="form-control form-control-lg" name="discountAmount" formControlName="discountAmount"
+                  autocomplete="off" />
+              </div>
+              <!-- discount amount end -->
+
+              <!-- discount percentage start -->
+              <div class="col-lg-3 fv-row"
+                *ngIf="pricingItemsFormArray.at(i).get('discountType')?.value == discountTypes[1].id">
+                <label class="col-form-label fw-bold">Percentage</label>
+                <input class="form-control form-control-lg" name="discountPercentage"
+                  formControlName="discountPercentage" autocomplete="off" />
+              </div>
+              <!-- discount percentage end -->
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="card-footer d-flex justify-content-end py-6 px-9">
+        <button type="button" class="btn btn-primary" [disabled]="isLoading || productForm.invalid" (click)="submit()">
+          <ng-container *ngIf="!isLoading">Save Changes</ng-container>
+          <ng-container *ngIf="isLoading">
+            <span clas="indicator-progress" [style.display]="'block'">
+              Please wait...{{ " " }}
+              <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+            </span>
+          </ng-container>
+        </button>
+      </div>
+
+
+    </form>
+  </div>
+
+
+
+</div>
+
+
+<ng-template #formError let-control="control" let-message="message" let-validation="validation">
+  <ng-container *ngIf="control.hasError(validation) && (control.dirty || control.touched)">
+    <div class="fv-plugins-message-container invalid-feedback">
+      <span role="alert">
+        {{ message }}
+      </span>
+    </div>
+  </ng-container>
+</ng-template>

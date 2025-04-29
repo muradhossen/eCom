@@ -1,0 +1,24 @@
+//
+// Theme style
+//
+
+// Initialize
+@import "init";
+
+// Components
+@import "./core/components/components";
+@import "components/components";
+
+// Layout
+@import "./core/layout/base/layout";
+@import "layout/layout";
+ 
+
+.table > thead{
+    background: $primary; 
+    color: white;
+}
+
+.kt-primary-text-color {
+ color: $primary;
+}
